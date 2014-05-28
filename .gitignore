@@ -1,0 +1,10 @@
+# ignore
+www.default
+platforms/android/gen
+platforms/android/bin
+platforms/android/assets/www
+platforms/ios/build
+platforms/ios/www
+platforms/ios/GomokuMist.xcodeproj/project.xcworkspace/xcuserdata
+.DS_Store
+
