@@ -218,9 +218,6 @@
     }
     
     function onClickStartStop() {
-//    	alert('onClickStartstop');
-//    	return;
-    	
     	if(! device_ready) return;
     	
     	if(watchID) {
@@ -243,8 +240,7 @@
     	
     	$("#accelerometer").html( ' (X,Y,Z): (' + accel.x.toFixed(1) + ',' +
                 accel.y.toFixed(1) + ',' +
-                accel.z.toFixed(1) + ')<br/>' +
-                ' Timestamp: ' + accel.timestamp + '<br/>' );
+                accel.z.toFixed(1) + ')' );
 
     	$("#counter").html( getDeltaTimeString() + '<br/>' +
         		count + '<br/>' );
