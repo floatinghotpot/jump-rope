@@ -22,6 +22,12 @@
     <feature name="Accelerometer">
         <param name="ios-package" value="CDVAccelerometer" />
     </feature>
+    <feature name="LowLatencyAudio">
+        <param name="ios-package" value="LowLatencyAudio" />
+    </feature>
+    <feature name="AdMob">
+        <param name="ios-package" value="CDVAdMob" />
+    </feature>
     <name>JumpRope</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

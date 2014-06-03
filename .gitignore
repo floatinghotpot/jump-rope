@@ -3,8 +3,9 @@ www.default
 platforms/android/gen
 platforms/android/bin
 platforms/android/assets/www
+platforms/android/CordovaLib/bin
 platforms/ios/build
 platforms/ios/www
-platforms/ios/GomokuMist.xcodeproj/project.xcworkspace/xcuserdata
+platforms/ios/JumpRope.xcodeproj/project.xcworkspace/xcuserdata
 .DS_Store
 

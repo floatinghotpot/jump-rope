@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+           id="com.rjfun.cordova.plugin.lowlatencyaudio"
+      version="1.0">
+      
+    <name>LowLatencyAudio</name>
+	<description>Add low latency audio support to Cordova/PhoneGap apps/games, since HTML5 audio is very poor in mobile browser</description>
+	<author>Developed by Andrew Trice, updated by Liming Xie</author>
+	<license>MIT</license>
+	<engines>
+	    <engine name="cordova" version=">=3.0" />
+	</engines>
+
+    <js-module src="www/LowLatencyAudio.js" name="LowLatencyAudio">
+        <clobbers target="window.plugins.LowLatencyAudio" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="LowLatencyAudio">
+                <param name="android-package" value="com.rjfun.cordova.plugin.LowLatencyAudio"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+        </config-file>
+
+        <source-file src="src/android/LowLatencyAudio.java" target-dir="src/com/rjfun/cordova/plugin" />
+        <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/com/rjfun/cordova/plugin" />
+        <source-file src="src/android/PolyphonicVoice.java" target-dir="src/com/rjfun/cordova/plugin" />
+        
+     </platform>
+     
+     <!-- ios -->
+     <platform name="ios">    
+         <config-file target="config.xml" parent="/*">
+             <feature name="LowLatencyAudio">
+                 <param name="ios-package" value="LowLatencyAudio" />
+             </feature>
+         </config-file>
+         
+         <header-file src="src/ios/LowLatencyAudio.h" />
+         <source-file src="src/ios/LowLatencyAudio.m" />
+         <header-file src="src/ios/LowLatencyAudioAsset.h" />
+         <source-file src="src/ios/LowLatencyAudioAsset.m" />
+         
+	</platform>
+          
+</plugin>

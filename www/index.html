@@ -27,8 +27,36 @@
 <meta name="msapplication-tap-highlight" content="no" />
 <title>Skipping</title>
 <script src='lib/jquery-1.9.js'></script>
+<script src='lib/hotjs-src.js'></script>
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src='voice-count.js'></script>
 <script type="text/javascript" charset="utf-8">
+    function showAdMob() {
+        var admob_ios_key = 'ca-app-pub-6869992474017983/9801473155';
+    	var admob_android_key = 'ca-app-pub-6869992474017983/3754939559';
+    	var adId = (navigator.userAgent.indexOf('Android') >=0) ? admob_android_key : admob_ios_key;
+    	
+    	if ( window.plugins && window.plugins.AdMob ) {
+    	    
+    	    var am = window.plugins.AdMob;
+    	    am.createBannerView(
+                                {
+                                'publisherId': adId,
+                                'adSize': am.AD_SIZE.BANNER,
+                                'bannerAtTop': false
+                                }, function() {
+                                am.requestAd( { 'isTesting':false }, function() {
+                                             am.showAd( true );
+                                             }, function() {
+                                             console.log('failed to request ad');
+                                             })
+                                }, function(){
+                                console.log( 'failed to create ad view' );
+                                });
+    	} else {
+    		console.log('AdMob plugin not available/ready.');
+    	}
+    }
 
     // The watch id references the current `watchAcceleration`
     var watchID = null;
@@ -92,7 +120,10 @@
     	if(motions.length > 0) {
     		var detectLine = minMotion + (maxMotion - minMotion) * 0.3;
     		var lastMotion = motions[ motions.length - 1 ];
-    		if(motion > detectLine && lastMotion < detectLine) count ++;
+    		if(motion > detectLine && lastMotion < detectLine) {
+                count ++;
+                hotjs.voiceCount( count );
+            }
     	}
 
     	motions.push( motion );
@@ -197,6 +228,8 @@
     // Wait for device API libraries to load
     var device_ready = false;
     function onDeviceReady() {
+        showAdMob();
+        
     	device_ready = true;
     	$("#accelerometer").html( 'Ready to go' );
     }
