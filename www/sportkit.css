@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'Joti One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Joti One'), local('JotiOne-Regular'), url(lib/jotione.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Combo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Combo'), local('Combo-Regular'), url(lib/combov1.woff) format('woff');
+}
+
+html, body, table {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font-family: serif, Arial;
+	background-color: silver;
+}
+
+html, body, div, canvas {
+	margin: 0;
+	padding: 0;
+}
+
+.m {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.l {
+	text-align: left;
+}
+
+.r {
+	text-align: right;
+}
+
+.data {
+	font-family: 'Joti One', serif, Arial;
+	font-size:24px;
+	color: blue;
+}
+
+.unit {
+	font-size: 16px;
+}
+
+.btn {
+	font-size: 28px;
+}
+
+.tips {
+	font-size: 24px;
+	color: green;
+}

@@ -23,277 +23,54 @@
 <meta name="format-detection" content="telephone=no" />
 <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
 <meta name='viewport'
-	content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width' />
+	content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1' />
 <meta name="msapplication-tap-highlight" content="no" />
-<title>Skipping</title>
+<title>Jumping Rope</title>
+<link href='sportkit.css' rel='stylesheet' type='text/css'>
 <script src='lib/jquery-1.9.js'></script>
 <script src='lib/hotjs-src.js'></script>
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src="cordova.js"></script>
+<script src='hotjs-ad.js'></script>
+<script src='hotjs-motion.js'></script>
 <script src='voice-count.js'></script>
-<script type="text/javascript" charset="utf-8">
-    function showAdMob() {
-        var admob_ios_key = 'ca-app-pub-6869992474017983/9801473155';
-    	var admob_android_key = 'ca-app-pub-6869992474017983/3754939559';
-    	var adId = (navigator.userAgent.indexOf('Android') >=0) ? admob_android_key : admob_ios_key;
-    	
-    	if ( window.plugins && window.plugins.AdMob ) {
-    	    
-    	    var am = window.plugins.AdMob;
-    	    am.createBannerView(
-                                {
-                                'publisherId': adId,
-                                'adSize': am.AD_SIZE.BANNER,
-                                'bannerAtTop': false
-                                }, function() {
-                                am.requestAd( { 'isTesting':false }, function() {
-                                             am.showAd( true );
-                                             }, function() {
-                                             console.log('failed to request ad');
-                                             })
-                                }, function(){
-                                console.log( 'failed to create ad view' );
-                                });
-    	} else {
-    		console.log('AdMob plugin not available/ready.');
-    	}
-    }
-
-    // The watch id references the current `watchAcceleration`
-    var watchID = null;
-
-    var accels = [];
-    var minX = 0, maxX = 0;
-    var minY = 0, maxY = 0;
-    var minZ = 0, maxZ = 0;
-    
-    var motions = [];
-    var maxMotion = 0, minMotion = 0;
-    
-    var startTime = 0;
-    var count = 0;
-    
-    var W = 300, H = 100, scale = 5;
-    
-    function getTime() {
-    	var dt = new Date();
-    	var s = dt.getTime() / 1000;
-    	return Math.floor(s);
-    }
-    
-    function getDeltaTimeString() {
-    	if(! startTime) startTime = getTime();
-    	
-    	var now = getTime();
-    	var s = now - startTime;
-    	var m = Math.floor(s / 60); s = s % 60;
-    	var h = Math.floor(m / 60); m = m % 60;
-    	
-    	var str = s;
-    	if(s < 10) str = '0' + str;
-    	str = m + ':' + str;
-    	if(m < 10) str = '0' + str;
-    	str = h + ':' + str;
-    	return str;
-    }
-    
-    function detectMotion(accel) {
-    	// record acceleration for drawing 
-    	if((maxX == 0) || (accel.x > maxX)) maxX = accel.x;
-    	if((minX == 0) || (accel.x < minX)) minX = accel.x;
-    	
-    	if((maxY == 0) || (accel.y > maxY)) maxY = accel.y;
-    	if((minY == 0) || (accel.y < minY)) minY = accel.y;
-    	
-    	if((maxZ == 0) || (accel.z > maxZ)) maxZ = accel.z;
-    	if((minZ == 0) || (accel.z < minZ)) minZ = accel.z;
-    	
-    	accels.push( accel );
-    	if(accels.length > W/scale) accels.shift();
-    	
-    	// record motion for drawing
-    	var motion = (accel.x * accel.x + accel.y * accel.y + accel.z * accel.z);
-    	
-    	if((maxMotion == 0) || (motion > maxMotion)) maxMotion = motion;
-    	if((minMotion == 0) || (motion < minMotion)) minMotion = motion;
-    	
-    	// detect action
-    	if(motions.length > 0) {
-    		var detectLine = minMotion + (maxMotion - minMotion) * 0.3;
-    		var lastMotion = motions[ motions.length - 1 ];
-    		if(motion > detectLine && lastMotion < detectLine) {
-                count ++;
-                hotjs.voiceCount( count );
-            }
-    	}
-
-    	motions.push( motion );
-    	if(motions.length > W/scale) motions.shift();
- 	}
-
-    function drawMotionCurve() {
-    	var ctx = document.getElementById("motion_canvas").getContext("2d");
-    	ctx.clearRect(0,0,W,H);
-    	
-    	ctx.strokeStyle = 'gray';
-    	ctx.strokeRect(0, H*0.2, W, H*0.2);
-    	ctx.strokeRect(0, H*0.6, W, H*0.2);
-    	
-    	ctx.strokeStyle = "red";
-    	ctx.beginPath();
-    	for(var i=0; i<motions.length; i++) {
-    		var x = i * scale;
-    		var y = H * motions[i] / maxMotion;
-			if(i == 0) {
-				ctx.moveTo(x, y);
-			} else {
-				ctx.lineTo(x, y);
-			} 		
-    	}
-    	ctx.stroke();
-    }
-    
-    function drawXYZCurve() {
-    	var ctx = document.getElementById("xyz_canvas").getContext("2d");
-    	ctx.clearRect(0,0,W,H*1.5);
-    	
-    	ctx.strokeStyle = 'gray';
-    	ctx.strokeRect(0, H*0.25, W, H*0.5);
-    	ctx.strokeRect(0, H*0.75, W, H*0.5);
-    	
-    	ctx.strokeStyle = "red";
-    	ctx.beginPath();
-    	for(var i=0; i<accels.length; i++) {
-    		var x = i * scale;
-    		var y = H*0.25 * (1 + accels[i].x/maxX);
-			if(i == 0) {
-				ctx.moveTo(x, y);
-			} else {
-				ctx.lineTo(x, y);
-			} 		
-    	}
-    	ctx.stroke();
-
-    	ctx.strokeStyle = "green";
-    	ctx.beginPath();
-    	for(var i=0; i<accels.length; i++) {
-    		var x = i * scale;
-    		var y = H*0.25 * (3 + accels[i].y/maxY);
-			if(i == 0) {
-				ctx.moveTo(x, y);
-			} else {
-				ctx.lineTo(x, y);
-			} 		
-    	}
-    	ctx.stroke();
-    	
-    	ctx.strokeStyle = "blue";
-    	ctx.beginPath();
-    	for(var i=0; i<accels.length; i++) {
-    		var x = i * scale;
-    		var y = H*0.25 * (5 + accels[i].z/maxZ);
-			if(i == 0) {
-				ctx.moveTo(x, y);
-			} else {
-				ctx.lineTo(x, y);
-			} 		
-    	}
-    	ctx.stroke();
-    }
-
-    var requestAnimFrame = (function() {
-    	return window.requestAnimationFrame || window.webkitRequestAnimationFrame
-    			|| window.mozRequestAnimationFrame || window.oRequestAnimationFrame
-    			|| window.msRequestAnimationFrame || function(callback) {
-    				window.setTimeout(callback, 1000 / 60);
-    			};
-    })();
-    
-    var drawing = false;
-    function drawCurve() {
-    	if(! drawing) return;
-    	
-    	drawMotionCurve();
-    	drawXYZCurve();
-    	requestAnimFrame( drawCurve );
-    }
-
-    function startDraw() {
-    	drawing = true;
-    	drawCurve();
-    }
-    function stopDraw() {
-    	drawing = false;
-    }
-
-    // Wait for device API libraries to load
-    var device_ready = false;
-    function onDeviceReady() {
-        showAdMob();
-        
-    	device_ready = true;
-    	$("#accelerometer").html( 'Ready to go' );
-    }
-    document.addEventListener("deviceready", onDeviceReady, false);
-
-    // Start watching the acceleration
-    function startWatch() {
-        // Update acceleration every 3 seconds
-        var options = { frequency: 100 };
-        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
-    }
-
-    // Stop watching the acceleration
-    function stopWatch() {
-        if (watchID) {
-            navigator.accelerometer.clearWatch(watchID);
-            watchID = null;
-        }
-    }
-    
-    function onClickStartStop() {
-    	if(! device_ready) return;
-    	
-    	if(watchID) {
-    		stopWatch();
-    		stopDraw();
-    		$('#startstop').text('Start!');
-    	} else {
-    		count = 0;
-    		startTime = getTime();
-    		startWatch();
-    		startDraw();
-    		$('#startstop').text('Stop');
-    	}
-    }
-
-    // onSuccess: Get a snapshot of the current acceleration
-    //
-    function onSuccess( accel ) {
-    	detectMotion( accel );
-    	
-    	$("#accelerometer").html( ' (X,Y,Z): (' + accel.x.toFixed(1) + ',' +
-                accel.y.toFixed(1) + ',' +
-                accel.z.toFixed(1) + ')' );
-
-    	$("#counter").html( getDeltaTimeString() + '<br/>' +
-        		count + '<br/>' );
-    }
-
-    // onError: Failed to get the acceleration
-    //
-    function onError() {
-    	$("#accelerometer").html( 'failed to get accerlation' );
-    }
-    
-    //$("button#startstop").on('click', onClickStartStop );
-
-    </script>
+<script src='main.js'></script>
+<script type="text/javascript">
+function onLoad() {
+	document.addEventListener("deviceready", main, false);
+	
+	if(! window.plugins) main();
+}
+</script>
 </head>
-<body>
-	<div id="accelerometer" style="font-size:24px; text-align:center;">Please wait ...</div>
-	<div style="text-align:center;"><canvas id="xyz_canvas" width="300" height="150" style="border:1px solid #000000;"> </canvas></div>
-	<div style="text-align:center;"><canvas id="motion_canvas" width="300" height="100" style="border:1px solid #000000;"> </canvas></div>
-	<div id="counter" style="font-size:72px; text-align:center;">0:00:00<br/>0<br/></div>
-	<div style="text-align:center;"><button id="startstop" onclick="onClickStartStop();" style="font-size:48px;">Start</button></div>
+<body onload="onLoad()">
+	<table border=1 class='m' style='padding:0px;' cellspacing='0'>
+	<tr><td colspan=4 class='m'>
+	<span id="accelerometer" class='tips m'>加载中...</span><br/>
+	<span class='unit'>运动感应</span><br/>
+	<canvas id="motion_canvas" width="240" height="100" style="border:1px solid #000000;"> </canvas>
+	</td></tr>
+	<tr><td colspan=2 width='50%' class='m'>
+	<span class='unit'>最高记录</span><br/>
+	<span class='data'>0</span>
+	</td><td colspan=2 width='50%' class='m'>
+	<span class='unit'>上一次</span><br/>
+	<span class='data'>0</span>
+	</td></tr>
+	<tr><td width='25%' class='m'>
+	<span class='unit'>计数</span><br/>
+	<span class='data' id='counter'>0</span>
+	</td><td colspan=2 width='50%' class='m'>
+	<span class='unit'>时间</span><br/>
+	<span class='data' id='time'>0:00:00</span>
+	</td><td width='25%' class='m'>
+	<span class='unit'>卡路里</span><br/>
+	<span class='data' id='energy'>0</span>
+	</td></tr>
+	<tr><td colspan=2 width='50%' class='m'>
+	<button id="pause" onclick="onClickPause();" class='btn'>暂停</button>
+	</td><td colspan=2 width='50%' class='m'>
+	<button id="startstop" onclick="onClickStartStop();" class='btn'>开始</button>
+	</td></tr>
+	</table>
 </body>
 </html>
