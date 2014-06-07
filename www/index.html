@@ -251,7 +251,7 @@ function onLoad() {
 	<tr><td colspan=4><img src='img/share.jpg'/></td></tr>
 
 	<tr><td colspan=4>
-	<textarea id='sharingmsg' rows=4 cols=40>#天天跳绳#，我是 #运动达人#，再创新纪录！我已累计跳跃 123456 次，消耗脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。http://go.to/jumprope</textarea>
+	<textarea id='sharemsg' rows=4 cols=40>#天天跳绳#，我是 #运动达人#，再创新纪录！我已累计跳跃 123456 次，消耗脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。http://go.to/jumprope</textarea>
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
@@ -259,12 +259,15 @@ function onLoad() {
 	</td></tr>
 	
 	<tr>
-	<td colspan=2 width='50%' class='btn'>QQ空间</td>
-	<td colspan=2 width='50%' class='btn'>微信朋友圈</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviaqq'>QQ空间</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviawechat'>微信朋友圈</td>
 	</tr>
 	<tr>
-	<td colspan=2 width='50%' class='btn'>新浪微博</td>
-	<td colspan=2 width='50%' class='btn'>Twitter</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviaweibo'>新浪微博</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviatwitter'>Twitter</td>
+	</tr>
+	<tr>
+	<td colspan=4 width='100%' class='btn sharevia' id='shareviaother'>其他</td>
 	</tr>
 
 </table>

@@ -68,6 +68,26 @@ function drawRecords() {
 	}
 }
 
+function shareVia( via ) {
+	var msg = $('textarea#sharemsg').text();
+	var subject = "晒纪录";
+	var img = null;
+	var link = null;
+	
+	if(window.plugins && window.plugins.socialsharing) {
+		switch(via) {
+		case 'shareviaqq':
+		case 'shareviawechat':
+		case 'shareviaweibo':
+		case 'shareviatwitter':
+		case 'shareviaother':
+			window.plugins.socialsharing.share(msg, subject, img, link);
+		}
+	} else {
+		alert('social sharing plugin not ready.\n\n' + subject + '\n' + msg);
+	}
+}
+
 function showPage( pgid ) {
 	$('div.page').hide();
 	$('div#' + pgid).show();
@@ -162,6 +182,13 @@ function initUI() {
 		// restore settings
 		
 		showPage('homepage');
+	});
+	
+	$('.sharevia').on('click',function(){
+		var id = $(this).attr('id');
+		console.log(id + ' clicked');
+		
+		shareVia( id );
 	});
 }
 
