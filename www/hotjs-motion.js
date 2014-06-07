@@ -13,7 +13,6 @@ var minZ = 0, maxZ = 0;
 var motions = [];
 var maxMotion = 0, minMotion = 0;
 
-var startTime = 0;
 var lastTime = 0;
 var motionCount = 0;
 var motionTime = 0;
@@ -27,7 +26,6 @@ function getCount() {
 	return count;
 }
 function resetCount() {
-	startTime = 0;
 	lastTime = 0;
 	time = 0;
 	motionCount = 0;
