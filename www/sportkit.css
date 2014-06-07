@@ -12,12 +12,12 @@
   src: local('Combo'), local('Combo-Regular'), url(lib/combov1.woff) format('woff');
 }
 
-html, body, table {
+html, body, div.page, table {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 	font-family: serif, Arial;
-	background-color: silver;
+	background-color: white;
 }
 
 html, body, div, canvas {
@@ -38,10 +38,72 @@ html, body, div, canvas {
 	text-align: right;
 }
 
+.t {
+	vertical-align: top;
+}
+
+.b {
+	vertical-align: bottom;
+}
+
+.visible {
+	display: block;
+}
+
+.invisible {
+	display: none;
+}
+
+.round {
+	-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.shadow {
+	-webkit-box-shadow:5px 5px 10px black;
+	-moz-box-shadow:5px 5px 10px black;	
+}
+
+.clickable {
+	cursor:pointer;
+}
+
+.full {
+	width:100%;
+	height:100%;
+	margin: 0;
+	padding: 0;
+}
+
+.draw {
+	border:1px solid black;	
+}
+
 .data {
 	font-family: 'Joti One', serif, Arial;
 	font-size:24px;
 	color: blue;
+}
+
+.datacell {
+	border: 1px solid silver;
+	border-bottom: 5px solid silver;
+}
+
+.selectcell {
+	text-align: right;
+	vertical-align: bottom;
+	cursor: pointer;
+	border: 1px solid silver;
+	border-bottom: 5px solid silver;
+}
+
+.selected {
+	background-color: #99ff99;
+	border: 1px solid green;
+	border-bottom: 5px solid green;
 }
 
 .unit {
@@ -49,10 +111,32 @@ html, body, div, canvas {
 }
 
 .btn {
-	font-size: 28px;
+	cursor:pointer;
+	-moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+	
+	font-size: 30px;
+	background-color: orange;
+	border: 1px solid black;
+}
+
+.topbtn {
+	height: 48px;
 }
 
 .tips {
 	font-size: 24px;
 	color: green;
+}
+
+.title {
+	font-family: 'Joti One', serif, Arial;
+	font-size: 32px;
+	color: blue;
+}
+
+img#splash {
+	width: 320;
 }

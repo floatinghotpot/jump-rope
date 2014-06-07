@@ -2,17 +2,8 @@
 // if device not ready, wait for device API libraries to load
 var device_ready = false;
 
-function onClickStartStop() {
-	if(! device_ready) return;
-	
-	if(hotjs.motion.isWatching()) {
-		hotjs.voice.say('stop');
-		
-		hotjs.motion.stopWatch();
-		
-		$('#startstop').text('开始');
-		$("#accelerometer").html( '准备就绪' );
-	} else {
+function startCount() {
+	if(! hotjs.motion.isWatching()) {
 		hotjs.voice.say('start');
 		
 		hotjs.motion.startWatch();
@@ -25,10 +16,15 @@ function onClickStartStop() {
 	}
 }
 
-function onClickPause() {
-	hotjs.voice.say('pause');
-	
-	if(! device_ready) return;
+function stopCount() {
+	if(hotjs.motion.isWatching()) {
+		hotjs.voice.say('stop');
+		
+		hotjs.motion.stopWatch();
+		
+		$('#startstop').text('开始');
+		$("#accelerometer").html( '准备就绪' );
+	}
 }
 
 function countNumber(n) {
@@ -52,8 +48,126 @@ function onMotionError() {
 
 //document.addEventListener("deviceready", main, false);
 
+function drawRecords() {
+	var canvas = document.getElementById( 'records_canvas' );
+	if(! canvas) return;
+
+	var w = canvas.width, h = canvas.height;
+	var ctx = canvas.getContext("2d");
+	ctx.clearRect(0,0, w, h);
+	
+	var cx = w / 30 -1;
+	var n = 30;
+	ctx.fillStyle = 'green';
+	for(var i=0; i<n; i++) {
+		var ch = h * (0.4 + 0.6*Math.random());
+		if(Math.random() < 0.1) ch = 0;
+		var x = (cx +1) * i;
+		var y = h - ch;
+		ctx.fillRect(x, y, cx, ch);
+	}
+}
+
+function showPage( pgid ) {
+	$('div.page').hide();
+	$('div#' + pgid).show();
+}
+
+function initUI() {
+	// homepage
+	$('#startsport').on('click',function(){
+		showPage('countpage');
+	});
+	
+	$('#settings').on('click',function(){
+		showPage('settingspage');
+	});
+	
+	$('#trainer').on('click',function(){
+		showPage('trainerpage');
+	});
+	
+	$('.share').on('click',function(){
+		showPage('sharepage');
+	});
+	
+	$('.backhome').on('click', function(){
+		if(hotjs.motion.isWatching()) {
+			stopCount();
+		}
+
+		showPage('homepage');
+	});
+	
+	$('#myrecords').on('click',function(){
+		showPage('recordpage');
+		
+		drawRecords();
+	});
+	
+	// count page
+	$('#startstop').on('click', function() {
+		if(! device_ready) return;
+		
+		if(hotjs.motion.isWatching()) {
+			stopCount();
+		} else {
+			startCount();
+		}
+	});
+	
+	$('#pause').on('click', function(){
+		var isp = ! hotjs.motion.isPaused();
+		hotjs.motion.pauseCount( isp );
+		hotjs.voice.say( isp ? 'pause' : 'start');
+		$('#pause').html( isp ? '继续' : '暂停' );
+	});
+	
+	// settings page
+	$('td.opt').on('click',function(){
+		var item = $(this);
+		var k = item.attr('k');
+		var v = item.attr('v');
+		var ischecked = false;
+		console.log(k + '=' + v + ' clicked');
+		$('input.opt').each(function(i){
+			if($(this).attr('k') != k) return;
+			if($(this).attr('v') === v) {
+				ischecked = ! this.checked;
+				this.checked = ischecked;
+			} else {
+				this.checked = false;
+			}
+		});
+		$('td.opt').each(function(i){
+			if($(this).attr('k') != k) return;
+			if($(this).attr('v') === v) {
+				if(ischecked) {
+					$(this).addClass('selected');
+				} else {
+					$(this).removeClass('selected');
+				}
+			} else {
+				$(this).removeClass('selected');
+			}
+		});
+	});
+	
+	$('#settings_save').on('click', function(){
+		// save settings
+		
+		showPage('homepage');
+	});
+	$('#settings_cancel').on('click', function(){
+		// restore settings
+		
+		showPage('homepage');
+	});
+}
+
 function main() {
     hotjs.Ad.init();
+    initUI();
     
 	hotjs.motion.setMotionCanvas( 'motion_canvas', 300, 100 );
 	hotjs.motion.setMotionCallback( updateDataShow, onMotionError );

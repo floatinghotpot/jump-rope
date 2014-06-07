@@ -14,27 +14,51 @@ var motions = [];
 var maxMotion = 0, minMotion = 0;
 
 var startTime = 0;
-var count = 0;
+var lastTime = 0;
+var motionCount = 0;
+var motionTime = 0;
+
+var pausecount = false;
 
 var motionHistory = 60;
+var countCallback = function(n) {}
 
 function getCount() {
 	return count;
 }
-
-function getTime() {
-	var dt = new Date();
-	var s = dt.getTime() / 1000;
-	return Math.floor(s);
+function resetCount() {
+	startTime = 0;
+	lastTime = 0;
+	time = 0;
+	motionCount = 0;
+}
+function pauseCount(p) {
+	pausecount = (!! p);
+}
+function isPaused(){
+	return (!! pausecount);
+}
+function tickCount() {
+	if(pausecount) return;
+	
+	var now = (new Date()).getTime();
+	if(! lastTime) lastTime = now;
+	
+	// we only accumulate motion time
+	if(now - lastTime < 2000) {
+		motionTime += now - lastTime;
+		lastTime = now;
+	}
+	
+	motionCount += 1;
+    if(countCallback) countCallback( motionCount );
 }
 
+function getTime() {
+	return motionTime;
+}
 function getDeltaSeconds() {
-	if(! startTime) startTime = getTime();
-	
-	var now = getTime();
-	var s = now - startTime;
-
-	return s;
+	return Math.round( motionTime / 1000);
 }
 
 function getDeltaTimeString() {
@@ -51,7 +75,6 @@ function getDeltaTimeString() {
 	return str;
 }
 
-var countCallback = function(n) {}
 function setCountCallback(func) {
 	if(func) countCallback = func;
 }
@@ -80,8 +103,7 @@ function computeMotion(accel) {
 		var detectLine = minMotion + (maxMotion - minMotion) * 0.3;
 		var lastMotion = motions[ motions.length - 1 ];
 		if(motion > detectLine && lastMotion < detectLine) {
-            count ++;
-            if(countCallback) countCallback(count);
+			tickCount();
         }
 	}
 
@@ -103,7 +125,7 @@ function drawMotionCurve() {
 	var canvas = document.getElementById( motionCanvas.id );
 	if(! canvas) return;
 	
-	var w = motionCanvas.w, h = motionCanvas.h;
+	var w = canvas.width, h = canvas.height;
 	var scale = w / motionHistory;
 	
 	var ctx = canvas.getContext("2d");
@@ -141,7 +163,7 @@ function drawXYZCurve() {
 	var canvas = document.getElementById( xyzCanvas.id );
 	if(! canvas) return;
 	
-	var w =  xyzCanvas.w, h =  xyzCanvas.h;
+	var w = canvas.width, h = canvas.height;
 	var h6 = h / 6.0;
 	var scale = w / motionHistory;
 
@@ -254,9 +276,9 @@ if(! navigator.accelerometer) {
 function startWatch( freq ) {
 	if(! freq) freq = 100;
 	
-	count = 0;
-	startTime = getTime();
-
+	pausecount = false;
+	resetCount();
+	
     // Update acceleration frequency
     var options = { frequency: freq };
     watchID = navigator.accelerometer.watchAcceleration(function( accel ){
@@ -295,6 +317,8 @@ hotjs.motion = {
 	stopWatch : stopWatch,
 	isWatching : isWatching,
 	
+	pauseCount : pauseCount,
+	isPaused : isPaused,
 	getCount : getCount,
 	getTime : getTime,
 	getDeltaSeconds : getDeltaSeconds,
