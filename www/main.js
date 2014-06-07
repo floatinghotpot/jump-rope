@@ -76,10 +76,10 @@ function shareVia( via ) {
 	
 	if(window.plugins && window.plugins.socialsharing) {
 		switch(via) {
-		case 'shareviaqq':
 		case 'shareviawechat':
 		case 'shareviaweibo':
-		case 'shareviatwitter':
+		case 'shareviasms':
+		case 'shareviaqq':
 		case 'shareviaother':
 			window.plugins.socialsharing.share(msg, subject, img, link);
 		}

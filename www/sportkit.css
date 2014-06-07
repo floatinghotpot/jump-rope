@@ -137,6 +137,6 @@ html, body, div, canvas {
 	color: blue;
 }
 
-img#splash {
-	width: 320;
+img.splash {
+	width: 300;
 }

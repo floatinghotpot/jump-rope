@@ -51,7 +51,7 @@ function onLoad() {
 <span class='title'>运动达人</span><br/>
 之</br>
 <span class='title'>天天跳绳</span><br/>
-<img id='splash' src='img/jumprope.jpg'/>
+<img id='splash' class='splash' src='img/jumprope.jpg'/>
 </td></tr>
 <tr>
 <td width='30%' class='m btn' id='trainer'>私人<br/>教练</td>
@@ -217,7 +217,7 @@ function onLoad() {
 	<td colspan=1 width='25%'></td>
 	</tr>
 	
-	<tr><td colspan=4><img src='img/trainer.jpg'/></td></tr>
+	<tr><td colspan=4><img class='splash' src='img/trainer.jpg'/></td></tr>
 	
 	<tr>
 	<td colspan=2 width='50%' class='btn'>我的档案</td>
@@ -248,10 +248,8 @@ function onLoad() {
 	<td colspan=1 width='25%'></td>
 	</tr>
 	
-	<tr><td colspan=4><img src='img/share.jpg'/></td></tr>
-
 	<tr><td colspan=4>
-	<textarea id='sharemsg' rows=4 cols=40>#天天跳绳#，我是 #运动达人#，再创新纪录！我已累计跳跃 123456 次，消耗脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。http://go.to/jumprope</textarea>
+	<textarea id='sharemsg' rows=8 cols=30>#天天跳绳#，再创新纪录，我是 #运动达人#！已经累计跳跃 123456 次，消耗脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。http://go.to/jumprope</textarea>
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
@@ -259,12 +257,12 @@ function onLoad() {
 	</td></tr>
 	
 	<tr>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviaqq'>QQ空间</td>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviawechat'>微信朋友圈</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviawechat'>微信</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviaweibo'>新浪微博</td>
 	</tr>
 	<tr>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviaweibo'>新浪微博</td>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviatwitter'>Twitter</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviasms'>短信</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviaqq'>QQ空间</td>
 	</tr>
 	<tr>
 	<td colspan=4 width='100%' class='btn sharevia' id='shareviaother'>其他</td>
