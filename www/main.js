@@ -94,24 +94,27 @@ function showPage( pgid ) {
 }
 
 function initUI() {
+	var isMobile = ( /(android|ipad|iphone|ipod)/i.test(navigator.userAgent) );
+	var press = isMobile ? 'touchstart' : 'mousedown';
+	
 	// homepage
-	$('#startsport').on('click',function(){
+	$('#startsport').on(press,function(){
 		showPage('countpage');
 	});
 	
-	$('#settings').on('click',function(){
+	$('#settings').on(press,function(){
 		showPage('settingspage');
 	});
 	
-	$('#trainer').on('click',function(){
+	$('#trainer').on(press,function(){
 		showPage('trainerpage');
 	});
 	
-	$('.share').on('click',function(){
+	$('.share').on(press,function(){
 		showPage('sharepage');
 	});
 	
-	$('.backhome').on('click', function(){
+	$('.backhome').on(press, function(){
 		if(hotjs.motion.isWatching()) {
 			stopCount();
 		}
@@ -119,14 +122,14 @@ function initUI() {
 		showPage('homepage');
 	});
 	
-	$('#myrecords').on('click',function(){
+	$('#myrecords').on(press,function(){
 		showPage('recordpage');
 		
 		drawRecords();
 	});
 	
 	// count page
-	$('#startstop').on('click', function() {
+	$('#startstop').on(press, function() {
 		if(! device_ready) return;
 		
 		if(hotjs.motion.isWatching()) {
@@ -136,7 +139,7 @@ function initUI() {
 		}
 	});
 	
-	$('#pause').on('click', function(){
+	$('#pause').on(press, function(){
 		var isp = ! hotjs.motion.isPaused();
 		hotjs.motion.pauseCount( isp );
 		hotjs.voice.say( isp ? 'pause' : 'start');
@@ -144,7 +147,7 @@ function initUI() {
 	});
 	
 	// settings page
-	$('td.opt').on('click',function(){
+	$('td.opt').on(press,function(){
 		var item = $(this);
 		var k = item.attr('k');
 		var v = item.attr('v');
@@ -173,18 +176,18 @@ function initUI() {
 		});
 	});
 	
-	$('#settings_save').on('click', function(){
+	$('#settings_save').on(press, function(){
 		// save settings
 		
 		showPage('homepage');
 	});
-	$('#settings_cancel').on('click', function(){
+	$('#settings_cancel').on(press, function(){
 		// restore settings
 		
 		showPage('homepage');
 	});
 	
-	$('.sharevia').on('click',function(){
+	$('.sharevia').on(press,function(){
 		var id = $(this).attr('id');
 		console.log(id + ' clicked');
 		

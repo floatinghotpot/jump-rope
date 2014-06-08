@@ -81,12 +81,9 @@ var fx = {
 var f = []; for ( var k in fx ) f.push( fx[k] );
 resources.preloadFX( f );	
 
-function voiceCount( num ) {
-	if(! window.plugins) { 
-	    console.log( num );
-		return;
-	}
+function voiceCount( count ) {
 	
+	var num = count;
 	var numbers = [];
 	do {
 		numbers.push( num % 10 );
@@ -96,6 +93,13 @@ function voiceCount( num ) {
     var i = 0;
 	while(numbers.length > 0) {
 		var n = numbers.pop();
+		if(count >= 11 && count <= 19) {
+			if((n == 1) && (numbers.length == 1)) n = 10;
+		}
+		if(count >= 10 && count <= 90) {
+			if((n == 0) && (numbers.length == 0)) n = 10;
+		}
+		
 		n += (numbers.length>0) ? '-' : '';
         window.setTimeout(function( key ) {
             resources.playAudio( fx[ key ], true );

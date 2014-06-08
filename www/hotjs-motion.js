@@ -27,8 +27,8 @@ function getCount() {
 }
 function resetCount() {
 	lastTime = 0;
-	time = 0;
 	motionCount = 0;
+	motionTime = 0;
 }
 function pauseCount(p) {
 	pausecount = (!! p);
@@ -40,15 +40,17 @@ function tickCount() {
 	if(pausecount) return;
 	
 	var now = (new Date()).getTime();
-	if(! lastTime) lastTime = now;
 	
 	// we only accumulate motion time
-	if(now - lastTime < 2000) {
-		motionTime += now - lastTime;
-		lastTime = now;
+	if(! lastTime) lastTime = now;
+	var delta = now - lastTime;
+	if(delta < 2000) {
+		motionTime += delta;
 	}
 	
-	motionCount += 1;
+	motionCount ++;
+	lastTime = now;
+	
     if(countCallback) countCallback( motionCount );
 }
 
