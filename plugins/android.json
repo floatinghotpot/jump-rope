@@ -9,15 +9,19 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"LowLatencyAudio\"><param name=\"android-package\" value=\"com.rjfun.cordova.plugin.LowLatencyAudio\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"AdMob\"><param name=\"android-package\" value=\"com.rjfun.cordova.plugin.AdMob\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -44,15 +48,18 @@
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
                         }
+                    ],
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        }
                     ]
                 }
             }
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.device-motion": {
-            "PACKAGE_NAME": "com.rjfun.jumprope"
-        },
         "com.rjfun.cordova.plugin.lowlatencyaudio": {
             "PACKAGE_NAME": "com.rjfun.jumprope"
         },
@@ -60,6 +67,12 @@
             "PACKAGE_NAME": "com.rjfun.jumprope"
         },
         "com.rjfun.cordova.plugin.admob": {
+            "PACKAGE_NAME": "com.rjfun.jumprope"
+        },
+        "nl.x-services.plugins.socialsharing": {
+            "PACKAGE_NAME": "com.rjfun.jumprope"
+        },
+        "org.apache.cordova.device-motion": {
             "PACKAGE_NAME": "com.rjfun.jumprope"
         }
     },

@@ -5,14 +5,30 @@
     },
     "config_munge": {
         "files": {
-            "framework": {
+            "config.xml": {
                 "parents": {
-                    "CoreMotion.framework": [
+                    "/*": [
                         {
-                            "xml": "false",
+                            "xml": "<feature name=\"LowLatencyAudio\"><param name=\"ios-package\" value=\"LowLatencyAudio\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AdMob\"><param name=\"ios-package\" value=\"CDVAdMob\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"ios-package\" value=\"CDVAccelerometer\" /></feature>",
                             "count": 1
                         }
-                    ],
+                    ]
+                }
+            },
+            "framework": {
+                "parents": {
                     "StoreKit.framework": [
                         {
                             "xml": "false",
@@ -28,6 +44,10 @@
                     "MessageUI.framework": [
                         {
                             "xml": "false",
+                            "count": 1
+                        },
+                        {
+                            "xml": "true",
                             "count": 1
                         }
                     ],
@@ -54,22 +74,16 @@
                             "xml": "false",
                             "count": 1
                         }
-                    ]
-                }
-            },
-            "config.xml": {
-                "parents": {
-                    "/*": [
+                    ],
+                    "Social.framework": [
                         {
-                            "xml": "<feature name=\"Accelerometer\"><param name=\"ios-package\" value=\"CDVAccelerometer\" /></feature>",
+                            "xml": "true",
                             "count": 1
-                        },
+                        }
+                    ],
+                    "CoreMotion.framework": [
                         {
-                            "xml": "<feature name=\"LowLatencyAudio\"><param name=\"ios-package\" value=\"LowLatencyAudio\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"AdMob\"><param name=\"ios-package\" value=\"CDVAdMob\" /></feature>",
+                            "xml": "false",
                             "count": 1
                         }
                     ]
@@ -78,9 +92,6 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.device-motion": {
-            "PACKAGE_NAME": "com.rjfun.jumprope"
-        },
         "com.rjfun.cordova.plugin.lowlatencyaudio": {
             "PACKAGE_NAME": "com.rjfun.jumprope"
         },
@@ -88,6 +99,12 @@
             "PACKAGE_NAME": "com.rjfun.jumprope"
         },
         "com.rjfun.cordova.plugin.admob": {
+            "PACKAGE_NAME": "com.rjfun.jumprope"
+        },
+        "nl.x-services.plugins.socialsharing": {
+            "PACKAGE_NAME": "com.rjfun.jumprope"
+        },
+        "org.apache.cordova.device-motion": {
             "PACKAGE_NAME": "com.rjfun.jumprope"
         }
     },

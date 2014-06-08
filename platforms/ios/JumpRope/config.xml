@@ -19,14 +19,17 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
-    <feature name="Accelerometer">
-        <param name="ios-package" value="CDVAccelerometer" />
-    </feature>
     <feature name="LowLatencyAudio">
         <param name="ios-package" value="LowLatencyAudio" />
     </feature>
     <feature name="AdMob">
         <param name="ios-package" value="CDVAdMob" />
+    </feature>
+    <feature name="SocialSharing">
+        <param name="ios-package" value="SocialSharing" />
+    </feature>
+    <feature name="Accelerometer">
+        <param name="ios-package" value="CDVAccelerometer" />
     </feature>
     <name>JumpRope</name>
     <description>

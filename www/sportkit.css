@@ -117,7 +117,7 @@ html, body, div, canvas {
     -khtml-border-radius: 20px;
     border-radius: 20px;
 	
-	font-size: 30px;
+	font-size: 24px;
 	background-color: orange;
 	border: 1px solid black;
 }
@@ -133,7 +133,7 @@ html, body, div, canvas {
 
 .title {
 	font-family: 'Joti One', serif, Arial;
-	font-size: 32px;
+	font-size: 28px;
 	color: blue;
 }
 
