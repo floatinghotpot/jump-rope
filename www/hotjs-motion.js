@@ -11,7 +11,7 @@ var minY = 0, maxY = 0;
 var minZ = 0, maxZ = 0;
 
 var motions = [];
-var maxMotion = 0, minMotion = 0;
+var maxMotion = 200, minMotion = 0;
 
 var lastTime = 0;
 var motionCount = 0;
@@ -127,14 +127,16 @@ function setMotionCanvas( canvas, w, h ) {
 function drawMotionCurve() {
 	if(! motionCanvas) return;
 	
-	var canvas = document.getElementById( motionCanvas.id );
-	if(! canvas) return;
+	var c = document.getElementById( motionCanvas.id );
+	if(! c) return;
 	
-	var w = canvas.width, h = canvas.height;
+	var w = c.width, h = c.height;
 	var scale = w / motionHistory;
 	
-	var ctx = canvas.getContext("2d");
-	ctx.clearRect(0,0, w, h);
+	var ctx = c.getContext("2d");
+	//ctx.clearRect(0,0, w, h);
+	ctx.fillStyle = 'white';
+	ctx.fillRect(0,0, w,h);
 	
 	ctx.strokeStyle = 'gray';
 	ctx.strokeRect(0, h *0.2, w, h *0.2);
@@ -144,7 +146,7 @@ function drawMotionCurve() {
 	ctx.beginPath();
 	for(var i=0; i<motions.length; i++) {
 		var x = i * scale;
-		var y = h * motions[i] / maxMotion;
+		var y = h - h * motions[i] / maxMotion;
 		if(i == 0) {
 			ctx.moveTo(x, y);
 		} else {

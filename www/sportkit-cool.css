@@ -140,7 +140,7 @@ html, body, div, canvas {
     border-radius: 20px;
 	
 	font-size: 24px;
-	background-color: black;
+	background-color: gray;
 	color: white;
 	border: 1px solid black;
 }
@@ -156,8 +156,8 @@ html, body, div, canvas {
 
 .title2 {
 	font-family: 'Joti One', serif, Arial;
-	font-size: 22px;
-	color: green;
+	font-size: 20px;
+	color: black;
 }
 
 .title {

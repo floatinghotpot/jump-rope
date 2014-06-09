@@ -219,6 +219,7 @@ function initUIEvents() {
 	// homepage
 	$('#startsport').on(press,function(){
 		showPage('countpage');
+		adjustUI();
 	});
 	
 	$('#settings').on(press,function(){
@@ -318,6 +319,20 @@ function initUIEvents() {
 		
 		shareVia( id );
 	});
+	
+}
+
+function adjustUI() {
+	var xy = $('img#motion_canvas_bg').offset();
+	
+	//var x = (window.innerWidth - c.width())/2;
+	//var y = (window.innerHeight - c.height())/2;
+	//$("#accelerometer").html( (xy.left + xy.top) + ' | ' + (x + y) );
+
+	$('canvas#motion_canvas').css({
+		left: xy.left,
+		top: xy.top
+	});
 }
 
 function main() {
@@ -333,6 +348,10 @@ function main() {
 	hotjs.motion.setMotionCallback( updateDataShow, onMotionError );
 	hotjs.motion.setCountCallback( countNumber );
 
+	$(window).resize( adjustUI );
+
+	showPage('homepage');
+    
 	device_ready = true;
 	$("#accelerometer").html( '准备就绪' );
 	if( app_data.cfg.voice_btn ) hotjs.voice.say('ready');

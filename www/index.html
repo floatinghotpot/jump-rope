@@ -65,24 +65,26 @@ function onLoad() {
 
 <!-- count page -->
 <div class='page' id='countpage'>
+	<canvas id="motion_canvas" width="300" height="120" class='draw' style='position:absolute;'></canvas>
 	<table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'>返回</td>
-	<td colspan=2 width='75%' class='m'>
-	<span id="accelerometer" class='tips m'>加载中...</span><br/>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=2 width='50%' class='m' nowrap>
+	<span id="accelerometer" class='tips m'>加载中...</span>
 	</td>
-	<td colspan=1 width='25%' class='m btn topbtn share'>晒晒</td>
+	<td colspan=1 width='25%' class='m btn topbtn share'><img height=48 src='img/share.png'/></td>
 	</tr>
-	<tr><td colspan=4 class='m'>
-	<span class='unit'>运动感应</span><br/>
-	<canvas id="motion_canvas" width="300" height="100" class='draw'> </canvas>
-	</td></tr>
+	
 	<tr><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>最高记录</span><br/>
 	<span class='data'>0</span>
 	</td><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>上一次</span><br/>
 	<span class='data'>0</span>
+	</td></tr>
+	<tr><td colspan=4 class='m'>
+	<span class='title2' id='motion_title'>运动感应</span><br/>
+	<img width='300' height='120' id='motion_canvas_bg' src='img/null.png'/>
 	</td></tr>
 	<tr><td width='25%' class='m datacell'>
 	<span class='unit'>计数</span><br/>
@@ -95,9 +97,16 @@ function onLoad() {
 	<span class='data' id='energy'>0</span>
 	</td></tr>
 	<tr>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	</tr>
+	<tr>
 	<td colspan=2 width='50%' class='m btn' id='pause'>暂停</td>
 	<td colspan=2 width='50%' class='m btn' id='startstop'>开始</td>
 	</tr>
+	
 	</table>
 </div>
 
@@ -105,14 +114,17 @@ function onLoad() {
 <div class='page' id='recordpage'>
 	<table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'>返回</td>
-	<td colspan=2 width='50%' class='m'>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="recordpage_msg" class='tips m'>我的纪录</span><br/>
 	</td>
-	<td colspan=1 width='25%' class='m btn topbtn share'>晒晒</td>
+	<td colspan=1 width='25%' class='m btn topbtn share'><img height=48 src='img/share.png'/></td>
 	</tr>
+
+	<tr><td colspan=4 class='m'><table border=0>
+	
 	<tr><td colspan=4 class='m'>
-	<span class='tips'>单次</span>
+	<span class='title2'>单次</span>
 	</td></tr>
 	<tr><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>最高连续</span><br/>
@@ -122,7 +134,7 @@ function onLoad() {
 	<span class='data'>0</span>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
-	<span class='tips'>累计</span>
+	<span class='title2'>累计</span>
 	</td></tr>
 	<tr><td colspan=2 class='m datacell'>
 	<span class='unit'>完成次数</span><br/>
@@ -139,14 +151,16 @@ function onLoad() {
 	<span class='data' id='counter'>0</span>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
-	<span class='tips'>本月</span><br/>
-	<canvas id="records_canvas" width="300" height="150" class='draw'> </canvas>
+	<span class='title2'>本月</span><br/>
+	<canvas id="records_canvas" width="300" height="120" class='draw'> </canvas>
 	</td></tr>
 	
+	</table></td></tr>
+	
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn' id='records_last'>向前</td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='records_last'><img height=48 src='img/prev.png'/></td>
 	<td colspan=2 width='50%' class='m'></td>
-	<td colspan=1 width='25%' class='m btn topbtn' id='records_next'>向后</td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='records_next'><img height=48 src='img/next.png'/></td>
 	</tr>
 	
 	</table>
@@ -156,15 +170,17 @@ function onLoad() {
 <div class='page' id='settingspage'>
 	<table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'>返回</td>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
 	<td colspan=2 width='50%' class='m'>
 	<span id="settingspage_msg" class='tips m'>设置</span><br/>
 	</td>
 	<td colspan=1 width='25%'></td>
 	</tr>
 	
+	<tr><td colspan=4 class='m'><table border=0>
+	
 	<tr><td colspan=4 class='b'>
-	<span class='tips'>感应灵敏度</span><br/>
+	<span class='title2'>感应灵敏度</span><br/>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<table>
@@ -178,7 +194,7 @@ function onLoad() {
 	</td></tr>
 
 	<tr><td colspan=4 class='b'>
-	<span class='tips'>界面风格</span><br/>
+	<span class='title2'>界面风格</span><br/>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<table>
@@ -194,7 +210,7 @@ function onLoad() {
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
-	<span class='tips'>语音</span><br/>
+	<span class='title2'>语音</span><br/>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<table>
@@ -208,7 +224,7 @@ function onLoad() {
 	</table>
 	</td></tr>
 	
-	<tr></tr>
+	</table></td></tr>
 	
 	<tr>
 	<td colspan=1 width='25%' class='m btn topbtn' id='settings_cancel'>取消</td>
@@ -223,28 +239,35 @@ function onLoad() {
 <div class='page' id='trainerpage'>
 <table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'>返回</td>
-	<td colspan=2 width='50%' class='m'>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="settingspage_msg" class='tips m'>私人教练</span><br/>
 	</td>
-	<td colspan=1 width='25%'>&nbsp;</td>
+	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
 	</tr>
 	
 	<tr><td colspan=4><img class='splash' src='img/trainer.jpg'/></td></tr>
 	
 	<tr>
-	<td colspan=2 width='50%' class='btn'>我的档案</td>
-	<td colspan=2 width='50%' class='btn'>我的计划</td>
+	<td colspan=2 class='btn'>我的档案</td>
+	<td colspan=2 class='btn'>我的计划</td>
 	</tr>
 	
 	<tr>
-	<td colspan=2 width='50%' class='btn'>加入VIP</td>
-	<td colspan=2 width='50%' class='btn'>购买装备</td>
+	<td colspan=2 class='btn'>加入VIP</td>
+	<td colspan=2 class='btn'>购买装备</td>
 	</tr>
 
 	<tr>
-	<td colspan=2 width='50%' class='btn'>健身百科</td>
-	<td colspan=2 width='50%'></td>
+	<td colspan=2 class='btn'>健身百科</td>
+	<td colspan=2 ></td>
+	</tr>
+	
+	<tr>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
 	</tr>
 
 </table>
@@ -254,17 +277,15 @@ function onLoad() {
 <div class='page' id='sharepage'>
 <table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'>返回</td>
-	<td colspan=2 width='50%' class='m'>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="settingspage_msg" class='tips m'>晒纪录</span><br/>
 	</td>
-	<td colspan=1 width='25%'></td>
+	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
 	</tr>
 	
-	<tr><td colspan=4><img class='splash' src='img/share.jpg'/></td></tr>
-	
-	<tr><td colspan=4>
-	<textarea id='sharemsg' rows=6 cols=30>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 123456 次，燃烧脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。无线跳绳，语音计数，试试 App：http://go.to/jumprope</textarea>
+	<tr><td colspan=4><img class='splash' src='img/share.jpg'/><br/>
+	<textarea id='sharemsg' rows=6 cols=30>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 123456 次，燃烧脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。无线跳绳，语音计数：http://go.to/jumprope</textarea>
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
@@ -272,17 +293,15 @@ function onLoad() {
 	</td></tr>
 	
 	<tr>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviawechat'>微信</td>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviaweibo'>微博</td>
+	<td width='25%' class='btn sharevia' id='shareviawechat'><img src='img/wechat.png' height=48/></td>
+	<td width='25%' class='btn sharevia' id='shareviaweibo'><img src='img/weibo.png' height=48/></td>
+	<td width='25%' class='btn sharevia' id='shareviasms'><img src='img/sms.png' height=48/></td>
+	<td width='25%' class='btn sharevia' id='shareviaqq'><img src='img/qq.png' height=48/></td>
 	</tr>
 	<tr>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviasms'>短信</td>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviaqq'>QQ</td>
+	<td colspan=4 width='100%' class='btn sharevia' id='shareviaother'>其他 ...</td>
 	</tr>
-	<tr>
-	<td colspan=4 width='100%' class='btn sharevia' id='shareviaother'>其他</td>
-	</tr>
-
+	
 </table>
 </div>
 
