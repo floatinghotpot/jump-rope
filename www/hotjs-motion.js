@@ -22,6 +22,11 @@ var pausecount = false;
 var motionHistory = 60;
 var countCallback = function(n) {}
 
+var motionSensor = 0.4;
+function setMotionSensity( s ) {
+	motionSensor = Math.max(0.2, Math.min(0.8, s));
+}
+
 function getCount() {
 	return count;
 }
@@ -100,7 +105,7 @@ function computeMotion(accel) {
 	
 	// detect action
 	if(motions.length > 0) {
-		var detectLine = minMotion + (maxMotion - minMotion) * 0.3;
+		var detectLine = minMotion + (maxMotion - minMotion) * motionSensor;
 		var lastMotion = motions[ motions.length - 1 ];
 		if(motion > detectLine && lastMotion < detectLine) {
 			tickCount();
@@ -309,15 +314,18 @@ function isWatching() {
 }
 
 hotjs.motion = {
+	setMotionSensity : setMotionSensity,
 	setMotionCanvas : setMotionCanvas,
 	setXYZCanvas : setXYZCanvas,
 	setMotionCallback : setMotionCallback,
 	setCountCallback : setCountCallback,
+	
 	startWatch : startWatch,
 	stopWatch : stopWatch,
 	isWatching : isWatching,
 	
 	pauseCount : pauseCount,
+	
 	isPaused : isPaused,
 	getCount : getCount,
 	getTime : getTime,

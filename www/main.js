@@ -2,9 +2,43 @@
 // if device not ready, wait for device API libraries to load
 var device_ready = false;
 
+var app_key = 'com.rjfun.jumprope';
+var app_data = {};
+
+var ui_styles = [
+'sportkit.css',    
+'sportkit-cool.css',    
+'sportkit-cartoon.css',    
+'sportkit-girl.css' ];
+
+function resetData() {
+	app_data.cfg = {
+		ui : 0,
+		sensor : 0,
+		voice_btn : 1,
+		voice_count : 1,
+		voice_talk : 0
+	};
+	
+	app_data.records = [];
+}
+
+function loadData() {
+	var data_str = localStorage.getItem( app_key );
+	if( data_str ) {
+		app_data = JSON.parse( data_str );
+	} else {
+		resetData();
+	}
+}
+
+function saveData() {
+	localStorage.setItem( app_key, JSON.stringify(app_data) );
+}
+
 function startCount() {
 	if(! hotjs.motion.isWatching()) {
-		hotjs.voice.say('start');
+		if( app_data.cfg.voice_btn ) hotjs.voice.say('start');
 		
 		hotjs.motion.startWatch();
 		
@@ -18,7 +52,7 @@ function startCount() {
 
 function stopCount() {
 	if(hotjs.motion.isWatching()) {
-		hotjs.voice.say('stop');
+		if( app_data.cfg.voice_btn ) hotjs.voice.say('stop');
 		
 		hotjs.motion.stopWatch();
 		
@@ -28,9 +62,10 @@ function stopCount() {
 }
 
 function countNumber(n) {
-	hotjs.voice.countNumber( n );
 	$('#counter').html( n );
 	$('#energy').html( (hotjs.motion.getDeltaSeconds() / 60.0 * 60.0 / 60.0).toFixed(2) );
+
+	if( app_data.cfg.voice_count ) hotjs.voice.countNumber( n );
 }
 
 function updateDataShow( accel ) {
@@ -93,7 +128,91 @@ function showPage( pgid ) {
 	$('div#' + pgid).show();
 }
 
-function initUI() {
+function updateSettings() {
+	$('.opt').each(function(i){
+		var k = $(this).attr('k');
+		var v = $(this).attr('v');
+		var cfg_v = app_data.cfg[ k ];
+		
+		if($(this).attr('type') == 'checkbox') {
+			if(v == cfg_v) {
+				this.checked = true;
+			} else {
+				this.checked = false;
+			}
+		} else {
+			if(v == cfg_v) {
+				$(this).addClass('selected');
+			} else {
+				$(this).removeClass('selected');
+			}
+		}
+	});
+}
+
+function applyUIStyle( n ) {
+	var url = 'sportkit.css';
+	switch( app_data.cfg.ui ) {
+	case '1':
+	case '2':
+	case '3':
+		url = ui_styles[ n ];
+		console.log( url );
+		break;
+	case '0':
+	default:
+		break;
+	}
+	$('link').each(function(){
+		if(($(this).attr('rel') == 'stylesheet') && ($(this).attr('type')=='text/css')) {
+			$(this).attr('href', url);
+			console.log( 'style = ' + url );
+		}
+	});
+}
+
+function applySettings() {
+	// sensor
+	var s = 0.4;
+	switch( app_data.cfg.sensor ) {
+	case '1': 
+		s = 0.2; break;
+	case '3': 
+		s = 0.6; break;
+	case '2': 
+	default:
+		s = 0.4; break;
+	}
+	hotjs.motion.setMotionSensity( s );
+	
+	// UI style
+	applyUIStyle( app_data.cfg.ui );
+	
+	// voice, no need, when say, will check
+}
+
+function saveSettings() {
+	app_data.cfg = {
+			ui : 0,
+			sensor : 0,
+			voice_btn : 0,
+			voice_count : 0,
+			voice_talk : 0
+	};
+	$('input.opt').each(function(i){
+		var k = $(this).attr('k');
+		var v = $(this).attr('v');
+		if( this.checked ) {
+			app_data.cfg[ k ] = v;
+			console.log( k + ' = ' + v + ',' + typeof(v) );
+		}
+	});
+
+	applySettings();
+	saveData();
+}
+
+function initUIEvents() {
 	var isMobile = ( /(android|ipad|iphone|ipod)/i.test(navigator.userAgent) );
 	var press = isMobile ? 'touchstart' : 'mousedown';
 	
@@ -142,7 +261,7 @@ function initUI() {
 	$('#pause').on(press, function(){
 		var isp = ! hotjs.motion.isPaused();
 		hotjs.motion.pauseCount( isp );
-		hotjs.voice.say( isp ? 'pause' : 'start');
+		if( app_data.cfg.voice_btn ) hotjs.voice.say( isp ? 'pause' : 'start');
 		$('#pause').html( isp ? '继续' : '暂停' );
 	});
 	
@@ -174,15 +293,21 @@ function initUI() {
 				$(this).removeClass('selected');
 			}
 		});
+		
+		if(k == 'ui') {
+			applyUIStyle( v );
+		}
 	});
 	
 	$('#settings_save').on(press, function(){
 		// save settings
+		saveSettings();
 		
 		showPage('homepage');
 	});
 	$('#settings_cancel').on(press, function(){
 		// restore settings
+		updateSettings();
 		
 		showPage('homepage');
 	});
@@ -197,7 +322,12 @@ function initUI() {
 
 function main() {
     hotjs.Ad.init();
-    initUI();
+    
+    loadData();
+    updateSettings();
+    applySettings();
+    
+    initUIEvents();
     
 	hotjs.motion.setMotionCanvas( 'motion_canvas', 300, 100 );
 	hotjs.motion.setMotionCallback( updateDataShow, onMotionError );
@@ -205,5 +335,5 @@ function main() {
 
 	device_ready = true;
 	$("#accelerometer").html( '准备就绪' );
-	hotjs.voice.say('ready');
+	if( app_data.cfg.voice_btn ) hotjs.voice.say('ready');
 }

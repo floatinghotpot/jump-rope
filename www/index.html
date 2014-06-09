@@ -48,8 +48,7 @@ function onLoad() {
 <div class='page' id='homepage'>
 <table border=0 class='m'>
 <tr><td colspan=3 class='m'>
-<span class='title'>运动达人</span><br/>
-之</br>
+<span class='title2'>运动达人</span></br>
 <span class='title'>天天跳绳</span><br/>
 <img id='splash' class='splash' src='img/jumprope.jpg'/>
 </td></tr>
@@ -165,17 +164,31 @@ function onLoad() {
 	</tr>
 	
 	<tr><td colspan=4 class='b'>
+	<span class='tips'>感应灵敏度</span><br/>
+	</td></tr>
+	<tr><td colspan=4 class='m'>
+	<table>
+	<tr>
+	<td width='25%' class='selectcell opt selected' k='sensor' v='0'>自动<input type='checkbox' class='opt' k='sensor' v='0' checked></input></td>
+	<td width='25%' class='selectcell opt' k='sensor' v='1'>高<input type='checkbox' class='opt' k='sensor' v='1'></input></td>
+	<td width='25%' class='selectcell opt' k='sensor' v='2'>中<input type='checkbox' class='opt' k='sensor' v='2'></input></td>
+	<td width='25%' class='selectcell opt' k='sensor' v='3'>低<input type='checkbox' class='opt' k='sensor' v='3'></input></td>
+	</tr>
+	</table>
+	</td></tr>
+
+	<tr><td colspan=4 class='b'>
 	<span class='tips'>界面风格</span><br/>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<table>
 	<tr>
-	<td class='selectcell opt selected' k='ui' v='0'>屌丝宅男<input type='checkbox' class='opt' k='ui' v='0' checked></input></td>
-	<td class='selectcell opt' k='ui' v='1'>时尚酷男<input type='checkbox' class='opt' k='ui' v='1'></input></td>
+	<td width='50%' class='selectcell opt selected' k='ui' v='0'>土豪金色<input type='checkbox' class='opt' k='ui' v='0' checked></input></td>
+	<td width='50%' class='selectcell opt' k='ui' v='1'>时尚酷黑<input type='checkbox' class='opt' k='ui' v='1'></input></td>
 	</tr>
 	<tr>
-	<td class='selectcell opt' k='ui' v='2'>Q版卡通<input type='checkbox' class='opt' k='ui' v='2'></input></td>
-	<td class='selectcell opt' k='ui' v='3'>阳光美女<input type='checkbox' class='opt' k='ui' v='3'></input></td>
+	<td class='selectcell opt' k='ui' v='2'>蓝颜知己<input type='checkbox' class='opt' k='ui' v='2'></input></td>
+	<td class='selectcell opt' k='ui' v='3'>粉红女郎<input type='checkbox' class='opt' k='ui' v='3'></input></td>
 	</tr>
 	</table>
 	</td></tr>
@@ -186,21 +199,21 @@ function onLoad() {
 	<tr><td colspan=4 class='m'>
 	<table>
 	<tr><td width='25%' class='r'></td>
-	<td width='50%' class='l selectcell opt selected' k='feed' v='0'>按钮反馈<input type='checkbox' class='opt' k='feed' v='0' checked></input></td>
+	<td width='50%' class='l selectcell opt selected' k='voice_btn' v='1'>按钮反馈<input type='checkbox' class='opt' k='voice_btn' v='1' checked></input></td>
 	<td width='25%'></td></tr>
 	<tr><td class='r'></td>
-	<td class='l selectcell opt selected' k='count' v='0'>运动计数<input type='checkbox' class='opt' k='count' v='0' checked></input></td><td></td></tr>
+	<td class='l selectcell opt selected' k='voice_count' v='1'>运动计数<input type='checkbox' class='opt' k='voice_count' v='1' checked></input></td><td></td></tr>
 	<tr><td class='r'></td>
-	<td class='l selectcell opt' k='talk' v='0'>话痨<input type='checkbox' class='opt' k='talk' v='0'></input></td><td></td></tr>
+	<td class='l selectcell opt' k='voice_talk' v='1'>话痨<input type='checkbox' class='opt' k='voice_talk' v='1'></input></td><td></td></tr>
 	</table>
 	</td></tr>
 	
 	<tr></tr>
 	
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn' id='settings_save'>保存</td>
-	<td colspan=2 width='50%' class='m'></td>
 	<td colspan=1 width='25%' class='m btn topbtn' id='settings_cancel'>取消</td>
+	<td colspan=2 width='50%' class='m'></td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='settings_save'>保存</td>
 	</tr>
 	
 	</table>
@@ -214,7 +227,7 @@ function onLoad() {
 	<td colspan=2 width='50%' class='m'>
 	<span id="settingspage_msg" class='tips m'>私人教练</span><br/>
 	</td>
-	<td colspan=1 width='25%'></td>
+	<td colspan=1 width='25%'>&nbsp;</td>
 	</tr>
 	
 	<tr><td colspan=4><img class='splash' src='img/trainer.jpg'/></td></tr>
@@ -251,7 +264,7 @@ function onLoad() {
 	<tr><td colspan=4><img class='splash' src='img/share.jpg'/></td></tr>
 	
 	<tr><td colspan=4>
-	<textarea id='sharemsg' rows=8 cols=30>#天天跳绳#，再创新纪录，我是 #运动达人#！已经累计跳跃 123456 次，消耗脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。http://go.to/jumprope</textarea>
+	<textarea id='sharemsg' rows=6 cols=30>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 123456 次，燃烧脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。无线跳绳，语音计数，试试 App：http://go.to/jumprope</textarea>
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
@@ -260,11 +273,11 @@ function onLoad() {
 	
 	<tr>
 	<td colspan=2 width='50%' class='btn sharevia' id='shareviawechat'>微信</td>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviaweibo'>新浪微博</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviaweibo'>微博</td>
 	</tr>
 	<tr>
 	<td colspan=2 width='50%' class='btn sharevia' id='shareviasms'>短信</td>
-	<td colspan=2 width='50%' class='btn sharevia' id='shareviaqq'>QQ空间</td>
+	<td colspan=2 width='50%' class='btn sharevia' id='shareviaqq'>QQ</td>
 	</tr>
 	<tr>
 	<td colspan=4 width='100%' class='btn sharevia' id='shareviaother'>其他</td>
