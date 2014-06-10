@@ -42,7 +42,7 @@ function startCount() {
 		
 		hotjs.motion.startWatch();
 		
-		$("#accelerometer").html( '正在计数...' );
+		$("#countpage_msg").html( '正在计数...' );
 		$('#startstop').text('结束');
 		$('#counter').html( 0 );
 		$('#energy').html( 0 );
@@ -57,7 +57,7 @@ function stopCount() {
 		hotjs.motion.stopWatch();
 		
 		$('#startstop').text('开始');
-		$("#accelerometer").html( '准备就绪' );
+		$("#countpage_msg").html( '准备就绪' );
 	}
 }
 
@@ -69,7 +69,7 @@ function countNumber(n) {
 }
 
 function updateDataShow( accel ) {
-//	$("#accelerometer").html( ' (X,Y,Z): (' + 
+//	$("#countpage_msg").html( ' (X,Y,Z): (' + 
 //			accel.x.toFixed(1) + ',' +
 //            accel.y.toFixed(1) + ',' +
 //            accel.z.toFixed(1) + ')' );
@@ -78,7 +78,7 @@ function updateDataShow( accel ) {
 };
 
 function onMotionError() {
-	$("#accelerometer").html( '运动感应错误' );
+	$("#countpage_msg").html( '运动感应错误' );
 };
 
 //document.addEventListener("deviceready", main, false);
@@ -220,6 +220,9 @@ function initUIEvents() {
 	$('#startsport').on(press,function(){
 		showPage('countpage');
 		adjustUI();
+
+		$("#countpage_msg").html( '准备就绪' );
+		if( app_data.cfg.voice_btn ) hotjs.voice.say('ready');
 	});
 	
 	$('#settings').on(press,function(){
@@ -320,6 +323,9 @@ function initUIEvents() {
 		shareVia( id );
 	});
 	
+	$('.btn, td.opt').on(press, function(){
+		hotjs.voice.say('click');
+	});
 }
 
 function adjustUI() {
@@ -327,7 +333,7 @@ function adjustUI() {
 	
 	//var x = (window.innerWidth - c.width())/2;
 	//var y = (window.innerHeight - c.height())/2;
-	//$("#accelerometer").html( (xy.left + xy.top) + ' | ' + (x + y) );
+	//$("#countpage_msg").html( (xy.left + xy.top) + ' | ' + (x + y) );
 
 	$('canvas#motion_canvas').css({
 		left: xy.left,
@@ -353,6 +359,5 @@ function main() {
 	showPage('homepage');
     
 	device_ready = true;
-	$("#accelerometer").html( '准备就绪' );
-	if( app_data.cfg.voice_btn ) hotjs.voice.say('ready');
+	hotjs.voice.say('logo');
 }
