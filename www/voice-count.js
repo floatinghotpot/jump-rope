@@ -78,7 +78,8 @@ var fx = {
         'pause':_F('audio/pause.mp3'),
         'click' : _F('audio/button_click.mp3'),
         'bad' : _F('audio/bad_move.mp3'),
-        'logo' : _F('audio/logo.mp3')
+        'logo' : _F('audio/logo.mp3'),
+        'happymood' : _F('audio/happymood.mp3')
 };
 
 var f = []; for ( var k in fx ) f.push( fx[k] );

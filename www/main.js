@@ -38,7 +38,7 @@ function saveData() {
 
 function startCount() {
 	if(! hotjs.motion.isWatching()) {
-		if( app_data.cfg.voice_btn ) hotjs.voice.say('start');
+		if( app_data.cfg.voice_count ) hotjs.voice.say('start');
 		
 		hotjs.motion.startWatch();
 		
@@ -52,7 +52,7 @@ function startCount() {
 
 function stopCount() {
 	if(hotjs.motion.isWatching()) {
-		if( app_data.cfg.voice_btn ) hotjs.voice.say('stop');
+		if( app_data.cfg.voice_count ) hotjs.voice.say('stop');
 		
 		hotjs.motion.stopWatch();
 		
@@ -222,7 +222,7 @@ function initUIEvents() {
 		adjustUI();
 
 		$("#countpage_msg").html( '准备就绪' );
-		if( app_data.cfg.voice_btn ) hotjs.voice.say('ready');
+		if( app_data.cfg.voice_count ) hotjs.voice.say('ready');
 	});
 	
 	$('#settings').on(press,function(){
@@ -265,12 +265,13 @@ function initUIEvents() {
 	$('#pause').on(press, function(){
 		var isp = ! hotjs.motion.isPaused();
 		hotjs.motion.pauseCount( isp );
-		if( app_data.cfg.voice_btn ) hotjs.voice.say( isp ? 'pause' : 'start');
+		if( app_data.cfg.voice_count ) hotjs.voice.say( isp ? 'pause' : 'start');
 		$('#pause').html( isp ? '继续' : '暂停' );
 	});
 	
 	// settings page
 	$('td.opt').on(press,function(){
+		
 		var item = $(this);
 		var k = item.attr('k');
 		var v = item.attr('v');
@@ -323,8 +324,8 @@ function initUIEvents() {
 		shareVia( id );
 	});
 	
-	$('.btn, td.opt').on(press, function(){
-		hotjs.voice.say('click');
+	$('.btn,td.opt').on(press, function(){
+		if(!! app_data.cfg.voice_btn) hotjs.voice.say('click');
 	});
 }
 
@@ -359,5 +360,5 @@ function main() {
 	showPage('homepage');
     
 	device_ready = true;
-	hotjs.voice.say('logo');
+	hotjs.voice.say('happymood');
 }
