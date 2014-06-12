@@ -171,3 +171,8 @@ html, body, div, canvas {
 img.splash {
 	width: 300;
 }
+
+.highlight {
+	font-size: 24px;
+	color: green;
+}

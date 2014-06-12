@@ -237,6 +237,12 @@ function initUIEvents() {
 		showPage('sharepage');
 	});
 	
+	$('#myrecords').on(press,function(){
+		showPage('recordpage');
+		
+		drawRecords();
+	});
+	
 	$('.backhome').on(press, function(){
 		if(hotjs.motion.isWatching()) {
 			stopCount();
@@ -245,10 +251,9 @@ function initUIEvents() {
 		showPage('homepage');
 	});
 	
-	$('#myrecords').on(press,function(){
-		showPage('recordpage');
-		
-		drawRecords();
+	// trainer page
+	$('#benefit').on(press, function(){
+		showPage('benefitpage');
 	});
 	
 	// count page
