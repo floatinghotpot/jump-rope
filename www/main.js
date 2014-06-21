@@ -231,10 +231,18 @@ function shareVia( via ) {
 	
 	if(window.plugins && window.plugins.socialsharing) {
 		switch(via) {
-		case 'shareviawechat':
-		case 'shareviaweibo':
 		case 'shareviasms':
+			window.plugins.socialsharing.shareViaSMS(msg, subject, img, link);
+			break;
+		case 'shareviawechat':
+			window.plugins.socialsharing.shareVia('com.tencent.mm', msg, subject, img, link);
+			break;
 		case 'shareviaqq':
+			window.plugins.socialsharing.shareVia('qq', msg, subject, img, link);
+			break;
+		case 'shareviaweibo':
+			window.plugins.socialsharing.shareVia('weibo', msg, subject, img, link);
+			break;
 		case 'shareviaother':
 			window.plugins.socialsharing.share(msg, subject, img, link);
 		}
