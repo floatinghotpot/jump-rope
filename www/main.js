@@ -21,6 +21,8 @@ function resetData() {
 	};
 	
 	app_data.records = [];
+	
+	app_data.notfirstrun = null;
 }
 
 function loadData() {
@@ -57,7 +59,7 @@ function stopCount() {
 		hotjs.motion.stopWatch();
 		
 		$('#startstop').text('开始');
-		$("#countpage_msg").html( '准备就绪' );
+		$("#countpage_msg").html( '准备好了吗？' );
 	}
 }
 
@@ -65,23 +67,19 @@ function countNumber(n) {
 	$('#counter').html( n );
 	$('#energy').html( (hotjs.motion.getDeltaSeconds() / 60.0 * 60.0 / 60.0).toFixed(2) );
 
+	// if number too big, count every 2
+	if((n > 100) && (n % 2 == 1)) return;
+	
 	if( app_data.cfg.voice_count ) hotjs.voice.countNumber( n );
 }
 
 function updateDataShow( accel ) {
-//	$("#countpage_msg").html( ' (X,Y,Z): (' + 
-//			accel.x.toFixed(1) + ',' +
-//            accel.y.toFixed(1) + ',' +
-//            accel.z.toFixed(1) + ')' );
-	
 	$('#time').html( hotjs.motion.getDeltaTimeString() );
 };
 
 function onMotionError() {
 	$("#countpage_msg").html( '运动感应错误' );
 };
-
-//document.addEventListener("deviceready", main, false);
 
 function drawRecords() {
 	var canvas = document.getElementById( 'records_canvas' );
@@ -221,7 +219,7 @@ function initUIEvents() {
 		showPage('countpage');
 		adjustUI();
 
-		$("#countpage_msg").html( '准备就绪' );
+		$("#countpage_msg").html( '准备好了吗？' );
 		if( app_data.cfg.voice_count ) hotjs.voice.say('ready');
 	});
 	
@@ -270,7 +268,7 @@ function initUIEvents() {
 	$('#pause').on(press, function(){
 		var isp = ! hotjs.motion.isPaused();
 		hotjs.motion.pauseCount( isp );
-		if( app_data.cfg.voice_count ) hotjs.voice.say( isp ? 'pause' : 'start');
+		if( app_data.cfg.voice_count ) hotjs.voice.say( isp ? 'pause' : 'continue');
 		$('#pause').html( isp ? '继续' : '暂停' );
 	});
 	
@@ -337,10 +335,6 @@ function initUIEvents() {
 function adjustUI() {
 	var xy = $('img#motion_canvas_bg').offset();
 	
-	//var x = (window.innerWidth - c.width())/2;
-	//var y = (window.innerHeight - c.height())/2;
-	//$("#countpage_msg").html( (xy.left + xy.top) + ' | ' + (x + y) );
-
 	$('canvas#motion_canvas').css({
 		left: xy.left,
 		top: xy.top
@@ -361,9 +355,18 @@ function main() {
 	hotjs.motion.setCountCallback( countNumber );
 
 	$(window).resize( adjustUI );
-
-	showPage('homepage');
-    
-	device_ready = true;
+	
 	hotjs.voice.say('happymood');
+	device_ready = true;
+	
+	window.setTimeout(function(){
+		if( app_data.notfirstrun ) {
+			showPage('homepage');
+		} else {
+			showPage('benefitpage');
+			app_data.notfirstrun = true;
+			saveData();
+		}
+		
+	},1000);
 }

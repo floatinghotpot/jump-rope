@@ -46,10 +46,10 @@ function onLoad() {
 
 <!-- home page -->
 <div class='page' id='homepage'>
-<table border=0 class='m'>
+<table border=0 class='m' cellspacing=5>
 <tr><td colspan=3 class='m'>
 <span class='title2'>运动达人</span></br>
-<span class='title'>天天跳绳</span><br/>
+<img id='appname' class='appname' src='img/appname.png'/><br/>
 <img id='splash' class='splash' src='img/jumprope.jpg'/>
 </td></tr>
 <tr>
@@ -68,11 +68,11 @@ function onLoad() {
 	<canvas id="motion_canvas" width="300" height="120" class='draw' style='position:absolute;'></canvas>
 	<table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
 	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="countpage_msg" class='tips m'>加载中...</span>
 	</td>
-	<td colspan=1 width='25%' class='m btn topbtn share'><img height=48 src='img/share.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn share'><img class='navicon' src='img/share.png'/></td>
 	</tr>
 	
 	<tr><td colspan=2 width='50%' class='m datacell'>
@@ -114,11 +114,11 @@ function onLoad() {
 <div class='page' id='recordpage'>
 	<table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
 	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="recordpage_msg" class='tips m'>我的纪录</span><br/>
 	</td>
-	<td colspan=1 width='25%' class='m btn topbtn share'><img height=48 src='img/share.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn share'><img class='navicon' src='img/share.png'/></td>
 	</tr>
 
 	<tr><td colspan=4 class='m'><table border=0>
@@ -158,9 +158,9 @@ function onLoad() {
 	</table></td></tr>
 	
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn' id='records_last'><img height=48 src='img/prev.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='records_last'><img class='navicon'src='img/prev.png'/></td>
 	<td colspan=2 width='50%' class='m'></td>
-	<td colspan=1 width='25%' class='m btn topbtn' id='records_next'><img height=48 src='img/next.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='records_next'><img class='navicon' src='img/next.png'/></td>
 	</tr>
 	
 	</table>
@@ -170,7 +170,7 @@ function onLoad() {
 <div class='page' id='settingspage'>
 	<table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
 	<td colspan=2 width='50%' class='m'>
 	<span id="settingspage_msg" class='tips m'>设置</span><br/>
 	</td>
@@ -199,12 +199,12 @@ function onLoad() {
 	<tr><td colspan=4 class='m'>
 	<table>
 	<tr>
-	<td width='50%' class='selectcell opt selected' k='ui' v='0'>土豪金色<input type='checkbox' class='opt' k='ui' v='0' checked></input></td>
-	<td width='50%' class='selectcell opt' k='ui' v='1'>时尚酷黑<input type='checkbox' class='opt' k='ui' v='1'></input></td>
+	<td width='50%' class='selectcell opt selected' k='ui' v='0'>绿色清新<input type='checkbox' class='opt' k='ui' v='0' checked></input></td>
+	<td width='50%' class='selectcell opt' k='ui' v='1'>金色土豪<input type='checkbox' class='opt' k='ui' v='1'></input></td>
 	</tr>
 	<tr>
 	<td class='selectcell opt' k='ui' v='2'>蓝颜知己<input type='checkbox' class='opt' k='ui' v='2'></input></td>
-	<td class='selectcell opt' k='ui' v='3'>粉红女郎<input type='checkbox' class='opt' k='ui' v='3'></input></td>
+	<td class='selectcell opt' k='ui' v='3'>粉红佳人<input type='checkbox' class='opt' k='ui' v='3'></input></td>
 	</tr>
 	</table>
 	</td></tr>
@@ -239,7 +239,7 @@ function onLoad() {
 <div class='page' id='trainerpage'>
 <table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
 	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="settingspage_msg" class='tips m'>私人教练</span><br/>
 	</td>
@@ -277,7 +277,7 @@ function onLoad() {
 <div class='page' id='sharepage'>
 <table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
 	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="settingspage_msg" class='tips m'>晒纪录</span><br/>
 	</td>
@@ -309,7 +309,7 @@ function onLoad() {
 <div class='page' id='benefitpage'>
 <table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img height=48 src='img/back.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
 	<td colspan=2 width='50%' class='m' nowrap>
 	<span id="settingspage_msg" class='tips m'>天天跳绳</span><br/>
 	</td>

@@ -123,9 +123,9 @@ html, body, div, canvas {
 }
 
 .selected {
-	background-color: #99ff99;
-	border: 1px solid green;
-	border-bottom: 5px solid green;
+	background-color: #faa51a;
+	border: 1px solid #f47a20;
+	border-bottom: 5px solid #f47a20;
 }
 
 .unit {
@@ -134,15 +134,24 @@ html, body, div, canvas {
 
 .btn {
 	cursor:pointer;
+	font-size: 24px;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3); 
+
 	-moz-border-radius: 20px;
     -webkit-border-radius: 20px;
     -khtml-border-radius: 20px;
     border-radius: 20px;
 	
-	font-size: 24px;
-	background-color: gray;
-	color: white;
-	border: 1px solid black;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);	
+
+    color: #fef4e9;  
+    border: solid 1px #da7c0c;  
+    background: #f78d1d;  
+    background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));  
+    background: -moz-linear-gradient(top,  #faa51a,  #f47a20);  
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');  
 }
 
 .topbtn {
@@ -169,4 +178,14 @@ html, body, div, canvas {
 
 img.splash {
 	width: 300;
+}
+
+.highlight {
+	font-size: 24px;
+	color: green;
+}
+
+img.navicon {
+	width:32px;
+	height:32px;
 }
