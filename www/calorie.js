@@ -69,10 +69,16 @@ var ActCalorie = [
 
 // 以上数据是60kg体重运动1分钟消耗的热量 
 
-function burnCalorie(weightkg, minute, actIndex) {
-	if(actIndex < 0 || actIndex >= ActCalorie.length) return 0;
-	
-	return ActCalorie[ actIndex ] * minute * (weightkg / 60.0);
+function burnCaloriePerMinute( act ) {
+	for(var i=0; i<ActName.length; i++) {
+		if(ActName[i] == act) return ActCalorie[i];
+	}
+	return 0;
+}
+
+
+function burnCalorie(weightkg, minute, permin) {
+	return permin * minute * (weightkg / 60.0);
 }
 
 // 人体每减掉1公斤脂肪，大约需要消耗7700大卡热量。

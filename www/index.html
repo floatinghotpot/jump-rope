@@ -36,13 +36,31 @@
 <script src='main.js'></script>
 <script type="text/javascript">
 function onLoad() {
-	document.addEventListener("deviceready", main, false);
-	
-	if(! window.plugins) main();
+	var isMobile = ( /(android|ipad|iphone|ipod)/i.test(navigator.userAgent) );
+
+	if(isMobile) {
+		document.addEventListener("deviceready", main, false);
+	} else {
+		main();
+	}
 }
 </script>
 </head>
 <body onload="onLoad()">
+
+<!-- splash page -->
+<div class='page' id='splashpage'>
+<table border=0 class='m' cellspacing=5>
+<tr><td class='m'>
+<span class='title2'>运动达人</span></br>
+<img id='appname' class='appname' src='img/appname.png'/><br/>
+<img id='splash' class='splash' src='img/jumprope.jpg'/>
+</td></tr>
+<tr>
+<td class='m title2'>Loading ...</td>
+</tr>
+</table>
+</div>
 
 <!-- home page -->
 <div class='page' id='homepage'>
@@ -60,6 +78,7 @@ function onLoad() {
 <tr>
 <td class='m btn' id='myrecords'>我的</br>纪录</td>
 <td class='m btn' id='settings'>设置</td>
+</tr>
 </table>
 </div>
 
@@ -77,10 +96,10 @@ function onLoad() {
 	
 	<tr><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>最高记录</span><br/>
-	<span class='data'>0</span>
+	<span class='data maxcount'>0</span>
 	</td><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>上一次</span><br/>
-	<span class='data'>0</span>
+	<span class='data lastcount'>0</span>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<span class='title2' id='motion_title'>运动感应</span><br/>
@@ -128,39 +147,39 @@ function onLoad() {
 	</td></tr>
 	<tr><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>最高连续</span><br/>
-	<span class='data'>0</span>
+	<span class='data maxcount'>0</span>
 	</td><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>最快（次/分钟）</span><br/>
-	<span class='data'>0</span>
+	<span class='data maxspeed'>0</span>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<span class='title2'>累计</span>
 	</td></tr>
 	<tr><td colspan=2 class='m datacell'>
 	<span class='unit'>完成次数</span><br/>
-	<span class='data' id='counter'>0</span>
+	<span class='data' id='totalcount'>0</span>
 	</td><td colspan=2 width='50%' class='m datacell'>
-	<span class='unit'>运动时间（小时）</span><br/>
-	<span class='data' id='hours'>17.5</span>
+	<span class='unit'>运动时间</span><br/>
+	<span class='data' id='totaltime'>17.5</span>
 	</td></tr>
 	<tr><td colspan=2 class='m datacell'>
 	<span class='unit'>消耗卡路里</span><br/>
-	<span class='data' id='energy'>0</span>
+	<span class='data' id='totalenergy'>0</span>
 	</td><td colspan=2 class='m datacell'>
 	<span class='unit'>燃烧脂肪（克）</span><br/>
-	<span class='data' id='counter'>0</span>
+	<span class='data' id='totalfat'>0</span>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
-	<span class='title2'>本月</span><br/>
+	<span class='title2' id='themonth'>月</span><br/>
 	<canvas id="records_canvas" width="300" height="120" class='draw'> </canvas>
 	</td></tr>
 	
 	</table></td></tr>
 	
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn' id='records_last'><img class='navicon'src='img/prev.png'/></td>
-	<td colspan=2 width='50%' class='m'></td>
-	<td colspan=1 width='25%' class='m btn topbtn' id='records_next'><img class='navicon' src='img/next.png'/></td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='lastmonth'><img class='navicon'src='img/prev.png'/></td>
+	<td colspan=2 width='50%' class='m btn topbtn' id='thismonth'>本月</td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='nextmonth'><img class='navicon' src='img/next.png'/></td>
 	</tr>
 	
 	</table>
@@ -215,12 +234,12 @@ function onLoad() {
 	<tr><td colspan=4 class='m'>
 	<table>
 	<tr><td width='25%' class='r'></td>
-	<td width='50%' class='l selectcell opt selected' k='voice_btn' v='1'>按钮反馈<input type='checkbox' class='opt' k='voice_btn' v='1' checked></input></td>
+	<td width='50%' class='l selectcell opt selected' k='voice_btn' v='1'>按钮反馈<input type='checkbox' class='opt' k='voice_btn' v='1' checked checkable=1></input></td>
 	<td width='25%'></td></tr>
 	<tr><td class='r'></td>
-	<td class='l selectcell opt selected' k='voice_count' v='1'>语音计数<input type='checkbox' class='opt' k='voice_count' v='1' checked></input></td><td></td></tr>
+	<td class='l selectcell opt selected' k='voice_count' v='1'>语音计数<input type='checkbox' class='opt' k='voice_count' v='1' checked checkable=1></input></td><td></td></tr>
 	<tr><td class='r'></td>
-	<td class='l selectcell opt' k='voice_talk' v='1'>话痨<input type='checkbox' class='opt' k='voice_talk' v='1'></input></td><td></td></tr>
+	<td class='l selectcell opt' k='voice_talk' v='1'>话痨<input type='checkbox' class='opt' k='voice_talk' v='1' checkable=1></input></td><td></td></tr>
 	</table>
 	</td></tr>
 	
@@ -249,12 +268,12 @@ function onLoad() {
 	<tr><td colspan=4><img class='splash' src='img/trainer.jpg'/></td></tr>
 	
 	<tr>
+	<td colspan=2 class='btn' id='benefit'>跳绳益处多</td>
 	<td colspan=2 class='btn' id='my_profile'>我的档案</td>
-	<td colspan=2 class='btn' id='my_plan'>健身计划</td>
 	</tr>
 	
 	<tr>
-	<td colspan=2 class='btn' id='benefit'>跳绳的益处</td>
+	<td colspan=2 class='btn' id='my_plan'>健身计划</td>
 	<td colspan=2 class='btn' id='join_vip'>加入VIP</td>
 	</tr>
 	
@@ -317,7 +336,7 @@ function onLoad() {
 	</tr>
 	
 	<tr>
-	<td colspan=2 class='highlight'>强健心脏</td>
+	<td colspan=2 class='highlight'>强健心肺</td>
 	<td colspan=2 class='highlight'>结实身材</td>
 	</tr>
 
@@ -335,7 +354,7 @@ function onLoad() {
 	<li>锻炼心肺机能，相当于 3 倍时间的跑步。</li>
 	<li>结实全身肌肉，消除臀部和大腿多余脂肪。</li>
 	<li>避免跑步产生的膝、踝关节疼痛困扰。</li>
-	<li>不受场地和天气的限制，想跳就跳吧。</li>
+	<li>不受场地和天气的限制，想跳就跳！</li>
 	</ul>
 	</td></tr>
 	

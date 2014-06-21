@@ -28,7 +28,7 @@ function setMotionSensity( s ) {
 }
 
 function getCount() {
-	return count;
+	return motionCount;
 }
 function resetCount() {
 	lastTime = 0;
@@ -62,22 +62,8 @@ function tickCount() {
 function getTime() {
 	return motionTime;
 }
-function getDeltaSeconds() {
+function getDurationSeconds() {
 	return Math.round( motionTime / 1000);
-}
-
-function getDeltaTimeString() {
-	s = getDeltaSeconds();
-	
-	var m = Math.floor(s / 60); s = s % 60;
-	var h = Math.floor(m / 60); m = m % 60;
-	
-	var str = s;
-	if(s < 10) str = '0' + str;
-	str = m + ':' + str;
-	if(m < 10) str = '0' + str;
-	str = h + ':' + str;
-	return str;
 }
 
 function setCountCallback(func) {
@@ -331,8 +317,7 @@ hotjs.motion = {
 	isPaused : isPaused,
 	getCount : getCount,
 	getTime : getTime,
-	getDeltaSeconds : getDeltaSeconds,
-	getDeltaTimeString : getDeltaTimeString
+	getDurationSeconds : getDurationSeconds
 };
 
 })();
