@@ -236,33 +236,35 @@ function setMotionCallback( okFunc, errFunc ) {
 	motionErrorCallback = errFunc;
 }
 
-if(! navigator.accelerometer) {
-	console.log('device-motion simulation.')
-	var onOkFunc = null;
-	var onErrFunc = null;
-	function motionSimutator(){
-		if(onOkFunc) {
-			var t = (new Date()).getTime();
-			onOkFunc({
-				x: 10 * Math.sin(t/6.0 * 3.1416926/180),
-				y: 5 * Math.cos(t/6.0 * 3.1416926/180),
-				z: 0,
-				timestamp: t
-			});
-		}
-	}
-	navigator.accelerometer = {
-			watchAcceleration : function(okFunc,errFunc,opt) { 
-				onOkFunc = okFunc;
-				onErrFunc = errFunc;
-				var freq = (opt && opt.frequency) ? opt.frequency : 100;
-				var watchId = window.setInterval(motionSimutator, freq);
-				return watchId; 
-			},
-			clearWatch : function(watchID) {
-				clearInterval(watchID);
+function initMotion() {
+	if(! navigator.accelerometer) {
+		console.log('device-motion simulation.')
+		var onOkFunc = null;
+		var onErrFunc = null;
+		function motionSimutator(){
+			if(onOkFunc) {
+				var t = (new Date()).getTime();
+				onOkFunc({
+					x: 10 * Math.sin(t/6.0 * 3.1416926/180),
+					y: 5 * Math.cos(t/6.0 * 3.1416926/180),
+					z: 0,
+					timestamp: t
+				});
 			}
-	};
+		}
+		navigator.accelerometer = {
+				watchAcceleration : function(okFunc,errFunc,opt) { 
+					onOkFunc = okFunc;
+					onErrFunc = errFunc;
+					var freq = (opt && opt.frequency) ? opt.frequency : 100;
+					var watchId = window.setInterval(motionSimutator, freq);
+					return watchId; 
+				},
+				clearWatch : function(watchID) {
+					clearInterval(watchID);
+				}
+		};
+	}
 }
 
 // Start watching the acceleration
@@ -302,6 +304,7 @@ function isWatching() {
 }
 
 hotjs.motion = {
+	init : initMotion,
 	setMotionSensity : setMotionSensity,
 	setMotionCanvas : setMotionCanvas,
 	setXYZCanvas : setXYZCanvas,

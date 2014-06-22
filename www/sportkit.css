@@ -109,6 +109,11 @@ html, body, div, canvas {
 	color: blue;
 }
 
+.people {
+	font-family: 'Joti One', serif, Arial;
+	font-size:16px;
+}
+
 .datacell {
 	border: 1px solid silver;
 	border-bottom: 5px solid silver;

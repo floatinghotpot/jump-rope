@@ -86,8 +86,10 @@ var fx = {
         'happymood' : _F('audio/happymood.mp3')
 };
 
-var f = []; for ( var k in fx ) f.push( fx[k] );
-resources.preloadFX( f );	
+function initFX() {
+	var f = []; for ( var k in fx ) f.push( fx[k] );
+	resources.preloadFX( f );	
+}
 
 function voiceCount( count ) {
 	var num = count;
@@ -137,6 +139,7 @@ function say( what ) {
     resources.playAudio( fx[ what ], true );
 }
 
+hotjs.voice.init = initFX;
 hotjs.voice.countNumber = voiceCount;
 hotjs.voice.stopAllAudio = stopAllAudio;
 hotjs.voice.say = say;

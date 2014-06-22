@@ -19,7 +19,10 @@
 -->
 <html>
 <head>
-<meta charset="utf-8" />
+<meta charset='UTF-8'>
+<meta http-equiv='Expires' CONTENT='0'>
+<meta http-equiv='Cache-Control' CONTENT='no-cache'>
+<meta http-equiv='Pragma' CONTENT='no-cache'>
 <meta name="format-detection" content="telephone=no" />
 <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
 <meta name='viewport'
@@ -59,6 +62,24 @@ function onLoad() {
 <tr>
 <td class='m title2'>Loading ...</td>
 </tr>
+</table>
+</div>
+
+<!-- about page -->
+<div class='page' id='aboutpage'>
+<table border=0 class='m' cellspacing=5>
+<tr><td class='m'>
+<span class='title2'>运动达人</span></br>
+<img id='appname' class='appname' src='img/appname.png'/><br/>
+<img id='splash' class='splash' src='img/jumprope.jpg'/>
+</td></tr>
+<tr><td><table>
+<tr><td class='r' width='50%'>Producer:</td><td class='l people' width='50%'>Raymond Xie</td></tr></tr>
+<tr><td class='r'>Programmer:</td><td class='l people'>Floatinghotpot</td></tr>
+<tr><td class='r'>UX Designer / Sound FX:</td><td class='l people'>Tiantian's Elder Dad</td></tr>
+<tr><td class='r'>Voice Actor:</td><td class='l people'>Duanduan's Grandma</td></tr>
+</table></td></tr>
+<tr><td class='m'>&copy;RjFun 欢乐出品</td></tr>
 </table>
 </div>
 
@@ -274,12 +295,12 @@ function onLoad() {
 	
 	<tr>
 	<td colspan=2 class='btn' id='my_plan'>健身计划</td>
-	<td colspan=2 class='btn' id='join_vip'>加入VIP</td>
+	<td colspan=2 class='btn' id='buy'>购买装备</td>
 	</tr>
 	
 	<tr>
-	<td colspan=2 class='btn' id='buy_equipment'>购买装备</td>
-	<td colspan=2 class='btn' id='buy_food'>买营养品</td>
+	<td colspan=2 class='btn' id='checkupdate'>检查更新</td>
+	<td colspan=2 class='btn' id='about'>关于</td>
 	</tr>
 
 	<tr>
@@ -304,7 +325,7 @@ function onLoad() {
 	</tr>
 	
 	<tr><td colspan=4><img class='splash' src='img/share.jpg'/><br/>
-	<textarea id='sharemsg' rows=6 cols=30>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 123456 次，燃烧脂肪 1234 克。最高连续跳跃 500下，最快速度 120次／分钟。无线跳绳，语音计数：http://go.to/jumprope</textarea>
+	<textarea id='sharemsg' rows=6 cols=30>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 0 次，燃烧脂肪 0 克。最高连续跳跃 0下，最快速度 0次／分钟。无线跳绳，语音计数：http://go.to/jumprope</textarea>
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
@@ -328,9 +349,9 @@ function onLoad() {
 <div class='page' id='benefitpage'>
 <table border=0 class='m'>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
+	<td colspan=1 width='25%' class='m'><img height=48 src='img/null.png'/></td>
 	<td colspan=2 width='50%' class='m' nowrap>
-	<span id="settingspage_msg" class='tips m'>天天跳绳</span><br/>
+	<span id="settingspage_msg" class='tips m'>天天跳绳 益处多多</span>
 	</td>
 	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
 	</tr>
@@ -358,6 +379,14 @@ function onLoad() {
 	</ul>
 	</td></tr>
 	
+	<tr>
+	<td colspan=1 width='25%' class='m'><img height=48 src='img/null.png'/></td>
+	<td colspan=2 width='50%' class='m' nowrap>
+	任意点击继续...
+	</td>
+	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
+	</tr>
+
 	<tr>
 	<td width='25%'>&nbsp;</td>
 	<td width='25%'>&nbsp;</td>

@@ -3,8 +3,11 @@
 var device_ready = false;
 
 var app_key = 'com.rjfun.jumprope';
+var app_version = '1.0.20140622';
+var app_vercode = 20140622;
 
 var app_url = 'http://rjfun.com/jumprope/';
+var autorun_url = 'http://rjfun.com/jumprope/autorun.js';
 
 var app_data = {};
 
@@ -110,7 +113,8 @@ function stopCount() {
 			app_data.totalCount += count;
 			
 			if(! app_data.totalTime) app_data.totalTime = 0;
-			app_data.totalTime += time;
+			app_data.totalTime = Math.round(app_data.totalTime + time);
+			
 			
 			if( (! app_data.maxCount) || (app_data.maxCount < count)) {
 				app_data.maxCount = count;
@@ -447,6 +451,22 @@ function initUIEvents() {
 		pushPage('benefitpage');
 	});
 	
+	$('#buy').on(press,function(e){e.preventDefault(); 
+		//pushPage('buypage');
+	});
+	
+	$('#checkupdate').on(press,function(e){e.preventDefault(); 
+		if(checkUpdate) checkUpdate();
+	});
+	
+	$('#about').on(press,function(e){e.preventDefault(); 
+		pushPage('aboutpage');
+	});
+	
+	$('div#aboutpage, div#benefitpage').on(press,function(e){e.preventDefault(); 
+		popPage();
+	});
+
 	// count page
 	$('#startstop').on(press, function(e) {e.preventDefault(); 
 		if(! device_ready) return;
@@ -553,6 +573,8 @@ function main() {
 	console.log('enter main');
 	
     hotjs.Ad.init();
+    hotjs.motion.init();
+    hotjs.voice.init();
     
     loadData();
     updateSettings();
@@ -579,6 +601,8 @@ function main() {
 			app_data.notfirstrun = true;
 			saveData();
 		}
+		
+		hotjs.require( autorun_url );
 		
 	},2000);
 }
