@@ -214,8 +214,10 @@ function drawRecords( off ) {
 	
 	var w = canvas.width, h = canvas.height;
 	var ctx = canvas.getContext("2d");
-	ctx.clearRect(0,0, w, h);
-	
+	//ctx.clearRect(0,0, w, h);
+	ctx.fillStyle = 'white';
+	ctx.fillRect(0,0, w,h);
+
 	var cx = w / 30 -1;
 	ctx.fillStyle = 'green';
 	for(var i=0; i<n; i++) {
@@ -432,6 +434,7 @@ function initUIEvents() {
 	
 	$('#myrecords').on(press,function(e){e.preventDefault(); 
 		pushPage('recordpage');
+		adjustUI();
 		
 		$('span.maxcount').text( app_data.maxCount );
 		$('span.maxspeed').text( app_data.maxSpeed );
@@ -562,8 +565,13 @@ function initUIEvents() {
 
 function adjustUI() {
 	var xy = $('img#motion_canvas_bg').offset();
-	
 	$('canvas#motion_canvas').css({
+		left: xy.left,
+		top: xy.top
+	});
+
+	xy = $('img#records_canvas_bg').offset();
+	$('canvas#records_canvas').css({
 		left: xy.left,
 		top: xy.top
 	});

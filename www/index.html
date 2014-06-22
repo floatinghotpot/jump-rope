@@ -76,8 +76,8 @@ function onLoad() {
 <tr><td><table>
 <tr><td class='r' width='50%'>Producer:</td><td class='l people' width='50%'>Raymond Xie</td></tr></tr>
 <tr><td class='r'>Programmer:</td><td class='l people'>Floatinghotpot</td></tr>
-<tr><td class='r'>UX Designer / Sound FX:</td><td class='l people'>Tiantian's Elder Dad</td></tr>
-<tr><td class='r'>Voice Actor:</td><td class='l people'>Duanduan's Grandma</td></tr>
+<tr><td class='r'>UX Designer / Sound FX:</td><td class='l people'>Tiantian's Uncle</td></tr>
+<tr><td class='r'>Voice Actress:</td><td class='l people'>Duanduan's Aunt</td></tr>
 </table></td></tr>
 <tr><td class='m'>&copy;RjFun 欢乐出品</td></tr>
 </table>
@@ -152,6 +152,7 @@ function onLoad() {
 
 <!-- my records page -->
 <div class='page' id='recordpage'>
+	<canvas id="records_canvas" width="300" height="120" class='draw' style='position:absolute;'></canvas>
 	<table border=0 class='m'>
 	<tr>
 	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
@@ -192,7 +193,7 @@ function onLoad() {
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<span class='title2' id='themonth'>月</span><br/>
-	<canvas id="records_canvas" width="300" height="120" class='draw'> </canvas>
+	<img width='300' height='120' id='records_canvas_bg' src='img/null.png'/>
 	</td></tr>
 	
 	</table></td></tr>
@@ -354,16 +355,6 @@ function onLoad() {
 	<span id="settingspage_msg" class='tips m'>天天跳绳 益处多多</span>
 	</td>
 	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
-	</tr>
-	
-	<tr>
-	<td colspan=2 class='highlight'>强健心肺</td>
-	<td colspan=2 class='highlight'>结实身材</td>
-	</tr>
-
-	<tr>
-	<td colspan=2 class='highlight' >紧致小腿</td>
-	<td colspan=2 class='highlight' >控制体重</td>
 	</tr>
 	
 	<tr><td colspan=4 class='b'>
