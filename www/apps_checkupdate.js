@@ -7,7 +7,7 @@ apps['com.rjfun.jumprope'] = {
 	desc : '运动达人健身神器，自动语音计数，无线跳绳App',
 	android : {
 		version : '1.0.20140622',
-		vercode : 20140623,
+		vercode : 20140622,
 		url : 'http://rjfun.com/jumprope/jumprope-1.0.apk'
 	},
 	ios : {
