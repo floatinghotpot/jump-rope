@@ -47,46 +47,26 @@ function _T(t) {
 }
 
 var fx = {
-        '0-':_F('audio/0-.mp3'), 
-        '1-':_F('audio/1-.mp3'), 
-        '2-':_F('audio/2-.mp3'), 
-        '3-':_F('audio/3-.mp3'), 
-        '4-':_F('audio/4-.mp3'), 
-        '5-':_F('audio/5-.mp3'), 
-        '6-':_F('audio/6-.mp3'), 
-        '7-':_F('audio/7-.mp3'),
-        '8-':_F('audio/8-.mp3'),
-        '9-':_F('audio/9-.mp3'),
-        '10-':_F('audio/10-.mp3'),
-        '100-':_F('audio/100-.mp3'),
-        '1000-':_F('audio/1000-.mp3'),
-        '10000-':_F('audio/10000-.mp3'),
-        '0':_F('audio/0.mp3'), 
-        '1':_F('audio/1.mp3'), 
-        '2':_F('audio/2.mp3'), 
-        '3':_F('audio/3.mp3'), 
-        '4':_F('audio/4.mp3'), 
-        '5':_F('audio/5.mp3'), 
-        '6':_F('audio/6.mp3'), 
-        '7':_F('audio/7.mp3'),
-        '8':_F('audio/8.mp3'),
-        '9':_F('audio/9.mp3'),
-        '10':_F('audio/10.mp3'),
-        '100':_F('audio/100.mp3'),
-        '1000':_F('audio/1000.mp3'),
-        '10000':_F('audio/10000.mp3'),
-        'ready':_F('audio/ready.mp3'),
-        'start':_F('audio/start.mp3'),
-        'stop':_F('audio/stop.mp3'),
-        'pause':_F('audio/pause.mp3'),
-        'continue' : _F('audio/continue.mp3'),
         'click' : _F('audio/button_click.mp3'),
         'bad' : _F('audio/bad_move.mp3'),
         'logo' : _F('audio/logo.mp3'),
         'happymood' : _F('audio/happymood.mp3')
 };
 
-function initFX() {
+function initFX( who ) {
+	if(who == null) who = 'grandma';
+	
+	var voices = ['0','1','2','3','4','5','6','7','8','9','10','100','1000','10000',
+	          '0-','1-','2-','3-','4-','5-','6-','7-','8-','9-','10-','100-','1000-','10000-',
+	          'ready','start','stop','pause','continue','excellent','amazing','addoil'
+	          ];
+	
+	var files = [];
+	for(var i=0; i<voices.length; i++) {
+		var url = _F('audio/' + who + '/' + voices[i] + '.mp3');
+		fx[ voices[i] ] = url;
+	}
+	
 	var f = []; for ( var k in fx ) f.push( fx[k] );
 	resources.preloadFX( f );	
 }

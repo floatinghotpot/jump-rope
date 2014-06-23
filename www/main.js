@@ -25,6 +25,7 @@ function resetData() {
 	app_data.cfg = {
 		ui : 0,
 		sensor : 0,
+		voice : 0,
 		voice_btn : 1,
 		voice_count : 1,
 		voice_talk : 0
@@ -69,6 +70,11 @@ function loadData() {
 		resetData();
 	}
 
+	if(! app_data.cfg) app_data.cfg = {};
+	if(! app_data.cfg.ui) app_data.cfg.ui = 0;
+	if(! app_data.cfg.sensor) app_data.cfg.sensor = 0;
+	if(! app_data.cfg.voice) app_data.cfg.voice = 0;
+	
 	if(! app_data.records) app_data.records = {};
 	
 	if(! app_data.maxCount) app_data.maxCount = 0;
@@ -341,12 +347,23 @@ function applySettings() {
 	applyUIStyle( app_data.cfg.ui );
 	
 	// voice, no need, when say, will check
+	var v = 'grandma';
+	switch( app_data.cfg.voice ) {
+	case '1': v = 'aunt'; break;
+	case '2': v = 'uncle'; break;
+	case '3': v = 'robot'; break;
+	case '0':
+	default:
+		v = 'grandma'; break;
+	}
+	hotjs.voice.init( v );
 }
 
 function saveSettings() {
 	app_data.cfg = {
 			ui : 0,
 			sensor : 0,
+			voice: 0,
 			voice_btn : 0,
 			voice_count : 0,
 			voice_talk : 0
@@ -582,7 +599,6 @@ function main() {
 	
     hotjs.Ad.init();
     hotjs.motion.init();
-    hotjs.voice.init();
     
     loadData();
     updateSettings();
