@@ -347,14 +347,14 @@ function applySettings() {
 	applyUIStyle( app_data.cfg.ui );
 	
 	// voice, no need, when say, will check
-	var v = 'grandma';
+	var v = 'robot';
 	switch( app_data.cfg.voice ) {
 	case '1': v = 'aunt'; break;
 	case '2': v = 'uncle'; break;
-	case '3': v = 'robot'; break;
+	case '3': v = 'grandma'; break;
 	case '0':
 	default:
-		v = 'grandma'; break;
+		v = 'robot'; break;
 	}
 	hotjs.voice.init( v );
 }
@@ -424,10 +424,12 @@ function initUIEvents() {
 	
 	$('#trainer').on(press,function(e){e.preventDefault(); 
 		pushPage('trainerpage');
+		if( app_data.cfg.voice_talk ) hotjs.voice.say('addoil');
 	});
 	
 	$('.share').on(press,function(e){e.preventDefault(); 
 		pushPage('sharepage');
+		if( app_data.cfg.voice_talk ) hotjs.voice.say('excellent');
 		
 		Object.size = function(obj) {
 		    var size = 0, key;
@@ -452,6 +454,7 @@ function initUIEvents() {
 	$('#myrecords').on(press,function(e){e.preventDefault(); 
 		pushPage('recordpage');
 		adjustUI();
+		if( app_data.cfg.voice_talk ) hotjs.voice.say('amazing');
 		
 		$('span.maxcount').text( app_data.maxCount );
 		$('span.maxspeed').text( app_data.maxSpeed );
