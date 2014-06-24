@@ -3,23 +3,13 @@
 var device_ready = false;
 
 var app_key = 'com.rjfun.jumprope';
-var app_version = '1.0.20140622';
-var app_vercode = 20140622;
+var app_version = '1.0.20140624';
+var app_vercode = 20140624;
 
 var app_url = 'http://rjfun.com/jumprope/';
 var autorun_url = 'http://rjfun.com/jumprope/autorun.js';
 
 var app_data = {};
-
-var ui_styles = [
-	'sportkit.css',    
-	'sportkit-cool.css',    
-	'sportkit-cartoon.css',    
-	'sportkit-girl.css' 
-];
-
-var myKg = 60.0;
-var standardKg = 60.0;
 
 function resetData() {
 	app_data.cfg = {
@@ -149,6 +139,8 @@ function stopCount() {
 }
 
 function sportTimeToEnergy( sec ) {
+	var myKg = 60.0;
+	var standardKg = 60.0;
 	var jumpCostPerMin = 12.0;
 	return (jumpCostPerMin * (sec / 60.0) * (myKg / standardKg)).toFixed(1);
 }
@@ -235,57 +227,6 @@ function drawRecords( off ) {
 	}
 }
 
-function shareVia( via ) {
-	var msg = $('textarea#sharemsg').text();
-	var subject = "晒纪录";
-	var img = null;
-	var link = null;
-	
-	if(window.plugins && window.plugins.socialsharing) {
-		switch(via) {
-		case 'shareviasms':
-			window.plugins.socialsharing.shareViaSMS(msg, subject, img, link);
-			break;
-		case 'shareviawechat':
-			window.plugins.socialsharing.shareVia('com.tencent.mm', msg, subject, img, link);
-			break;
-		case 'shareviaqq':
-			window.plugins.socialsharing.shareVia('qq', msg, subject, img, link);
-			break;
-		case 'shareviaweibo':
-			window.plugins.socialsharing.shareVia('weibo', msg, subject, img, link);
-			break;
-		case 'shareviaother':
-			window.plugins.socialsharing.share(msg, subject, img, link);
-		}
-	} else {
-		alert('social sharing plugin not ready.\n\n' + subject + '\n' + msg);
-	}
-}
-
-var pageStack = [];
-var pageCurrent = null;
-
-function showPage( pgid ) {
-	$('div.page').hide();
-	$('div#' + pgid).show();
-	pageCurrent = pgid;
-}
-
-function pushPage( pgid ) {
-	if(pageCurrent != null) pageStack.push( pageCurrent );
-	showPage( pgid );
-}
-
-function popPage() {
-	if( pageStack.length >0) {
-		showPage( pageStack.pop() );
-		return true;
-	}
-	
-	return false;
-}
-
 function updateSettings() {
 	$('.opt').each(function(i){
 		var k = $(this).attr('k');
@@ -309,13 +250,20 @@ function updateSettings() {
 }
 
 function applyUIStyle( n ) {
+	var ui_styles = [
+	              	'sportkit.css',    
+	              	'sportkit-cool.css',    
+	              	'sportkit-cartoon.css',    
+	              	'sportkit-girl.css' 
+	              ];
+
 	var url = 'sportkit.css';
 	switch( app_data.cfg.ui ) {
 	case '1':
 	case '2':
 	case '3':
 		url = ui_styles[ n ];
-		console.log( url );
+		//console.log( url );
 		break;
 	case '0':
 	default:
@@ -324,7 +272,7 @@ function applyUIStyle( n ) {
 	$('link').each(function(){
 		if(($(this).attr('rel') == 'stylesheet') && ($(this).attr('type')=='text/css')) {
 			$(this).attr('href', url);
-			console.log( 'style = ' + url );
+			//console.log( 'style = ' + url );
 		}
 	});
 }
@@ -373,12 +321,35 @@ function saveSettings() {
 		var v = $(this).attr('v');
 		if( this.checked ) {
 			app_data.cfg[ k ] = v;
-			console.log( k + ' = ' + v + ',' + typeof(v) );
+			//console.log( k + ' = ' + v + ',' + typeof(v) );
 		}
 	});
 
 	applySettings();
 	saveData();
+}
+
+var stackedPages = [];
+var currentPage = null;
+
+function showPage( pgid ) {
+	$('div.page').hide();
+	$('div#' + pgid).show();
+	currentPage = pgid;
+}
+
+function pushPage( pgid ) {
+	if(currentPage != null) stackedPages.push( currentPage );
+	showPage( pgid );
+}
+
+function popPage() {
+	if( stackedPages.length >0) {
+		showPage( stackedPages.pop() );
+		return true;
+	}
+	
+	return false;
 }
 
 function pageBack() {
@@ -388,201 +359,279 @@ function pageBack() {
 	popPage();
 }
 
-function initUIEvents() {
-	var isMobile = ( /(android|ipad|iphone|ipod)/i.test(navigator.userAgent) );
-	var press = isMobile ? 'touchstart' : 'mousedown';
-	
-	$(document).on('backbutton',function(e){e.preventDefault();
-		if(!! app_data.cfg.voice_btn) hotjs.voice.say('click');
-		
-		if(pageStack.length >0) {
-			pageBack();
-		} else {
-			navigator.app.exitApp();
-		}
-	});
-	
-	$('.backhome').on(press, function(e){e.preventDefault(); 
-		pageBack();
-	});
+function onClickBackHome(e) {
+	e.preventDefault(); 
+	pageBack();
+}
 
-	// homepage
-	$('#startsport').on(press,function(e){e.preventDefault(); 
-		pushPage('countpage');
-		adjustUI();
-		
+function onClickBackButton(e) {
+	e.preventDefault();
+	if(!! app_data.cfg.voice_btn) hotjs.voice.say('click');
+	
+	if(stackedPages.length >0) {
+		pageBack();
+	} else {
+		navigator.app.exitApp();
+	}
+}
+
+function onClickStartSport(e) {
+	e.preventDefault(); 
+	pushPage('countpage');
+	adjustUI();
+	
+	$('span.maxcount').text( app_data.maxCount );
+	$('span.lastcount').text( app_data.lastCount );
+
+	$("#countpage_msg").html( '准备好了吗？' );
+	if( app_data.cfg.voice_count ) hotjs.voice.say('ready');
+}
+
+function onClickSettings(e){
+	e.preventDefault(); 
+	pushPage('settingspage');
+}
+
+function onClickMyRecord(e){
+	e.preventDefault();
+	
+	pushPage('recordpage');
+	adjustUI();
+	if( app_data.cfg.voice_talk ) hotjs.voice.say('amazing');
+	
+	$('span.maxcount').text( app_data.maxCount );
+	$('span.maxspeed').text( app_data.maxSpeed );
+	
+	$('span#totalcount').text( app_data.totalCount );
+	$('span#totaltime').text( durationToString(app_data.totalTime) );
+	
+	var energy = sportTimeToEnergy( app_data.totalTime );
+	$('span#totalenergy').text( energy );
+	$('span#totalfat').text( energyToFat( energy ) );
+	
+	drawRecords();
+}
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+function onClickShare(e){
+	e.preventDefault(); 
+	
+	pushPage('sharepage');
+	if( app_data.cfg.voice_talk ) hotjs.voice.say('excellent');
+	
+	var now = new Date();
+	var todayTime = (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime();
+	var count = app_data.records[ todayTime ];
+	if(! count) count = 0;
+
+	var days = Object.size( app_data.records );
+	
+	var sharemsg = "#天天跳绳#再创新纪录！今天跳了" + count + "次！我已坚持 " + days + "天，累计跳绳 " + 
+		app_data.totalCount + "次，燃烧脂肪 " + 
+		energyToFat(sportTimeToEnergy(app_data.totalTime)) + "克。最高连续跳跃 " + 
+		app_data.maxCount + "下，最快速度 " + 
+		app_data.maxSpeed + "次／分钟。#运动达人#健身神器，无线跳绳App：" +
+		app_url;
+	
+	$('textarea#sharemsg').text( sharemsg );
+}
+
+function onClickBenefit(e){
+	e.preventDefault(); 
+	pushPage('benefitpage');
+}
+
+function onClickCheckUpdate(e){
+	e.preventDefault(); 
+	if(checkUpdate) checkUpdate();
+}
+
+function onClickAbout(e){
+	e.preventDefault(); 
+	pushPage('aboutpage');
+}
+
+function onClickToDismiss(e) {
+	e.preventDefault(); 
+	if(!! app_data.cfg.voice_btn) hotjs.voice.say('click');
+	popPage();
+}
+
+function onClickHomeTrainer(e) {
+	e.preventDefault(); 
+	pushPage('trainerpage');
+	if( app_data.cfg.voice_talk ) hotjs.voice.say('addoil');
+}
+
+function onClickStartStop(e) {
+	e.preventDefault(); 
+	if(! device_ready) return;
+	
+	if(hotjs.motion.isWatching()) {
+		stopCount();
+	} else {
 		$('span.maxcount').text( app_data.maxCount );
 		$('span.lastcount').text( app_data.lastCount );
+		startCount();
+	}
+}
 
-		$("#countpage_msg").html( '准备好了吗？' );
-		if( app_data.cfg.voice_count ) hotjs.voice.say('ready');
-	});
-	
-	$('#settings').on(press,function(e){e.preventDefault(); 
-		pushPage('settingspage');
-	});
-	
-	$('#trainer').on(press,function(e){e.preventDefault(); 
-		pushPage('trainerpage');
-		if( app_data.cfg.voice_talk ) hotjs.voice.say('addoil');
-	});
-	
-	$('.share').on(press,function(e){e.preventDefault(); 
-		pushPage('sharepage');
-		if( app_data.cfg.voice_talk ) hotjs.voice.say('excellent');
-		
-		Object.size = function(obj) {
-		    var size = 0, key;
-		    for (key in obj) {
-		        if (obj.hasOwnProperty(key)) size++;
-		    }
-		    return size;
-		};
+function onClickPauseContinue(e){
+	e.preventDefault(); 
+	var isp = ! hotjs.motion.isPaused();
+	hotjs.motion.pauseCount( isp );
+	if( app_data.cfg.voice_count ) hotjs.voice.say( isp ? 'pause' : 'continue');
+	$('#pause').html( isp ? '继续' : '暂停' );
+}
 
-		var days = Object.size( app_data.records );
-		
-		var sharemsg = "#天天跳绳#再创新纪录！我已坚持 " + days + "天，累计跳绳 " + 
-			app_data.totalCount + "次，燃烧脂肪 " + 
-			energyToFat(sportTimeToEnergy(app_data.totalTime)) + "克。最高连续跳跃 " + 
-			app_data.maxCount + "下，最快速度 " + 
-			app_data.maxSpeed + "次／分钟。#运动达人#健身神器，无线跳绳App：" +
-			app_url;
-		
-		$('textarea#sharemsg').text( sharemsg );
-	});
+function onClickOptionItem(e){
+	//e.preventDefault(); 
 	
-	$('#myrecords').on(press,function(e){e.preventDefault(); 
-		pushPage('recordpage');
-		adjustUI();
-		if( app_data.cfg.voice_talk ) hotjs.voice.say('amazing');
-		
-		$('span.maxcount').text( app_data.maxCount );
-		$('span.maxspeed').text( app_data.maxSpeed );
-		
-		$('span#totalcount').text( app_data.totalCount );
-		$('span#totaltime').text( durationToString(app_data.totalTime) );
-		
-		var energy = sportTimeToEnergy( app_data.totalTime );
-		$('span#totalenergy').text( energy );
-		$('span#totalfat').text( energyToFat( energy ) );
-		
-		drawRecords();
-	});
-	
-	// trainer page
-	$('#benefit').on(press, function(e){e.preventDefault(); 
-		pushPage('benefitpage');
-	});
-	
-	$('#buy').on(press,function(e){e.preventDefault(); 
-		//pushPage('buypage');
-	});
-	
-	$('#checkupdate').on(press,function(e){e.preventDefault(); 
-		if(checkUpdate) checkUpdate();
-	});
-	
-	$('#about').on(press,function(e){e.preventDefault(); 
-		pushPage('aboutpage');
-	});
-	
-	$('div#aboutpage, div#benefitpage').on(press,function(e){e.preventDefault(); 
-		popPage();
-	});
-
-	// count page
-	$('#startstop').on(press, function(e) {e.preventDefault(); 
-		if(! device_ready) return;
-		
-		if(hotjs.motion.isWatching()) {
-			stopCount();
+	var item = $(this);
+	var k = item.attr('k');
+	var v = item.attr('v');
+	var ischecked = false;
+	//console.log(k + '=' + v + ' clicked');
+	$('input.opt').each(function(i){
+		if($(this).attr('k') != k) return;
+		if($(this).attr('v') === v) {
+			if($(this).attr('checkable') != null) ischecked = ! this.checked;
+			else ischecked = true;
+			
+			this.checked = ischecked;
 		} else {
-			$('span.maxcount').text( app_data.maxCount );
-			$('span.lastcount').text( app_data.lastCount );
-			startCount();
+			this.checked = false;
 		}
 	});
-	
-	$('#pause').on(press, function(e){e.preventDefault(); 
-		var isp = ! hotjs.motion.isPaused();
-		hotjs.motion.pauseCount( isp );
-		if( app_data.cfg.voice_count ) hotjs.voice.say( isp ? 'pause' : 'continue');
-		$('#pause').html( isp ? '继续' : '暂停' );
-	});
-	
-	$('#thismonth').on(press, function(e){e.preventDefault(); 
-		drawRecords(0);
-	});
-	$('#lastmonth').on(press, function(e){e.preventDefault(); 
-		drawRecords(-1);
-	});
-	$('#nextmonth').on(press, function(e){e.preventDefault(); 
-		drawRecords(+1);
-	});
-	
-	// settings page
-	$('td.opt').on(press,function(e){//e.preventDefault(); 
-		
-		var item = $(this);
-		var k = item.attr('k');
-		var v = item.attr('v');
-		var ischecked = false;
-		console.log(k + '=' + v + ' clicked');
-		$('input.opt').each(function(i){
-			if($(this).attr('k') != k) return;
-			if($(this).attr('v') === v) {
-				if($(this).attr('checkable') != null) ischecked = ! this.checked;
-				else ischecked = true;
-				
-				this.checked = ischecked;
-			} else {
-				this.checked = false;
-			}
-		});
-		$('td.opt').each(function(i){
-			if($(this).attr('k') != k) return;
-			if($(this).attr('v') === v) {
-				if(ischecked) {
-					$(this).addClass('selected');
-				} else {
-					$(this).removeClass('selected');
-				}
+	$('td.opt').each(function(i){
+		if($(this).attr('k') != k) return;
+		if($(this).attr('v') === v) {
+			if(ischecked) {
+				$(this).addClass('selected');
 			} else {
 				$(this).removeClass('selected');
 			}
-		});
-		
-		if(k == 'ui') {
-			applyUIStyle( v );
+		} else {
+			$(this).removeClass('selected');
 		}
 	});
 	
-	$('#settings_save').on(press, function(e){e.preventDefault(); 
-		// save settings
-		saveSettings();
-		
-		popPage();
-	});
-	$('#settings_cancel').on(press, function(e){e.preventDefault(); 
-		// restore settings
-		updateSettings();
-		
-		popPage();
-	});
+	if(k == 'ui') {
+		applyUIStyle( v );
+	}
+}
+
+function onClickSaveSettings(e){
+	e.preventDefault(); 
+	saveSettings();
+	popPage();
+}
+
+function onCancelSave(e){
+	e.preventDefault(); 
+	updateSettings();
+	popPage();
+}
+
+function onClickShareVia(e){
+	e.preventDefault(); 
+	var via = $(this).attr('id');
+	//console.log(id + ' clicked');
+
+	var msg = $('textarea#sharemsg').text();
+	var subject = "天天跳绳晒纪录";
+	var img = 'http://rjfun.com/jumprope/jumprope.jpg';
+	var link = null;
 	
-	$('.sharevia').on(press,function(e){e.preventDefault(); 
-		var id = $(this).attr('id');
-		console.log(id + ' clicked');
-		
-		shareVia( id );
-	});
+	if(window.plugins && window.plugins.socialsharing) {
+		switch(via) {
+		case 'shareviasms':
+			window.plugins.socialsharing.shareViaSMS(msg, subject, img, link);
+			break;
+		case 'shareviawechat':
+			window.plugins.socialsharing.shareVia('com.tencent.mm', msg, subject, img, link);
+			break;
+		case 'shareviaqq':
+			window.plugins.socialsharing.shareVia('qq', msg, subject, img, link);
+			break;
+		case 'shareviaweibo':
+			window.plugins.socialsharing.shareVia('weibo', msg, subject, img, link);
+			break;
+		case 'shareviaother':
+			window.plugins.socialsharing.share(msg, subject, img, link);
+		}
+	} else {
+		alert('social sharing plugin not ready.\n\n' + subject + '\n' + msg);
+	}
+}
+
+function onClickThisMonth(e){
+	e.preventDefault(); 
+	drawRecords(0);
+}
+
+function onClickLastMonth(e){
+	e.preventDefault(); 
+	drawRecords(-1);
+}
+
+function onClickNextMonth(e){
+	e.preventDefault(); 
+	drawRecords(+1);
+}
+
+function initUIEvents() {
+	var isMobile = ( /(android|ipad|iphone|ipod)/i.test(navigator.userAgent) );
+	var click = isMobile ? 'touchstart' : 'mousedown';
 	
-	$('.btn,td.opt').on(press, function(e){e.preventDefault(); 
+	$(document).on('backbutton', onClickBackButton);
+	$('.backhome').on(click, onClickBackHome);
+	$('div#aboutpage, div#benefitpage').on(click, onClickToDismiss);
+
+	// homepage
+	$('#trainer').on(click, onClickHomeTrainer);
+	$('#myrecords').on(click, onClickMyRecord);
+	$('#startsport').on(click, onClickStartSport);
+	$('.share').on(click, onClickShare);
+	$('#settings').on(click, onClickSettings);
+	
+	// trainer page
+	$('#benefit').on(click, onClickBenefit);
+	$('#checkupdate').on(click, onClickCheckUpdate);
+	$('#about').on(click, onClickAbout);
+	
+	// count page
+	$('#startstop').on(click, onClickStartStop);
+	$('#pause').on(click, onClickPauseContinue);
+
+	// my records page
+	$('#thismonth').on(click, onClickThisMonth);
+	$('#lastmonth').on(click, onClickLastMonth);
+	$('#nextmonth').on(click, onClickNextMonth);
+	
+	// settings page
+	$('td.opt').on(click, onClickOptionItem);
+	$('#settings_save').on(click, onClickSaveSettings);
+	$('#settings_cancel').on(click, onCancelSave);
+	
+	// share page
+	$('.sharevia').on(click, onClickShareVia);
+	
+	$('.btn,td.opt').on(click, function(e){
+		e.preventDefault(); 
 		if(!! app_data.cfg.voice_btn) hotjs.voice.say('click');
 	});
 
 }
 
+// if canvas in table, sometimes it will mess the page, so we make it float over the right position
 function adjustUI() {
 	var xy = $('img#motion_canvas_bg').offset();
 	$('canvas#motion_canvas').css({
@@ -598,7 +647,7 @@ function adjustUI() {
 }
 
 function main() {
-	console.log('enter main');
+	//console.log('enter main');
 	
     hotjs.Ad.init();
     hotjs.motion.init();

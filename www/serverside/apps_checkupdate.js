@@ -3,16 +3,16 @@ var apps = apps || {};
 
 apps['com.rjfun.jumprope'] = {
 	name : '天天跳绳',
-	icon : 'http://rjfun.com/jumprope/jumprope.png',
+	icon : 'http://rjfun.com/jumprope/icon.png',
 	desc : '运动达人健身神器，自动语音计数，无线跳绳App',
 	android : {
-		version : '1.0.20140622',
-		vercode : 20140622,
-		url : 'http://rjfun.com/jumprope/jumprope-1.0.apk'
+		version : '1.0.20140624',
+		vercode : 20140624,
+		url : 'http://rjfun.com/jumprope/jumprope-1.0.20140624.apk'
 	},
 	ios : {
-		version : '1.0.20140622',
-		vercode : 20140622,
+		version : '1.0.20140624',
+		vercode : 20140624,
 		url : null //'https://itunes.apple.com/us/app/jing-dian-wu-zi-qi/id650241502?l=zh&ls=1&mt=8'
 	}
 };
