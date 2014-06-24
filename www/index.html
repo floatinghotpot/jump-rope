@@ -69,15 +69,14 @@ function onLoad() {
 <div class='page' id='aboutpage'>
 <table border=0 class='m' cellspacing=5>
 <tr><td class='m'>
-<span class='title2'>运动达人</span></br>
 <img id='appname' class='appname' src='img/appname.png'/><br/>
 <img id='splash' class='splash' src='img/jumprope.jpg'/>
 </td></tr>
 <tr><td><table>
 <tr><td class='r' width='50%'>Producer:</td><td class='l people' width='50%'>Raymond Xie</td></tr></tr>
 <tr><td class='r'>Programmer:</td><td class='l people'>Floatinghotpot</td></tr>
-<tr><td class='r'>UX Designer / Sound FX:</td><td class='l people'>Tiantian's Uncle</td></tr>
-<tr><td class='r'>Voice Actress:</td><td class='l people'>Duanduan's Aunt</td></tr>
+<tr><td class='r'>UX Designer<br/>Sound FX:</td><td class='l people'>Tiantian's Uncle</td></tr>
+<tr><td class='r'>Voice Actress:</td><td class='l people'>Duanduan's Aunt, <br/>Grandma</td></tr>
 </table></td></tr>
 <tr><td class='m'>&copy;RjFun 欢乐出品</td></tr>
 </table>
@@ -87,7 +86,6 @@ function onLoad() {
 <div class='page' id='homepage'>
 <table border=0 class='m' cellspacing=5>
 <tr><td colspan=3 class='m'>
-<span class='title2'>运动达人</span></br>
 <img id='appname' class='appname' src='img/appname.png'/><br/>
 <img id='splash' class='splash' src='img/jumprope.jpg'/>
 </td></tr>
@@ -105,7 +103,7 @@ function onLoad() {
 
 <!-- count page -->
 <div class='page' id='countpage'>
-	<canvas id="motion_canvas" width="300" height="120" class='draw' style='position:absolute;'></canvas>
+	<canvas id="motion_canvas" width="300" height="80" class='draw' style='position:absolute;'></canvas>
 	<table border=0 class='m'>
 	<tr>
 	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
@@ -124,7 +122,7 @@ function onLoad() {
 	</td></tr>
 	<tr><td colspan=4 class='m'>
 	<span class='title2' id='motion_title'>运动感应</span><br/>
-	<img width='300' height='120' id='motion_canvas_bg' src='img/null.png'/>
+	<img width='300' height='80' id='motion_canvas_bg' src='img/null.png'/>
 	</td></tr>
 	<tr><td width='25%' class='m datacell'>
 	<span class='unit'>计数</span><br/>
@@ -137,12 +135,6 @@ function onLoad() {
 	<span class='data' id='energy'>0</span>
 	</td></tr>
 	<tr>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
-	</tr>
-	<tr>
 	<td colspan=2 width='50%' class='m btn' id='pause'>暂停</td>
 	<td colspan=2 width='50%' class='m btn' id='startstop'>开始</td>
 	</tr>
@@ -152,7 +144,7 @@ function onLoad() {
 
 <!-- my records page -->
 <div class='page' id='recordpage'>
-	<canvas id="records_canvas" width="300" height="120" class='draw' style='position:absolute;'></canvas>
+	<canvas id="records_canvas" width="300" height="80" class='draw' style='position:absolute;'></canvas>
 	<table border=0 class='m'>
 	<tr>
 	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
@@ -164,36 +156,30 @@ function onLoad() {
 
 	<tr><td colspan=4 class='m'><table border=0>
 	
-	<tr><td colspan=4 class='m'>
-	<span class='title2'>单次</span>
-	</td></tr>
 	<tr><td colspan=2 width='50%' class='m datacell'>
-	<span class='unit'>最高连续</span><br/>
+	<span class='unit'>连续最多</span><br/>
 	<span class='data maxcount'>0</span>
 	</td><td colspan=2 width='50%' class='m datacell'>
 	<span class='unit'>最快（次/分钟）</span><br/>
 	<span class='data maxspeed'>0</span>
 	</td></tr>
-	<tr><td colspan=4 class='m'>
-	<span class='title2'>累计</span>
-	</td></tr>
 	<tr><td colspan=2 class='m datacell'>
-	<span class='unit'>完成次数</span><br/>
+	<span class='unit'>累计次数</span><br/>
 	<span class='data' id='totalcount'>0</span>
 	</td><td colspan=2 width='50%' class='m datacell'>
-	<span class='unit'>运动时间</span><br/>
+	<span class='unit'>累计时间</span><br/>
 	<span class='data' id='totaltime'>17.5</span>
 	</td></tr>
 	<tr><td colspan=2 class='m datacell'>
-	<span class='unit'>消耗卡路里</span><br/>
+	<span class='unit'>累计卡路里</span><br/>
 	<span class='data' id='totalenergy'>0</span>
 	</td><td colspan=2 class='m datacell'>
 	<span class='unit'>燃烧脂肪（克）</span><br/>
 	<span class='data' id='totalfat'>0</span>
 	</td></tr>
 	<tr><td colspan=4 class='m'>
-	<span class='title2' id='themonth'>月</span><br/>
-	<img width='300' height='120' id='records_canvas_bg' src='img/null.png'/>
+	<span class='unit' id='themonth'>月</span><br/>
+	<img width='300' height='80' id='records_canvas_bg' src='img/null.png'/>
 	</td></tr>
 	
 	</table></td></tr>
@@ -221,9 +207,9 @@ function onLoad() {
 	<tr><td colspan=4 class='m'><table border=0>
 	
 	<tr><td colspan=4 class='b'>
-	<span class='title2'>感应灵敏度</span><br/>
+	<span class='unit'>感应灵敏度</span>
 	</td></tr>
-	<tr><td colspan=4 class='m'>
+	<tr><td colspan=4 class='m t'>
 	<table>
 	<tr>
 	<td width='25%' class='selectcell opt selected' k='sensor' v='0'>自动<input type='checkbox' class='opt' k='sensor' v='0' checked></input></td>
@@ -235,9 +221,9 @@ function onLoad() {
 	</td></tr>
 
 	<tr><td colspan=4 class='b'>
-	<span class='title2'>界面风格</span><br/>
+	<span class='unit'>界面风格</span>
 	</td></tr>
-	<tr><td colspan=4 class='m'>
+	<tr><td colspan=4 class='m t'>
 	<table>
 	<tr>
 	<td width='50%' class='selectcell opt selected' k='ui' v='0'>绿色清新<input type='checkbox' class='opt' k='ui' v='0' checked></input></td>
@@ -251,9 +237,9 @@ function onLoad() {
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
-	<span class='title2'>语音</span><br/>
+	<span class='unit'>语音</span>
 	</td></tr>
-	<tr><td colspan=4 class='m'>
+	<tr><td colspan=4 class='m t'>
 	<table>
 	<tr>
 	<td width='25%' class='selectcell opt selected' k='voice' v='0'>机器人<input type='checkbox' class='opt' k='voice' v='0' checked></input></td>
@@ -265,17 +251,13 @@ function onLoad() {
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
-	<span class='title2'>其他</span><br/>
+	<span class='unit'>其他</span>
 	</td></tr>
-	<tr><td colspan=4 class='m'>
+	<tr><td colspan=4 class='m t'>
 	<table>
-	<tr><td width='25%' class='r'></td>
-	<td width='50%' class='l selectcell opt selected' k='voice_btn' v='1'>按钮反馈<input type='checkbox' class='opt' k='voice_btn' v='1' checked checkable=1></input></td>
-	<td width='25%'></td></tr>
-	<tr><td class='r'></td>
-	<td class='l selectcell opt selected' k='voice_count' v='1'>语音计数<input type='checkbox' class='opt' k='voice_count' v='1' checked checkable=1></input></td><td></td></tr>
-	<tr><td class='r'></td>
-	<td class='l selectcell opt' k='voice_talk' v='1'>话痨<input type='checkbox' class='opt' k='voice_talk' v='1' checkable=1></input></td><td></td></tr>
+	<td width='25%' class='l selectcell opt selected' k='voice_btn' v='1'>按钮声<input type='checkbox' class='opt' k='voice_btn' v='1' checked checkable=1></input></td>
+	<td width='50%' class='l selectcell opt selected' k='voice_count' v='1'>语音报数<input type='checkbox' class='opt' k='voice_count' v='1' checked checkable=1></input></td>
+	<td width='25%' class='l selectcell opt' k='voice_talk' v='1'>话痨<input type='checkbox' class='opt' k='voice_talk' v='1' checkable=1></input></td>
 	</table>
 	</td></tr>
 	
@@ -304,25 +286,20 @@ function onLoad() {
 	<tr><td colspan=4><img class='splash' src='img/trainer.jpg'/></td></tr>
 	
 	<tr>
-	<td colspan=2 class='btn' id='benefit'>跳绳益处多</td>
-	<td colspan=2 class='btn' id='my_profile'>我的档案</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
 	</tr>
-	
+
 	<tr>
-	<td colspan=2 class='btn' id='my_plan'>健身计划</td>
-	<td colspan=2 class='btn' id='buy'>购买装备</td>
+	<td colspan=2 class='btn' id='benefit'>跳绳益处多</td>
+	<td colspan=2 class='btn' id='my_plan'>我的计划</td>
 	</tr>
 	
 	<tr>
 	<td colspan=2 class='btn' id='checkupdate'>检查更新</td>
 	<td colspan=2 class='btn' id='about'>关于</td>
-	</tr>
-
-	<tr>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
 	</tr>
 
 </table>
@@ -339,7 +316,7 @@ function onLoad() {
 	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
 	</tr>
 	
-	<tr><td colspan=4><img class='splash' src='img/share.jpg'/><br/>
+	<tr><td colspan=4>
 	<textarea id='sharemsg' rows=6 cols=30>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 0 次，燃烧脂肪 0 克。最高连续跳跃 0下，最快速度 0次／分钟。无线跳绳，语音计数：http://go.to/jumprope</textarea>
 	</td></tr>
 	
@@ -377,21 +354,46 @@ function onLoad() {
 	
 	<tr><td colspan=4 class='t l'>
 	<ul>
-	<li>锻炼心肺机能，相当于 3 倍时间的跑步。</li>
-	<li>结实全身肌肉，消除臀部和大腿多余脂肪。</li>
-	<li>避免跑步产生的膝、踝关节疼痛困扰。</li>
-	<li>不受场地和天气的限制，想跳就跳！</li>
+	<li>锻炼心肺，相当三倍时间跑步。</li>
+	<li>结实全身肌肉，消除多余脂肪。</li>
+	<li>避免跑步产生的关节疼痛困扰。</li>
+	<li>不受场地天气限制，想跳就跳！</li>
 	</ul>
 	</td></tr>
 	
 	<tr>
-	<td colspan=1 width='25%' class='m'><img height=48 src='img/null.png'/></td>
-	<td colspan=2 width='50%' class='m' nowrap>
+	<td colspan=4 class='m' nowrap>
 	任意点击继续...
+	</td>
+	</tr>
+
+	<tr>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	<td width='25%'>&nbsp;</td>
+	</tr>
+
+</table>
+</div>
+
+<!-- trainer page -->
+<div class='page' id='myplanpage'>
+<table border=0 class='m'>
+	<tr>
+	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
+	<td colspan=2 width='50%' class='m' nowrap>
+	<span class='tips m'>我的计划</span><br/>
 	</td>
 	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
 	</tr>
-
+	
+	<tr><td colspan=4><img class='splash' src='img/trainer.jpg'/></td></tr>
+	
+	<tr>
+	<td colspan=4>敬请期待 ...</td>
+	</tr>
+	
 	<tr>
 	<td width='25%'>&nbsp;</td>
 	<td width='25%'>&nbsp;</td>

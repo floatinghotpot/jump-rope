@@ -4,7 +4,7 @@ var apps = apps || {};
 apps['com.rjfun.jumprope'] = {
 	name : '天天跳绳',
 	icon : 'http://rjfun.com/jumprope/icon.png',
-	desc : '运动达人健身神器，自动语音计数，无线跳绳App',
+	desc : '无线跳绳App，自动语音计数，运动达人健身神器',
 	android : {
 		version : '1.0.20140624',
 		vercode : 20140624,

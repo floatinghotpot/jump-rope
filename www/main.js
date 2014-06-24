@@ -448,6 +448,11 @@ function onClickBenefit(e){
 	pushPage('benefitpage');
 }
 
+function onClickMyPlan(e) {
+	e.preventDefault(); 
+	pushPage('myplanpage');
+}
+
 function onClickCheckUpdate(e){
 	e.preventDefault(); 
 	if(checkUpdate) checkUpdate();
@@ -540,10 +545,24 @@ function onCancelSave(e){
 	popPage();
 }
 
+function doAlert(msg, title) {
+	if(navigator && navigator.notification && navigator.notification.alert) {
+		navigator.notification.alert(msg, function(){}, title);
+	} else {
+		alert(msg);
+	}
+}
+
+function onShareFailed(){
+	doAlert('请检查是否安装了相应的APP','未能分享');
+}
+
 function onClickShareVia(e){
 	e.preventDefault(); 
 	var via = $(this).attr('id');
 	//console.log(id + ' clicked');
+	
+	var isios = ( /(ipad|iphone|ipod)/i.test(navigator.userAgent) );
 
 	var msg = $('textarea#sharemsg').text();
 	var subject = "天天跳绳晒纪录";
@@ -553,16 +572,19 @@ function onClickShareVia(e){
 	if(window.plugins && window.plugins.socialsharing) {
 		switch(via) {
 		case 'shareviasms':
-			window.plugins.socialsharing.shareViaSMS(msg, subject, img, link);
+			window.plugins.socialsharing.shareViaSMS(msg, subject, null, link);
 			break;
 		case 'shareviawechat':
-			window.plugins.socialsharing.shareVia('com.tencent.mm', msg, subject, img, link);
+			var shareapp = isios ? 'com.tencent.xin' : 'com.tencent.mm';
+			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, null, onShareFailed);
 			break;
 		case 'shareviaqq':
-			window.plugins.socialsharing.shareVia('qq', msg, subject, img, link);
+			var shareapp = isios ? 'com.tencent.qq' : 'qq';
+			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, null, onShareFailed);
 			break;
 		case 'shareviaweibo':
-			window.plugins.socialsharing.shareVia('weibo', msg, subject, img, link);
+			var shareapp = isios ? 'com.apple.social.sinaweibo' : 'weibo';
+			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, null, onShareFailed);
 			break;
 		case 'shareviaother':
 			window.plugins.socialsharing.share(msg, subject, img, link);
@@ -604,6 +626,7 @@ function initUIEvents() {
 	
 	// trainer page
 	$('#benefit').on(click, onClickBenefit);
+	$('#my_plan').on(click, onClickMyPlan);
 	$('#checkupdate').on(click, onClickCheckUpdate);
 	$('#about').on(click, onClickAbout);
 	

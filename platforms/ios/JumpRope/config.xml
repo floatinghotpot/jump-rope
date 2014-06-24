@@ -22,9 +22,6 @@
     <feature name="LowLatencyAudio">
         <param name="ios-package" value="LowLatencyAudio" />
     </feature>
-    <feature name="AdMob">
-        <param name="ios-package" value="CDVAdMob" />
-    </feature>
     <feature name="SocialSharing">
         <param name="ios-package" value="SocialSharing" />
     </feature>
@@ -36,6 +33,9 @@
     </feature>
     <feature name="Vibration">
         <param name="ios-package" value="CDVVibration" />
+    </feature>
+    <feature name="AdMob">
+        <param name="ios-package" value="CDVAdMob" />
     </feature>
     <name>JumpRope</name>
     <description>
