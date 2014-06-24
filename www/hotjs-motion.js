@@ -121,7 +121,7 @@ function drawMotionCurve() {
 	
 	var ctx = c.getContext("2d");
 	//ctx.clearRect(0,0, w, h);
-	ctx.fillStyle = 'white';
+	ctx.fillStyle = '#dddddd';
 	ctx.fillRect(0,0, w,h);
 	
 	ctx.strokeStyle = 'gray';

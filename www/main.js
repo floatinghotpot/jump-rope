@@ -3,8 +3,8 @@
 var device_ready = false;
 
 var app_key = 'com.rjfun.jumprope';
-var app_version = '1.0.20140624';
-var app_vercode = 20140624;
+var app_version = '1.0.20140625';
+var app_vercode = 20140625;
 
 var app_url = 'http://rjfun.com/jumprope/';
 var autorun_url = 'http://rjfun.com/jumprope/autorun.js';
@@ -213,7 +213,7 @@ function drawRecords( off ) {
 	var w = canvas.width, h = canvas.height;
 	var ctx = canvas.getContext("2d");
 	//ctx.clearRect(0,0, w, h);
-	ctx.fillStyle = 'white';
+	ctx.fillStyle = '#dddddd';
 	ctx.fillRect(0,0, w,h);
 
 	var cx = w / 30 -1;

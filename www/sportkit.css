@@ -99,6 +99,7 @@ html, body, div, canvas {
 }
 
 .draw {
+	background-color: #dddddd;
 	border:1px solid black;	
 }
 
@@ -114,6 +115,7 @@ html, body, div, canvas {
 }
 
 .datacell {
+	background-color: #dddddd;
 	border: 1px solid silver;
 	border-bottom: 5px solid silver;
 }
@@ -122,6 +124,7 @@ html, body, div, canvas {
 	text-align: right;
 	vertical-align: bottom;
 	cursor: pointer;
+	background-color: #dddddd;
 	border: 1px solid silver;
 	border-bottom: 5px solid silver;
 }

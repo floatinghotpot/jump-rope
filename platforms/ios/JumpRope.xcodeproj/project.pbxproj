@@ -581,8 +581,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = JumpRope/JumpRope.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Liming Xie (D92BDUZHUG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -612,7 +612,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = JumpRope;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2269AD39-DF72-434B-804F-252D5802D55D";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -623,8 +623,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = JumpRope/JumpRope.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Liming Xie (D92BDUZHUG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JumpRope/JumpRope-Prefix.pch";
@@ -652,7 +652,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = JumpRope;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2269AD39-DF72-434B-804F-252D5802D55D";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
