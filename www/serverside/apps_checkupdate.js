@@ -4,7 +4,7 @@ var apps = apps || {};
 apps['com.rjfun.jumprope'] = {
 	name : '天天跳绳',
 	icon : 'http://rjfun.com/jumprope/icon.png',
-	desc : '无线跳绳App，自动语音计数，运动达人健身神器',
+	desc : '智能跳绳App，自动语音计数，运动达人健身神器',
 	android : {
 		version : '1.0.20140625',
 		vercode : 20140625,
@@ -13,7 +13,8 @@ apps['com.rjfun.jumprope'] = {
 	ios : {
 		version : '1.0.20140625',
 		vercode : 20140625,
-		url : null //'https://itunes.apple.com/us/app/jing-dian-wu-zi-qi/id650241502?l=zh&ls=1&mt=8'
+		url : "javascript:doAlert('已提交苹果审核，敬请期待！');" 
+		// url: 'https://itunes.apple.com/us/app/jing-dian-wu-zi-qi/id650241502?l=zh&ls=1&mt=8'
 	}
 };
 
@@ -67,7 +68,7 @@ function listApp( div_id ) {
 			var platform = platforms[i];
 			var veritem = appitem[ platform ];
 			if(veritem && veritem.url) {
-				html += "<li><a href='" + veritem.url + "'>" + platform + "版</a>, v" + veritem.version + "</li>";
+				html += "<li><a href=\"" + veritem.url + "\">" + platform + "版</a>, v" + veritem.version + "</li>";
 			}
 		}
 		html += '<ul></p>';
