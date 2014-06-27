@@ -92,7 +92,7 @@ interstitial:(BOOL)isInterstitial;
 	[self createGADBannerViewWithPubId:publisherId bannerType:adSize];
 
 	// set background color to black
-	//self.webView.superview.backgroundColor = [UIColor blackColor];
+	self.webView.superview.backgroundColor = [UIColor blackColor];
     //self.webView.superview.tintColor = [UIColor whiteColor];
     
 	// Call the success callback that was passed in through the javascript.

@@ -377,8 +377,8 @@ function onLoad() {
 </table>
 </div>
 
-<!-- trainer page -->
-<div class='page' id='myplanpage'>
+<div class='page' id='planpage'>
+	<canvas id="plan_canvas" width="300" height="80" class='draw' style='position:absolute;'></canvas>
 <table border=0 class='m'>
 	<tr>
 	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
@@ -388,18 +388,60 @@ function onLoad() {
 	<td colspan=1 width='25%'><img height=48 src='img/null.png'/></td>
 	</tr>
 	
-	<tr><td colspan=4><img class='splash' src='img/trainer.jpg'/></td></tr>
-	
 	<tr>
-	<td colspan=4>敬请期待 ...</td>
+	<td colspan=1 class='r'>我想要</td>
+	<td colspan=3 class='l' class='data'><select class='data' id='planpurpose'>
+	<option value='1'>瘦身减肥</option>
+	<option value='2'>增加耐力</option>
+	<option value='3'>保持现在体重</option>
+	<option value='4'>锻炼腿部力量</option>
+	<option value='5'>锻炼肩膀和手臂</option>
+	<option value='xxx'>打飞机</option>
+	</select></td>
 	</tr>
 	
 	<tr>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
-	<td width='25%'>&nbsp;</td>
+	<td colspan=1 class='r'>在</td>
+	<td colspan=3 class='l class='data''><select class='data r' id='plantime'>
+	<option value='3'>3</option>
+	<option value='4'>4</option>
+	<option value='5'>5</option>
+	<option value='6' selected>6</option>
+	<option value='9'>9</option>
+	<option value='12'>12</option>
+	<option value='18'>18</option>
+	<option value='24'>24</option>
+	</select>个月内</td>
 	</tr>
+	
+	<tr>
+	<td colspan=1 class='r'>燃烧脂肪</td>
+	<td colspan=3 class='l' class='data'>
+	<select class='data r' id='planfat'>
+	<option value='2'>2</option>
+	<option value='3'>3</option>
+	<option value='5' selected>5</option>
+	<option value='8'>8</option>
+	<option value='10'>10</option>
+	<option value='15'>15</option>
+	<option value='20'>20</option>
+	</select>公斤</td>
+	</tr>
+	
+	<tr><td colspan=4 class='m'>
+	<img width='300' height='80' id='plan_canvas_bg' src='img/null.png'/>
+	</td></tr>
+
+<tr>
+	<td colspan=4 class='m' id='plantips'>每天 ?? 分钟</td>
+</tr>
+
+	<tr>
+	<td colspan=1 width='25%' class='m btn topbtn' id='resetplan'>复原</td>
+	<td colspan=2 width='50%' class='m btn topbtn' id='checkplan'>计算</td>
+	<td colspan=1 width='25%' class='m btn topbtn' id='saveplan'>保存</td>
+	</tr>
+	
 
 </table>
 </div>

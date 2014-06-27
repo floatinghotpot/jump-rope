@@ -85,6 +85,8 @@ function checkUpdate( manual_check ) {
 	// not from an cordova apps, ignore
 	if(! app_key) return;
 	if(! app_vercode) return;
+	if(typeof app_data !== 'object') return;
+	if(typeof saveData !== 'function') return;
 	
 	var platform = 'android';
 	if( /(android)/i.test(navigator.userAgent) ) platform = 'android';
@@ -102,13 +104,10 @@ function checkUpdate( manual_check ) {
 		return;
 	}
 	
-	var ask = true;
-	if(! manual_check) {
-		if(app_data && saveData) {
-			if(app_data.versionAsked >= veritem.vercode) ask = false;
-		}
-	}
-	if(! ask) return;
+	var needAsk = (!! manual_check) 
+			|| (! app_data.versionAsked)
+			|| (app_data.versionAsked < veritem.vercode);
+	if(! needAsk) return;
 
 	doConfirm(
 		'发现新版本: \n' + appitem.name + ' v' + veritem.version + ', \n要更新吗？',
@@ -116,10 +115,8 @@ function checkUpdate( manual_check ) {
 		function() {
 			openURL( veritem.url );
 		}, function() {
-			if (app_data && saveData) {
-				app_data.versionAsked = veritem.vercode;
-				saveData();
-			}
+			app_data.versionAsked = veritem.vercode;
+			saveData();
 		});
 }
 

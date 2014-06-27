@@ -80,6 +80,43 @@ function saveData() {
 	localStorage.setItem( app_key, JSON.stringify(app_data) );
 }
 
+function doAlert(msg, title) {
+	if(navigator && navigator.notification && navigator.notification.alert) {
+		navigator.notification.alert(msg, function(){}, title);
+	} else {
+		alert(msg);
+	}
+}
+
+function doConfirm(msg, title, okfunc, cancelfunc) {
+	if(navigator && navigator.notification && navigator.notification.confirm) {
+		navigator.notification.confirm(msg, function(btnIndex){
+			if(btnIndex == 1) okfunc();
+			else cancelfunc();
+		}, title);
+	} else {
+		if(confirm(msg)) okfunc();
+		else cancelfunc();
+	}
+}
+
+function openURL( url ) {
+	if (typeof navigator !== "undefined" && navigator.app) {
+		// Mobile device.
+		navigator.app.loadUrl(url, {
+			openExternal : true
+		});
+	} else {
+		// Possible web browser
+		window.open(url, "_blank");
+	}
+}
+
+function getTodayTime(){
+	var now = new Date();
+	return (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime();
+}
+
 function startCount() {
 	if(! hotjs.motion.isWatching()) {
 		if( app_data.cfg.voice_count ) hotjs.voice.say('start');
@@ -122,8 +159,7 @@ function stopCount() {
 			}
 		}
 		
-		var now = new Date();
-		var todayTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+		var todayTime = getTodayTime();
 		
 		if(app_data.records == null) app_data.records = {};
 		var n = app_data.records[ todayTime ];
@@ -142,12 +178,16 @@ function sportTimeToEnergy( sec ) {
 	var myKg = 60.0;
 	var standardKg = 60.0;
 	var jumpCostPerMin = 12.0;
-	return (jumpCostPerMin * (sec / 60.0) * (myKg / standardKg)).toFixed(1);
+	return (jumpCostPerMin * (sec / 60.0) * (myKg / standardKg)).toFixed(2);
 }
 
 // 1 Kg Fat = 7716 C energy
 function energyToFat( e ) {
-	return (e / 7.716).toFixed(1);
+	return (e / 7.716).toFixed(2);
+}
+
+function fatToSportTime( f ) {
+	return Math.round( 10000.0 * f / energyToFat(100) / sportTimeToEnergy(100) );
 }
 
 function durationToString(s) {
@@ -426,8 +466,7 @@ function onClickShare(e){
 	pushPage('sharepage');
 	if( app_data.cfg.voice_talk ) hotjs.voice.say('excellent');
 	
-	var now = new Date();
-	var todayTime = (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime();
+	var todayTime = getTodayTime();
 	var count = app_data.records[ todayTime ];
 	if(! count) count = 0;
 
@@ -448,9 +487,13 @@ function onClickBenefit(e){
 	pushPage('benefitpage');
 }
 
+
 function onClickMyPlan(e) {
 	e.preventDefault(); 
-	pushPage('myplanpage');
+	pushPage('planpage');
+	adjustUI();
+	
+	showMyPlan();
 }
 
 function onClickCheckUpdate(e){
@@ -545,14 +588,6 @@ function onCancelSave(e){
 	popPage();
 }
 
-function doAlert(msg, title) {
-	if(navigator && navigator.notification && navigator.notification.alert) {
-		navigator.notification.alert(msg, function(){}, title);
-	} else {
-		alert(msg);
-	}
-}
-
 function onShareFailed(){
 	doAlert('请检查是否安装了相应的APP','未能分享');
 }
@@ -609,45 +644,150 @@ function onClickNextMonth(e){
 	drawRecords(+1);
 }
 
+function drawPlan( dailyTime, days, purpose, from ) {
+	var canvas = document.getElementById( 'plan_canvas' );
+	if(! canvas) return;
+
+	var w = canvas.width, h = canvas.height;
+	var ctx = canvas.getContext("2d");
+	//ctx.clearRect(0,0, w, h);
+	ctx.fillStyle = '#dddddd';
+	ctx.fillRect(0,0, w,h);
+	
+	var n = days;
+	var data = [];
+	var dataMax = 0;
+	for(var i=1; i<=n; i++) {
+		if(i < 30) count = Math.round(dailyTime * i / 30);
+		else count = dailyTime;
+
+		// TODO: change dailytime according to different purpose
+		
+		data.push( count );
+		if(dataMax < count) dataMax = count;
+	}
+	dataMax = dataMax * 1.1;
+	
+	var cx = w / n -1;
+	ctx.fillStyle = 'green';
+	for(var i=0; i<n; i++) {
+		var count = data.shift();
+		var ch = h * count / dataMax;
+		var x = (cx +1) * i;
+		var y = h - ch;
+		ctx.fillRect(x, y, cx, ch);
+	}
+	
+	// TODO: draw today time line, or event history?
+}
+
+function showMyPlan() {
+	if(app_data && app_data.plan && app_data.plan.purpose) {
+		var p = app_data.plan;
+		
+		var days = p.months * 30;
+		var fat = p.fat * 1000;
+		
+		var needTime = fatToSportTime( fat );
+		var dailyTime = Math.round(needTime / (days - 15));
+		
+		$('#planpurpose').val(p.purpose);
+		$('#plantime').val(p.months);
+		$('#planfat').val(p.fat);
+		
+		drawPlan( dailyTime, days, p.purpose, p.from);
+		
+		var n = Object.size( app_data.records );
+		if(n > 0) {
+			$('#plantips').html('您已经坚持 ' + n + ' 天');
+		} else {
+			$('#plantips').html('您制定了计划，但还没开始');
+		}
+	} else {
+		$('#plantips').html('尚未制定计划');
+	}
+}
+
+function onClickResetPlan(e){
+	e.preventDefault(); 
+	
+	showMyPlan();
+}
+
+function onClickCheckPlan(e){
+	e.preventDefault(); 
+	
+	var purpose = $('#planpurpose').val();
+	var days = $('#plantime').val() * 30;
+	var fat = $('#planfat').val() * 1000;
+	
+	if(purpose == 'xxx') {
+		doAlert('抱歉，不支持打飞机。\n久坐、打飞机不利于健康。','友情提醒');
+		return;
+	}
+	
+	var needTime = fatToSportTime( fat );
+	var dailyTime = Math.round(needTime / (days - 15));
+	drawPlan( dailyTime, days, purpose, getTodayTime() );
+	
+	$('#plantips').html( '从 3 分钟开始，增加到每天 ' + Math.round(dailyTime /60) + ' 分钟。<br/>循序渐进，坚持必达！' );
+}
+
+function onClickSavePlan(e){
+	e.preventDefault(); 
+	app_data.plan = {
+		purpose: $('#planpurpose').val(),
+		months : $('#plantime').val(),
+		fat : $('#planfat').val(),
+		from: getTodayTime()
+	};
+	saveData();
+}
+
 function initUIEvents() {
 	var isMobile = ( /(android|ipad|iphone|ipod)/i.test(navigator.userAgent) );
-	var click = isMobile ? 'touchstart' : 'mousedown';
+	var CLICK = isMobile ? 'touchstart' : 'mousedown';
 	
 	$(document).on('backbutton', onClickBackButton);
-	$('.backhome').on(click, onClickBackHome);
-	$('div#aboutpage, div#benefitpage').on(click, onClickToDismiss);
+	$('.backhome').on(CLICK, onClickBackHome);
+	$('div#aboutpage, div#benefitpage').on(CLICK, onClickToDismiss);
 
 	// homepage
-	$('#trainer').on(click, onClickHomeTrainer);
-	$('#myrecords').on(click, onClickMyRecord);
-	$('#startsport').on(click, onClickStartSport);
-	$('.share').on(click, onClickShare);
-	$('#settings').on(click, onClickSettings);
+	$('#trainer').on(CLICK, onClickHomeTrainer);
+	$('#myrecords').on(CLICK, onClickMyRecord);
+	$('#startsport').on(CLICK, onClickStartSport);
+	$('.share').on(CLICK, onClickShare);
+	$('#settings').on(CLICK, onClickSettings);
 	
 	// trainer page
-	$('#benefit').on(click, onClickBenefit);
-	$('#my_plan').on(click, onClickMyPlan);
-	$('#checkupdate').on(click, onClickCheckUpdate);
-	$('#about').on(click, onClickAbout);
+	$('#benefit').on(CLICK, onClickBenefit);
+	$('#my_plan').on(CLICK, onClickMyPlan);
+	$('#checkupdate').on(CLICK, onClickCheckUpdate);
+	$('#about').on(CLICK, onClickAbout);
+	
+	// plan page
+	$('#resetplan').on(CLICK, onClickResetPlan);
+	$('#checkplan').on(CLICK, onClickCheckPlan);
+	$('#saveplan').on(CLICK, onClickSavePlan);
 	
 	// count page
-	$('#startstop').on(click, onClickStartStop);
-	$('#pause').on(click, onClickPauseContinue);
+	$('#startstop').on(CLICK, onClickStartStop);
+	$('#pause').on(CLICK, onClickPauseContinue);
 
 	// my records page
-	$('#thismonth').on(click, onClickThisMonth);
-	$('#lastmonth').on(click, onClickLastMonth);
-	$('#nextmonth').on(click, onClickNextMonth);
+	$('#thismonth').on(CLICK, onClickThisMonth);
+	$('#lastmonth').on(CLICK, onClickLastMonth);
+	$('#nextmonth').on(CLICK, onClickNextMonth);
 	
 	// settings page
-	$('td.opt').on(click, onClickOptionItem);
-	$('#settings_save').on(click, onClickSaveSettings);
-	$('#settings_cancel').on(click, onCancelSave);
+	$('td.opt').on(CLICK, onClickOptionItem);
+	$('#settings_save').on(CLICK, onClickSaveSettings);
+	$('#settings_cancel').on(CLICK, onCancelSave);
 	
 	// share page
-	$('.sharevia').on(click, onClickShareVia);
+	$('.sharevia').on(CLICK, onClickShareVia);
 	
-	$('.btn,td.opt').on(click, function(e){
+	$('.btn,td.opt').on(CLICK, function(e){
 		e.preventDefault(); 
 		if(!! app_data.cfg.voice_btn) hotjs.voice.say('click');
 	});
@@ -656,17 +796,17 @@ function initUIEvents() {
 
 // if canvas in table, sometimes it will mess the page, so we make it float over the right position
 function adjustUI() {
-	var xy = $('img#motion_canvas_bg').offset();
-	$('canvas#motion_canvas').css({
-		left: xy.left,
-		top: xy.top
-	});
-
-	xy = $('img#records_canvas_bg').offset();
-	$('canvas#records_canvas').css({
-		left: xy.left,
-		top: xy.top
-	});
+	var names = ['motion', 'records', 'plan'];
+	for(var i=0; i<names.length; i++) {
+		var name = names[i];
+		var img = 'img#' + name + '_canvas_bg';
+		var canvas = 'canvas#' + name + '_canvas';
+		var xy = $(img).offset();
+		$(canvas).css({
+			left: xy.left,
+			top: xy.top
+		});
+	}
 }
 
 function main() {
