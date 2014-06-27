@@ -6,23 +6,17 @@ apps['com.rjfun.jumprope'] = {
 	icon : 'http://rjfun.com/jumprope/icon.png',
 	desc : '智能跳绳App，自动语音计数，运动达人健身神器',
 	android : {
-		version : '1.0.20140625',
-		vercode : 20140625,
-		url : 'http://rjfun.com/jumprope/jumprope-1.0.20140625.apk'
+		version : '1.0.20140627',
+		vercode : 20140627,
+		url : 'http://rjfun.com/jumprope/jumprope-1.0.20140627.apk'
 	},
 	ios : {
-		version : '1.0.20140625',
-		vercode : 20140625,
+		version : '1.0.20140627',
+		vercode : 20140627,
 		url : "javascript:doAlert('已提交苹果审核，敬请期待！');" 
 		// url: 'https://itunes.apple.com/us/app/jing-dian-wu-zi-qi/id650241502?l=zh&ls=1&mt=8'
 	}
 };
-
-// Note: all apps using applist need have following items:
-// app_key, like 'com.rjfun.jumprope'
-// app_vercode, like 20140622
-// app_data.versionAsked
-// saveData(); 
 
 function doAlert(msg, title) {
 	if(navigator && navigator.notification && navigator.notification.alert) {
@@ -55,6 +49,13 @@ function openURL( url ) {
 		window.open(url, "_blank");
 	}
 }
+
+
+// Note: all apps using applist need have following items:
+// app_key, like 'com.rjfun.jumprope'
+// app_vercode, like 20140622
+// app_data.versionAsked
+// saveData(); 
 
 function listApp( div_id ) {
 	var html = "";

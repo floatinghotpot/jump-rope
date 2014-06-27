@@ -3,8 +3,8 @@
 var device_ready = false;
 
 var app_key = 'com.rjfun.jumprope';
-var app_version = '1.0.20140625';
-var app_vercode = 20140625;
+var app_version = '1.0.20140627';
+var app_vercode = 20140627;
 
 var app_url = 'http://rjfun.com/jumprope/';
 var autorun_url = 'http://rjfun.com/jumprope/autorun.js';
@@ -711,9 +711,9 @@ function showMyPlan() {
 		
 		var n = Object.size( app_data.records );
 		if((n > 0) && (app_data.totalCount > 50)) {
-			$('#plantips').html('您已经坚持 ' + n + ' 天');
+			$('#plantips').html('已经坚持 ' + n + ' 天');
 		} else {
-			$('#plantips').html('您制定了计划，但还没开始');
+			$('#plantips').html('制定了计划，但还没开始');
 		}
 	} else {
 		$('#plantips').html('尚未制定计划');
