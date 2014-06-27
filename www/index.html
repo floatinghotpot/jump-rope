@@ -317,11 +317,12 @@ function onLoad() {
 	</tr>
 	
 	<tr><td colspan=4>
-	<textarea id='sharemsg' rows=6 cols=30>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 0 次，燃烧脂肪 0 克。最高连续跳跃 0下，最快速度 0次／分钟。无线跳绳，语音计数：http://go.to/jumprope</textarea>
+	<img src='img/friends.jpg' height='100'/><br/>
+	<textarea id='sharemsg' rows=5 cols=40>#天天跳绳# 再创新纪录，我是 #运动达人#！已经累计跳跃 0 次，燃烧脂肪 0 克。最高连续跳跃 0下，最快速度 0次／分钟。无线跳绳，语音计数：http://go.to/jumprope</textarea>
 	</td></tr>
 	
 	<tr><td colspan=4 class='b'>
-	<span class='tips'>分享到</span><br/>
+	<span class='tips'>分享到</span>
 	</td></tr>
 	
 	<tr>
@@ -391,32 +392,32 @@ function onLoad() {
 	<tr>
 	<td colspan=1 class='r'>我想要</td>
 	<td colspan=3 class='l' class='data'><select class='data' id='planpurpose'>
-	<option value='1'>瘦身减肥</option>
+	<option value='1'>瘦身减脂</option>
 	<option value='2'>增加耐力</option>
-	<option value='3'>保持现在体重</option>
+	<option value='3'>保持体重</option>
 	<option value='4'>锻炼腿部力量</option>
-	<option value='5'>锻炼肩膀和手臂</option>
 	<option value='xxx'>打飞机</option>
 	</select></td>
 	</tr>
 	
 	<tr>
 	<td colspan=1 class='r'>在</td>
-	<td colspan=3 class='l class='data''><select class='data r' id='plantime'>
-	<option value='3'>3</option>
+	<td colspan=2 class='l class='data''><select class='data r' id='plantime'>
+	<option value='3' selected>3</option>
 	<option value='4'>4</option>
 	<option value='5'>5</option>
-	<option value='6' selected>6</option>
+	<option value='6'>6</option>
 	<option value='9'>9</option>
 	<option value='12'>12</option>
 	<option value='18'>18</option>
 	<option value='24'>24</option>
 	</select>个月内</td>
+	<td rowspan=2 class='m'><img src='img/girljump.png' width=60/></td>
 	</tr>
 	
 	<tr>
 	<td colspan=1 class='r'>燃烧脂肪</td>
-	<td colspan=3 class='l' class='data'>
+	<td colspan=2 class='l' class='data'>
 	<select class='data r' id='planfat'>
 	<option value='2'>2</option>
 	<option value='3'>3</option>
@@ -428,13 +429,13 @@ function onLoad() {
 	</select>公斤</td>
 	</tr>
 	
-	<tr><td colspan=4 class='m'>
-	<img width='300' height='80' id='plan_canvas_bg' src='img/null.png'/>
-	</td></tr>
-
 <tr>
 	<td colspan=4 class='m' id='plantips'>每天 ?? 分钟</td>
 </tr>
+
+	<tr><td colspan=4 class='m'>
+	<img width='300' height='80' id='plan_canvas_bg' src='img/null.png'/>
+	</td></tr>
 
 	<tr>
 	<td colspan=1 width='25%' class='m btn topbtn' id='resetplan'>复原</td>

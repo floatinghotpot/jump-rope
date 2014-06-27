@@ -650,7 +650,6 @@ function drawPlan( dailyTime, days, purpose, from ) {
 
 	var w = canvas.width, h = canvas.height;
 	var ctx = canvas.getContext("2d");
-	//ctx.clearRect(0,0, w, h);
 	ctx.fillStyle = '#dddddd';
 	ctx.fillRect(0,0, w,h);
 	
@@ -678,7 +677,20 @@ function drawPlan( dailyTime, days, purpose, from ) {
 		ctx.fillRect(x, y, cx, ch);
 	}
 	
-	// TODO: draw today time line, or event history?
+	var todayIndex = (getTodayTime() - from) / 3600 / 24;
+	if(todayIndex >=0 && todayIndex < n) {
+		var x = (cx +1) * todayIndex;
+		var y = 8;
+		ctx.strokeStyle = 'red';
+		ctx.beginPath();
+		ctx.moveTo(x, 0);
+		ctx.lineTo(x, y);
+		ctx.lineTo(x+2, y-3);
+		ctx.lineTo(x-2, y-3);
+		ctx.lineTo(x, y);
+		ctx.lineWidth = 1;
+		ctx.stroke();
+	}
 }
 
 function showMyPlan() {
@@ -698,7 +710,7 @@ function showMyPlan() {
 		drawPlan( dailyTime, days, p.purpose, p.from);
 		
 		var n = Object.size( app_data.records );
-		if(n > 0) {
+		if((n > 0) && (app_data.totalCount > 50)) {
 			$('#plantips').html('您已经坚持 ' + n + ' 天');
 		} else {
 			$('#plantips').html('您制定了计划，但还没开始');
@@ -718,23 +730,30 @@ function onClickCheckPlan(e){
 	e.preventDefault(); 
 	
 	var purpose = $('#planpurpose').val();
-	var days = $('#plantime').val() * 30;
-	var fat = $('#planfat').val() * 1000;
-	
 	if(purpose == 'xxx') {
 		doAlert('抱歉，不支持打飞机。\n久坐、打飞机不利于健康。','友情提醒');
 		return;
 	}
 	
+	var days = $('#plantime').val() * 30;
+	var fat = $('#planfat').val() * 1000;
+	
 	var needTime = fatToSportTime( fat );
 	var dailyTime = Math.round(needTime / (days - 15));
 	drawPlan( dailyTime, days, purpose, getTodayTime() );
 	
-	$('#plantips').html( '从 3 分钟开始，增加到每天 ' + Math.round(dailyTime /60) + ' 分钟。<br/>循序渐进，坚持必达！' );
+	$('#plantips').html( '从 3 分钟增加到每天 ' + Math.round(dailyTime /60) + ' 分钟。<br/>循序渐进，坚持必达！' );
 }
 
 function onClickSavePlan(e){
 	e.preventDefault(); 
+	
+	var purpose = $('#planpurpose').val();
+	if(purpose == 'xxx') {
+		doAlert('抱歉，不支持打飞机。\n久坐、打飞机不利于健康。','友情提醒');
+		return;
+	}
+	
 	app_data.plan = {
 		purpose: $('#planpurpose').val(),
 		months : $('#plantime').val(),
@@ -742,6 +761,8 @@ function onClickSavePlan(e){
 		from: getTodayTime()
 	};
 	saveData();
+	
+	pageBack();
 }
 
 function initUIEvents() {
