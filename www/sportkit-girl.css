@@ -104,9 +104,9 @@ html, body, div, canvas {
 }
 
 .data {
-	font-family: 'Joti One', serif, Arial;
+	font-family: verdana, serif, Arial;
 	font-size:24px;
-	color: blue;
+	color: #f171ab;
 }
 
 .datacell {
@@ -161,13 +161,13 @@ html, body, div, canvas {
 
 .tips {
 	font-size: 20px;
-	color: green;
+	color: #f171ab;
 }
 
 .title2 {
 	font-family: 'Joti One', serif, Arial;
 	font-size: 20px;
-	color: green;
+	color: #f171ab;
 }
 
 .title {
@@ -183,7 +183,7 @@ img.splash {
 
 .highlight {
 	font-size: 24px;
-	color: green;
+	color: #f171ab;
 }
 
 img.navicon {

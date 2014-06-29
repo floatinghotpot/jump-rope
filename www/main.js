@@ -3,11 +3,12 @@
 var device_ready = false;
 
 var app_key = 'com.rjfun.jumprope';
-var app_version = '1.0.20140627';
-var app_vercode = 20140627;
+var app_version = '1.0.20140629';
+var app_vercode = 20140629;
 
 var app_url = 'http://rjfun.com/jumprope/';
-var autorun_url = 'http://rjfun.com/jumprope/autorun.js';
+var autorun_url = app_url + 'autorun.js'; // will run when client start
+var share_link_url = app_url; // will share in social sharing
 
 var app_data = {};
 
@@ -460,6 +461,49 @@ Object.size = function(obj) {
     return size;
 };
 
+function createImageUrlForSharing( count, days, totalCount, totalFat ) {
+	var canvas = document.createElement('canvas');
+	canvas.width = 360;
+	canvas.height = 540;
+	
+	var w = canvas.width, h = canvas.height;
+	var ctx = canvas.getContext("2d");
+	//ctx.clearRect(0,0, w, h);
+	ctx.fillStyle = 'white';
+	ctx.fillRect(0,0, w,h);
+	
+	var winnerimg = $('img#winnerimg')[0];
+	ctx.drawImage(winnerimg, (w-winnerimg.width)/2, (h-winnerimg.height)/2);
+	
+	ctx.save();
+	ctx.font = '56pt verdana';
+	ctx.fillStyle = 'brown';
+	ctx.shadowColor = "gray";
+	ctx.shadowOffsetX = 2;
+	ctx.shadowOffsetY = 2;
+	ctx.shadowBlur = 3;
+	var score = '' + count;
+	var x = (w - 56 * score.length) * 0.5;
+	var y = h * 0.75;
+	ctx.fillText( score, x, y );
+	ctx.restore();
+	
+	ctx.font = '12pt verdana';
+	ctx.fillStyle = 'green';
+	ctx.shadowColor = "gray";
+	ctx.shadowOffsetX = 1;
+	ctx.shadowOffsetY = 1;
+	ctx.shadowBlur = 2;
+	var label = '今天跳绳 ';
+	ctx.fillText( label, (w - 12 * label.length) * 0.5, h * 0.60 );
+	ctx.fillText( '次！', (w - x), y );
+	ctx.fillText( '第 ' + days + ' 天', w * 0.1, h * 0.85 );
+	ctx.fillText( '累计: ' + totalCount + ' 次', w * 0.1, h * 0.9 );
+	ctx.fillText( '减脂: ' + Math.round(totalFat) + ' 克', w * 0.1, h * 0.95 );
+
+	return canvas.toDataURL('image/jpeg');
+}
+
 function onClickShare(e){
 	e.preventDefault(); 
 	
@@ -471,15 +515,27 @@ function onClickShare(e){
 	if(! count) count = 0;
 
 	var days = Object.size( app_data.records );
+	var totalFat = energyToFat(sportTimeToEnergy(app_data.totalTime));
+	
+	$('img#shareimg').attr('src', createImageUrlForSharing(count, days, app_data.totalCount, totalFat));
 	
 	var sharemsg = "#天天跳绳#再创新纪录！今天跳了" + count + "次！我已坚持 " + days + "天，累计跳绳 " + 
 		app_data.totalCount + "次，燃烧脂肪 " + 
-		energyToFat(sportTimeToEnergy(app_data.totalTime)) + "克。最高连续跳跃 " + 
+		totalFat + "克。最高连续跳跃 " + 
 		app_data.maxCount + "下，最快速度 " + 
 		app_data.maxSpeed + "次／分钟。#运动达人#健身神器，无线跳绳App：" +
 		app_url;
 	
 	$('textarea#sharemsg').text( sharemsg );
+	
+	var isios = ( /(ipad|iphone|ipod)/i.test(navigator.userAgent) );
+	if(isios) {
+		$('#shareviawechat').hide();
+		$('#shareviaweibo').hide();
+		$('#shareviasms').hide();
+		$('#shareviaqq').hide();
+	}
+
 }
 
 function onClickBenefit(e){
@@ -588,21 +644,22 @@ function onCancelSave(e){
 	popPage();
 }
 
-function onShareFailed(){
-	doAlert('请检查是否安装了相应的APP','未能分享');
+function onShareFailed(e){
+	doAlert('发生错误：'+e,'未能分享');
 }
 
 function onClickShareVia(e){
 	e.preventDefault(); 
 	var via = $(this).attr('id');
-	//console.log(id + ' clicked');
 	
 	var isios = ( /(ipad|iphone|ipod)/i.test(navigator.userAgent) );
 
 	var msg = $('textarea#sharemsg').text();
-	var subject = "天天跳绳晒纪录";
-	var img = 'http://rjfun.com/jumprope/jumprope.jpg';
-	var link = null;
+	var subject = "天天跳绳－晒记录";
+	var img = app_url + 'screenshot.jpg';
+	var link = share_link_url;
+	
+	// TODO: draw image & text into a canvas, then generate img
 	
 	if(window.plugins && window.plugins.socialsharing) {
 		switch(via) {
@@ -610,22 +667,23 @@ function onClickShareVia(e){
 			window.plugins.socialsharing.shareViaSMS(msg, subject, null, link);
 			break;
 		case 'shareviawechat':
-			var shareapp = isios ? 'com.tencent.xin' : 'com.tencent.mm';
-			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, null, onShareFailed);
+			var shareapp = isios ? 'com.tencent.xin' : 'com.tencent.mm/com.tencent.mm.ui.tools.ShareToTimeLineUI';
+			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, function(){}, onShareFailed);
 			break;
 		case 'shareviaqq':
 			var shareapp = isios ? 'com.tencent.qq' : 'qq';
-			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, null, onShareFailed);
+			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, function(){}, onShareFailed);
 			break;
 		case 'shareviaweibo':
 			var shareapp = isios ? 'com.apple.social.sinaweibo' : 'weibo';
-			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, null, onShareFailed);
+			window.plugins.socialsharing.shareVia(shareapp, msg, subject, img, link, function(){}, onShareFailed);
 			break;
 		case 'shareviaother':
-			window.plugins.socialsharing.share(msg, subject, img, link);
+			window.plugins.socialsharing.share(msg, subject, img, link, function(){}, onShareFailed);
+			break;
 		}
 	} else {
-		alert('social sharing plugin not ready.\n\n' + subject + '\n' + msg);
+		doAlert('social sharing plugin not ready.\n\n' + subject + '\n' + msg, 'not ready');
 	}
 }
 
@@ -832,6 +890,10 @@ function adjustUI() {
 
 function main() {
 	//console.log('enter main');
+	
+	//$('img.appname').attr('src', $('img#appname').attr('src'));
+	//$('img.splash').attr('src', $('img#splash').attr('src'));
+	$('textarea#sharemsg').hide();
 	
     hotjs.Ad.init();
     hotjs.motion.init();
