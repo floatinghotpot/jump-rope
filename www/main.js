@@ -523,8 +523,7 @@ function onClickShare(e){
 		app_data.totalCount + "次，燃烧脂肪 " + 
 		totalFat + "克。最高连续跳跃 " + 
 		app_data.maxCount + "下，最快速度 " + 
-		app_data.maxSpeed + "次／分钟。#运动达人#健身神器，无线跳绳App：" +
-		app_url;
+		app_data.maxSpeed + "次／分钟。智能跳绳App，#运动达人#健身神器。";
 	
 	$('textarea#sharemsg').text( sharemsg );
 	
@@ -656,7 +655,7 @@ function onClickShareVia(e){
 
 	var msg = $('textarea#sharemsg').text();
 	var subject = "天天跳绳－晒记录";
-	var img = app_url + 'screenshot.jpg';
+	var img = $('img#shareimg').attr('src');
 	var link = share_link_url;
 	
 	// TODO: draw image & text into a canvas, then generate img
