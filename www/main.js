@@ -226,6 +226,30 @@ function onMotionError() {
 
 var offset_month = 0;
 
+function drawGrid( c, bgcolor, color, col, row ) {
+    var w = c.width, h = c.height;
+    var ctx = c.getContext("2d");
+    //ctx.clearRect(0,0, w, h);
+    ctx.fillStyle = bgcolor; //'#dddddd';
+    ctx.fillRect(0,0, w,h);
+    
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    var cx = w / col;
+    var cy = h / row;
+    ctx.beginPath();
+    for(var x=0; x<=w; x+=cx) {
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+    }
+    for(var y=0; y<=h; y+=cy) {
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+    }
+    ctx.stroke();
+    ctx.strokeRect(0,0,w,h);
+}
+
 function drawRecords( off ) {
 	if(! off) off = 0;
 	if(! off) offset_month = 0;
@@ -240,6 +264,8 @@ function drawRecords( off ) {
 	mon = themonth.getMonth();
 	$('span#themonth').text( year + '年' + (mon+1) + '月')
 	
+    drawGrid(canvas, 'black', 'gray', 30, 10);
+    
 	var data = [];
 	var dataMax = 0;
 	for(var i=1; i<=31; i++) {
@@ -253,12 +279,8 @@ function drawRecords( off ) {
 	
 	var w = canvas.width, h = canvas.height;
 	var ctx = canvas.getContext("2d");
-	//ctx.clearRect(0,0, w, h);
-	ctx.fillStyle = '#dddddd';
-	ctx.fillRect(0,0, w,h);
-
 	var cx = w / 30 -1;
-	ctx.fillStyle = 'green';
+	ctx.fillStyle = 'gold';
 	for(var i=0; i<n; i++) {
 		var count = data.shift();
 		var ch = h * count / dataMax;
@@ -447,8 +469,8 @@ function onClickMyRecord(e){
 	$('span#totaltime').text( durationToString(app_data.totalTime) );
 	
 	var energy = sportTimeToEnergy( app_data.totalTime );
-	$('span#totalenergy').text( energy );
-	$('span#totalfat').text( energyToFat( energy ) );
+	$('span#totalenergy').text( Math.round(energy) );
+	$('span#totalfat').text( Math.round( energyToFat( energy ) ) );
 	
 	drawRecords();
 }
@@ -704,11 +726,11 @@ function onClickNextMonth(e){
 function drawPlan( dailyTime, days, purpose, from ) {
 	var canvas = document.getElementById( 'plan_canvas' );
 	if(! canvas) return;
+    
+    drawGrid(canvas, 'black', 'gray', 30, 5);
 
 	var w = canvas.width, h = canvas.height;
 	var ctx = canvas.getContext("2d");
-	ctx.fillStyle = '#dddddd';
-	ctx.fillRect(0,0, w,h);
 	
 	var n = days;
 	var data = [];
@@ -725,7 +747,7 @@ function drawPlan( dailyTime, days, purpose, from ) {
 	dataMax = dataMax * 1.1;
 	
 	var cx = w / n -1;
-	ctx.fillStyle = 'green';
+	ctx.fillStyle = 'gold';
 	for(var i=0; i<n; i++) {
 		var count = data.shift();
 		var ch = h * count / dataMax;
@@ -737,16 +759,8 @@ function drawPlan( dailyTime, days, purpose, from ) {
 	var todayIndex = (getTodayTime() - from) / 3600 / 24;
 	if(todayIndex >=0 && todayIndex < n) {
 		var x = (cx +1) * todayIndex;
-		var y = 8;
-		ctx.strokeStyle = 'red';
-		ctx.beginPath();
-		ctx.moveTo(x, 0);
-		ctx.lineTo(x, y);
-		ctx.lineTo(x+2, y-3);
-		ctx.lineTo(x-2, y-3);
-		ctx.lineTo(x, y);
-		ctx.lineWidth = 1;
-		ctx.stroke();
+		var arrow = $('img#arrowimg')[0];
+		ctx.drawImage(arrow, 0,0, arrow.width, arrow.height, x-8,0,16,16 );
 	}
 }
 
@@ -768,12 +782,12 @@ function showMyPlan() {
 		
 		var n = Object.size( app_data.records );
 		if((n > 0) && (app_data.totalCount > 50)) {
-			$('#plantips').html('已经坚持 ' + n + ' 天');
+			$('#plantips').html('<br/>已经坚持 ' + n + ' 天');
 		} else {
-			$('#plantips').html('制定了计划，但还没开始');
+			$('#plantips').html('<br/>制定了计划，但还没开始');
 		}
 	} else {
-		$('#plantips').html('尚未制定计划');
+		$('#plantips').html('<br/>尚未制定计划');
 	}
 }
 
@@ -892,7 +906,6 @@ function main() {
 	
 	//$('img.appname').attr('src', $('img#appname').attr('src'));
 	//$('img.splash').attr('src', $('img#splash').attr('src'));
-	$('textarea#sharemsg').hide();
 	
     hotjs.Ad.init();
     hotjs.motion.init();
@@ -908,6 +921,11 @@ function main() {
 	hotjs.motion.setCountCallback( countNumber );
 
 	$(window).resize( adjustUI );
+    
+	$('textarea#sharemsg').hide();
+    $('canvas.draw').each(function() {
+        drawGrid(this, 'black', 'gray', 30, 5 );
+    });
 	
 	showPage('splashpage');
 	

@@ -117,7 +117,6 @@ html, body, div, canvas {
 
 .selectcell {
 	text-align: right;
-	vertical-align: bottom;
 	cursor: pointer;
 	background-color: #dddddd;
 	border: 1px solid silver;
@@ -176,6 +175,10 @@ html, body, div, canvas {
 	font-size: 28px;
 	font-weight: bold;
 	color: blue;
+}
+
+img.appname {
+	width: 240;
 }
 
 img.splash {

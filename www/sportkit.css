@@ -110,26 +110,33 @@ html, body, div, canvas {
 }
 
 .people {
-	font-family: 'Joti One', serif, Arial;
+	font-family: verdana, serif, Arial;
 	font-size:16px;
 }
 
+div.page {
+	background-color: white;
+    color: #333333;
+}
+
 .datacell {
+	color: black;
 	background-color: #dddddd;
 	border: 1px solid silver;
 	border-bottom: 5px solid silver;
 }
 
 .selectcell {
+    color: black;
 	text-align: right;
-	vertical-align: bottom;
 	cursor: pointer;
-	background-color: #dddddd;
-	border: 1px solid silver;
-	border-bottom: 5px solid silver;
+	background-color: silver;
+	border: 1px solid gray;
+	border-bottom: 5px solid gray;
 }
 
 .selected {
+    color: black;
 	background-color: #adf76f;
 	border: 1px solid #4e7d0e;
 	border-bottom: 5px solid #4e7d0e;
@@ -174,15 +181,17 @@ html, body, div, canvas {
 .title2 {
 	font-family: 'Joti One', serif, Arial;
 	font-size: 20px;
-	color: black;
 }
 
 .title {
 	font-family: 'Joti One', serif, Arial;
 	font-size: 28px;
 	font-weight: bold;
-	color: blue;
 	text-shadow: 1px 1px 2px gray;
+}
+
+img.appname {
+	width: 240;
 }
 
 img.splash {
@@ -200,6 +209,3 @@ img.navicon {
 	height:32px;
 }
 
-div.page {
-	background-color: white;
-}

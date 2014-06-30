@@ -109,15 +109,22 @@ html, body, div, canvas {
 	color: #f171ab;
 }
 
+div.page {
+	background-color: black;
+	color: #cccccc;
+}
+
 .datacell {
+/*	color: black;
 	background-color: #dddddd;
 	border: 1px solid silver;
 	border-bottom: 5px solid silver;
+*/
 }
 
 .selectcell {
+	color: black;
 	text-align: right;
-	vertical-align: bottom;
 	cursor: pointer;
 	background-color: #dddddd;
 	border: 1px solid silver;
@@ -177,6 +184,10 @@ html, body, div, canvas {
 	color: blue;
 }
 
+img.appname {
+	width: 240;
+}
+
 img.splash {
 	width: 240;
 }
@@ -191,7 +202,3 @@ img.navicon {
 	height:32px;
 }
 
-
-div.page {
-	background-color: white;
-}

@@ -110,7 +110,33 @@ function setMotionCanvas( canvas, w, h ) {
 		h : h
 	};
 }
-function drawMotionCurve() {
+ function drawGrid( c, bgcolor, color, col, row ) {
+	 
+ var w = c.width, h = c.height;
+ var ctx = c.getContext("2d");
+ ctx.save();
+ //ctx.clearRect(0,0, w, h);
+ ctx.fillStyle = bgcolor; //'#dddddd';
+ ctx.fillRect(0,0, w,h);
+ 
+ ctx.strokeStyle = color;
+ var cx = w / col;
+ var cy = h / row;
+ ctx.beginPath();
+ for(var x=0; x<=w; x+=cx) {
+ ctx.moveTo(x, 0);
+ ctx.lineTo(x, h);
+ }
+ for(var y=0; y<=h; y+=cy) {
+ ctx.moveTo(0, y);
+ ctx.lineTo(w, y);
+ }
+ ctx.stroke();
+ ctx.strokeRect(0,0,w,h);
+ ctx.restore();
+ }
+
+ function drawMotionCurve() {
 	if(! motionCanvas) return;
 	
 	var c = document.getElementById( motionCanvas.id );
@@ -120,15 +146,12 @@ function drawMotionCurve() {
 	var scale = w / motionHistory;
 	
 	var ctx = c.getContext("2d");
-	//ctx.clearRect(0,0, w, h);
-	ctx.fillStyle = '#dddddd';
-	ctx.fillRect(0,0, w,h);
+ 
+    drawGrid(c, 'black', 'gray', 30, 5);
 	
-	ctx.strokeStyle = 'gray';
-	ctx.strokeRect(0, h *0.2, w, h *0.2);
-	ctx.strokeRect(0, h *0.6, w, h *0.2);
-	
-	ctx.strokeStyle = "red";
+    ctx.save();
+	ctx.strokeStyle = "yellow";
+	ctx.lineWidth = 2;
 	ctx.beginPath();
 	for(var i=0; i<motions.length; i++) {
 		var x = i * scale;
@@ -140,6 +163,7 @@ function drawMotionCurve() {
 		} 		
 	}
 	ctx.stroke();
+	ctx.restore();
 }
 
 var xyzCanvas = null;
