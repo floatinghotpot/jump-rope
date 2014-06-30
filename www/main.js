@@ -3,8 +3,8 @@
 var device_ready = false;
 
 var app_key = 'com.rjfun.jumprope';
-var app_version = '1.0.20140629';
-var app_vercode = 20140629;
+var app_version = '1.0.20140630';
+var app_vercode = 20140630;
 
 var app_url = 'http://rjfun.com/jumprope/';
 var autorun_url = app_url + 'autorun.js'; // will run when client start

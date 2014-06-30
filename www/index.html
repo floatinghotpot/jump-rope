@@ -107,39 +107,43 @@ function onLoad() {
 <div class='page' id='countpage'>
 	<canvas id="motion_canvas" width="300" height="80" class='draw' style='position:absolute;'></canvas>
 	<table border=0 class='m'>
+	<tr><td height='64'><table>
 	<tr>
-	<td colspan=1 width='25%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
-	<td colspan=2 width='50%' class='m' nowrap>
+	<td colspan=1 width='20%' class='m btn topbtn backhome'><img class='navicon' src='img/back.png'/></td>
+	<td colspan=2 width='60%' class='m' nowrap>
 	<span id="countpage_msg" class='tips m'>加载中...</span>
 	</td>
-	<td colspan=1 width='25%' class='m btn topbtn share'><img class='navicon' src='img/share.png'/></td>
+	<td colspan=1 width='20%' class='m btn topbtn share'><img class='navicon' src='img/share.png'/></td>
 	</tr>
-	
-	<tr><td colspan=2 width='50%' class='m datacell round'>
+	</table></td></tr>
+	<tr><td class='m'><table border=0 class='m'>
+	<tr><td width='50%' class='m datacell round'>
 	<span class='unit'>最高记录: </span><span class='unit maxcount'>0</span>
-	</td><td colspan=2 width='50%' class='m datacell round'>
+	</td><td width='50%' class='m datacell round'>
 	<span class='unit'>上一次: </span><span class='unit lastcount'>0</span>
 	</td></tr>
-	<tr><td colspan=4 class='m datacell round'>
+	<tr><td colspan=2 class='m datacell round'>
 	<span class='unit' id='motion_title'>运动感应</span><br/>
 	<img width='300' height='80' id='motion_canvas_bg' src='img/null.png'/>
 	</td></tr>
-	<tr><td colspan=4 class='m datacell round'>
+	<tr><td colspan=2 class='m datacell round'>
 	<span class='unit'>计数</span><br/>
 	<span class='data' id='counter'>0</span>
 	</td></tr>
-	<tr><td colspan=2 width='50%' class='m datacell round'>
+	<tr><td width='50%' class='m datacell round'>
 	<span class='unit'>时间</span><br/>
 	<span class='data' id='time'>0:00:00</span>
-	</td><td colspan=2 width='50%' class='m datacell round'>
+	</td><td width='50%' class='m datacell round'>
 	<span class='unit'>卡路里</span><br/>
 	<span class='data' id='energy'>0</span>
 	</td></tr>
+	</table></td></tr>
+	<tr><td><table>
 	<tr>
 	<td colspan=2 width='50%' class='m btn' id='pause'>暂停</td>
 	<td colspan=2 width='50%' class='m btn' id='startstop'>开始</td>
 	</tr>
-	
+	</table></td></tr>
 	</table>
 </div>
 
@@ -292,8 +296,10 @@ function onLoad() {
 	</tr>
 	
 	<tr>
-	<td colspan=2 class='btn topbtn' id='checkupdate'>检查更新</td>
-	<td colspan=2 class='btn topbtn' id='about'>关于</td>
+	<td colspan=2 width='50%' class='btn topbtn' id='checkupdate'>检查更新
+	</td>
+	<td colspan=2 width='50%' class='btn topbtn' id='about'>关于
+	</td>
 	</tr>
 
 </table>
