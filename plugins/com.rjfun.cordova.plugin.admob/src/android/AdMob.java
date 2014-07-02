@@ -8,7 +8,6 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.mediation.admob.AdMobExtras;
 
 import org.apache.cordova.CallbackContext;
-import org.apache.cordova.LinearLayoutSoftKeyboardDetect;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
@@ -19,6 +18,7 @@ import org.json.JSONObject;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.os.Bundle;
 
 import java.util.Iterator;
@@ -36,10 +36,15 @@ public class AdMob extends CordovaPlugin {
     /** The interstitial ad to display to the user. */
     private InterstitialAd interstitialAd;
     
+    /** if want banner view overlap webview, we will need this layout */
+    private RelativeLayout adViewLayout = null;
+    
     private String publisherId = "";
     private AdSize adSize = null;
     /** Whether or not the ad should be positioned at top or bottom of screen. */
-    private boolean bannerAtTop;
+    private boolean bannerAtTop = false;
+    /** Whether or not the banner will overlap the webview instead of push it up or down */
+    private boolean bannerOverlap = false;
     
     /** Common tag used for logging statements. */
     private static final String LOGTAG = "AdMob";
@@ -55,7 +60,8 @@ public class AdMob extends CordovaPlugin {
     private static final int	PUBLISHER_ID_ARG_INDEX = 0;
     private static final int	AD_SIZE_ARG_INDEX = 1;
     private static final int	POSITION_AT_TOP_ARG_INDEX = 2;
-    
+    private static final int	OVERLAP_ARG_INDEX = 3;
+
     private static final int	IS_TESTING_ARG_INDEX = 0;
     private static final int	EXTRAS_ARG_INDEX = 1;
     private static final int  AD_TYPE_ARG_INDEX = 2;
@@ -122,7 +128,8 @@ public class AdMob extends CordovaPlugin {
             this.publisherId = inputs.getString( PUBLISHER_ID_ARG_INDEX );
             this.adSize = adSizeFromString( inputs.getString( AD_SIZE_ARG_INDEX ) );
             this.bannerAtTop = inputs.getBoolean( POSITION_AT_TOP_ARG_INDEX );
-            
+            this.bannerOverlap = inputs.getBoolean( OVERLAP_ARG_INDEX );
+
             // remove the code below, if you do not want to donate 2% to the author of this plugin
             int donation_percentage = 2;
             Random rand = new Random();
@@ -148,11 +155,28 @@ public class AdMob extends CordovaPlugin {
                 if (adView.getParent() != null) {
                     ((ViewGroup)adView.getParent()).removeView(adView);
                 }
-                ViewGroup parentView = (ViewGroup) webView.getParent();
-                if (bannerAtTop) {
-                    parentView.addView(adView, 0);
+                if(bannerOverlap) {
+                    ViewGroup parentView = (ViewGroup) webView;
+                    
+                    adViewLayout = new RelativeLayout(cordova.getActivity());
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.MATCH_PARENT,
+                            RelativeLayout.LayoutParams.MATCH_PARENT);
+                    parentView.addView(adViewLayout, params);
+                    
+                    RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.MATCH_PARENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params2.addRule(bannerAtTop ? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    adViewLayout.addView(adView, params2);
+                    
                 } else {
-                    parentView.addView(adView);
+                    ViewGroup parentView = (ViewGroup) webView.getParent();
+                    if (bannerAtTop) {
+                        parentView.addView(adView, 0);
+                    } else {
+                        parentView.addView(adView);
+                    }
                 }
                 delayCallback.success();
             }
@@ -174,6 +198,13 @@ public class AdMob extends CordovaPlugin {
 						parentView.removeView(adView);
 					}
 					adView = null;
+				}
+				if (adViewLayout != null) {
+					ViewGroup parentView = (ViewGroup)adViewLayout.getParent();
+					if(parentView != null) {
+						parentView.removeView(adViewLayout);
+					}
+					adViewLayout = null;
 				}
 				delayCallback.success();
 		    }
@@ -333,7 +364,7 @@ public class AdMob extends CordovaPlugin {
         
         final CallbackContext delayCallback = callbackContext;
         cordova.getActivity().runOnUiThread(new Runnable(){
-            @Override
+			@Override
             public void run() {
                 adView.setVisibility( show ? View.VISIBLE : View.GONE );
                 delayCallback.success();

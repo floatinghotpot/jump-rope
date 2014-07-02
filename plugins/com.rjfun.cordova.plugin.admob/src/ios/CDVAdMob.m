@@ -89,10 +89,16 @@ interstitial:(BOOL)isInterstitial;
 		self.bannerAtTop = NO;
 	}
 
+	if ([arguments objectAtIndex:OVERLAP_ARG_INDEX]) {
+		self.bannerOverlap = [[arguments objectAtIndex:OVERLAP_ARG_INDEX] boolValue];
+	} else {
+		self.bannerOverlap = NO;
+	}
+    
 	[self createGADBannerViewWithPubId:publisherId bannerType:adSize];
 
 	// set background color to black
-	//self.webView.superview.backgroundColor = [UIColor blackColor];
+    self.webView.superview.backgroundColor = [UIColor blackColor];
     //self.webView.superview.tintColor = [UIColor whiteColor];
     
 	// Call the success callback that was passed in through the javascript.
@@ -110,7 +116,17 @@ interstitial:(BOOL)isInterstitial;
 		[self.bannerView removeFromSuperview];
         self.bannerView = nil;
         
-        self.webView.frame = self.webView.superview.frame;
+        // Handle orientation change
+        CGRect superViewFrame = self.webView.superview.frame;
+        CGRect webViewFrameNew = self.webView.frame;
+        if( [self __isLandscape] ) {
+            webViewFrameNew.size.width = superViewFrame.size.height;
+            webViewFrameNew.size.height = superViewFrame.size.width;
+        } else {
+            webViewFrameNew = superViewFrame;
+        }
+
+        self.webView.frame = webViewFrameNew;
 	}
 
 	// Call the success callback that was passed in through the javascript.
@@ -383,6 +399,19 @@ bannerType:(GADAdSize)adSize {
     BOOL adIsShowing = [self.webView.superview.subviews containsObject:self.bannerView] &&
     (! self.bannerView.hidden);
     if(adIsShowing) {
+        // banner overlap webview, no resizing needed, but we need bring banner over webview, and put it center.
+        if(self.bannerOverlap) {
+            bannerViewFrameNew.origin.x = (superViewFrameNew.size.width - bannerViewFrameNew.size.width) /2;
+            if(self.bannerAtTop) {
+                bannerViewFrameNew.origin.y = 0;
+            } else {
+                bannerViewFrameNew.origin.y = superViewFrameNew.size.height - bannerViewFrameNew.size.height;
+            }
+            self.bannerView.frame = bannerViewFrameNew;
+            [self.webView.superview bringSubviewToFront:self.bannerView];
+            return;
+        }
+
         if(self.bannerAtTop) {
             // iOS7 Hack, handle the Statusbar
             MainViewController *mainView = (MainViewController*) self.webView.superview.window.rootViewController;
@@ -411,7 +440,7 @@ bannerType:(GADAdSize)adSize {
         self.bannerView.frame = bannerViewFrameNew;
         
     } else {
-        webViewFrameNew.size.height = superViewFrameNew.size.height;
+        webViewFrameNew = superViewFrameNew;
         
         NSLog(@"webview: %d x %d",
               (int) webViewFrameNew.size.width, (int) webViewFrameNew.size.height );

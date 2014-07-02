@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00D89700466E47DBB341B0A3 /* CDVVibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 593C90BC18D645609C204E71 /* CDVVibration.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -413,7 +414,7 @@
 								enabled = 0;
 							};
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -616,7 +617,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = JumpRope;
-				PROVISIONING_PROFILE = "2269AD39-DF72-434B-804F-252D5802D55D";
+				PROVISIONING_PROFILE = "4C07C16E-60FF-4DA5-AC8F-D7A1B17BA069";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -656,7 +657,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = JumpRope;
-				PROVISIONING_PROFILE = "2269AD39-DF72-434B-804F-252D5802D55D";
+				PROVISIONING_PROFILE = "4C07C16E-60FF-4DA5-AC8F-D7A1B17BA069";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
