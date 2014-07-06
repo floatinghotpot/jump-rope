@@ -462,7 +462,11 @@ function onClickMyRecord(e){
 	adjustUI();
 	if( app_data.cfg.voice_talk ) hotjs.voice.say('amazing');
 	
-	$('span.maxcount').text( app_data.maxCount );
+	var maxPerDay = 0;
+	for(var k in app_data.records) {
+		if(maxPerDay < app_data.records[k]) maxPerDay = app_data.records[k];
+	}
+	$('span.maxperday').text( maxPerDay );
 	$('span.maxspeed').text( app_data.maxSpeed );
 	
 	$('span#totalcount').text( app_data.totalCount );
