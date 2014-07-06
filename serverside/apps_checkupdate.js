@@ -4,6 +4,7 @@ var apps = apps || {};
 apps['com.rjfun.jumprope'] = {
 	name : '天天跳绳',
 	icon : 'http://rjfun.com/jumprope/icon.png',
+	screenshot : 'http://rjfun.com/jumprope/screenshot.jpg',
 	desc : "智能跳绳App，自动语音计数，运动达人健身神器。什么是智能跳绳？且看《<a href='http://mp.weixin.qq.com/s?__biz=MzAxNDAwMTMzMw==&mid=200257052&idx=1&sn=2233e605c719bea86f167f768681dc98&scene=2&from=timeline&isappinstalled=0#rd'>西门吹雪与智能跳绳</a>》。",
 	android : {
 		version : '1.0.20140630',
@@ -64,7 +65,10 @@ function listApp( div_id ) {
 	for(var k in apps) {
 		var appitem = apps[k];
 		
-		html += "<p><img src='" + appitem.icon + "'/>" + '<br/>' + appitem.name + '<br/>介绍: ' + appitem.desc + '<br/>下载: <ul>';
+		html += "<p><div><img src='" + appitem.icon + "' style='float:left;margin:5px;'/>" + 
+		'<br/><strong>' + appitem.name + '</strong>' +
+		'<br/>介绍: ' + appitem.desc + '</div>' +
+		'<br/>下载: <ul>';
 		for(var i=0; i<platforms.length; i++) {
 			var platform = platforms[i];
 			var veritem = appitem[ platform ];
@@ -72,7 +76,8 @@ function listApp( div_id ) {
 				html += "<li><a href=\"" + veritem.url + "\">" + platform + "版</a>, v" + veritem.version + "</li>";
 			}
 		}
-		html += '<ul></p>';
+		html += '</ul>';
+		html += "<img width=300 src='" + appitem.screenshot + "'/></p>";
 	}
 	
 	var div = document.getElementById( div_id );
@@ -84,10 +89,14 @@ function checkUpdate( manual_check ) {
 	if(manual_check == null) manual_check = true;
 	
 	// not from an cordova apps, ignore
-	if(! app_key) return;
-	if(! app_vercode) return;
+	if(typeof app_key == 'undefined') return;
+	if(typeof app_vercode == 'undefined') return;
 	if(typeof app_data !== 'object') return;
 	if(typeof saveData !== 'function') return;
+	
+	var platform = 'android';
+	if( /(android)/i.test(navigator.userAgent) ) platform = 'android';
+	else if( /(iphone|ipad|ipod)/i.test(navigator.userAgent) ) platform = 'ios';
 	
 	var platform = 'android';
 	if( /(android)/i.test(navigator.userAgent) ) platform = 'android';
