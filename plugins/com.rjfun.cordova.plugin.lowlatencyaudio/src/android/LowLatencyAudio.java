@@ -33,7 +33,7 @@ import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 
 /**
- * @author triceam
+ * @author Andrew Trice
  *
  */
 public class LowLatencyAudio extends CordovaPlugin {
