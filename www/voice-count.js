@@ -4,53 +4,11 @@ hotjs.voice = hotjs.voice || {};
 
 (function(){
 	
-//Method 1: get path using the last loaded script, 
-//remember, we must append script in resource preloading.
-function getCurrentScriptPath() {
-	var scripts = document.getElementsByTagName("script");
-	var n = scripts.length;
-	while( n > 0 ) {
-		n --;
-		var url = scripts[ n ].src;
-		if( url.indexOf('game.js') >= 0 ) return url;
-	}
-	return '';
-}
-
-//Method 2: get with error exception
-function getCurrentScriptPath2() {
-	var url = '';
-	try {
-		throw Error("get js path");
-	}catch(ex){
-		if(ex.fileName) { //Firefox
-			url = ex.fileName;
-		} else if(ex.sourceURL) { //Safari
-			url = ex.sourceURL;
-		} else if(ex.stack) { //Chrome or IE10+
-			url = (ex.stack.match(/at\s+(.*?):\d+:\d+/)||['',''])[1];
-		} else {
-			// no such info in ex, iOS 5
-		}
-	}
-	return url;
-}
-
-var __FILE__ = getCurrentScriptPath() || getCurrentScriptPath2();
-
-function _F(f) {
-	return hotjs.getAbsPath(f, __FILE__);
-}
-
-function _T(t) {
-	return hotjs.i18n.get(t);
-}
-
 var fx = {
-        'click' : _F('audio/button_click.mp3'),
-        'bad' : _F('audio/bad_move.mp3'),
-        'logo' : _F('audio/logo.mp3'),
-        'happymood' : _F('audio/happymood.mp3')
+        'click' : 'audio/button_click.mp3',
+        'bad' : 'audio/bad_move.mp3',
+        'logo' : 'audio/logo.mp3',
+        'happymood' : 'audio/happymood.mp3'
 };
 
 function initFX( who ) {
@@ -63,7 +21,7 @@ function initFX( who ) {
 	
 	var files = [];
 	for(var i=0; i<voices.length; i++) {
-		var url = _F('audio/' + who + '/' + voices[i] + '.mp3');
+		var url = 'audio/' + who + '/' + voices[i] + '.mp3';
 		fx[ voices[i] ] = url;
 	}
 	
