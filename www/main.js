@@ -3,8 +3,8 @@
 var device_ready = false;
 
 var app_key = 'com.rjfun.jumprope';
-var app_version = '1.0.20140630';
-var app_vercode = 20140630;
+var app_version = '1.0.20140715';
+var app_vercode = 20140715;
 
 var app_url = 'http://rjfun.com/jumprope/';
 var autorun_url = app_url + 'autorun.js'; // will run when client start
@@ -314,13 +314,13 @@ function updateSettings() {
 
 function applyUIStyle( n ) {
 	var ui_styles = [
-	              	'sportkit.css',    
-	              	'sportkit-cool.css',    
-	              	'sportkit-cartoon.css',    
-	              	'sportkit-girl.css' 
+	              	'sportkit-orange.css',
+	              	'sportkit-green.css',
+	              	'sportkit-blue.css',
+	              	'sportkit-pink.css' 
 	              ];
 
-	var url = 'sportkit.css';
+	var url = 'sportkit-orange.css';
 	switch( app_data.cfg.ui ) {
 	case '1':
 	case '2':
@@ -906,17 +906,14 @@ function adjustUI() {
 }
 
 function main() {
-	//console.log('enter main');
+	showPage('splashpage');
 	
-	//$('img.appname').attr('src', $('img#appname').attr('src'));
-	//$('img.splash').attr('src', $('img#splash').attr('src'));
-	
-    hotjs.Ad.init();
-    hotjs.motion.init();
-    
     loadData();
     updateSettings();
     applySettings();
+    
+    hotjs.Ad.init();
+    hotjs.motion.init();
     
     initUIEvents();
     
@@ -930,8 +927,6 @@ function main() {
     $('canvas.draw').each(function() {
         drawGrid(this, 'black', 'gray', 30, 5 );
     });
-	
-	showPage('splashpage');
 	
 	window.setTimeout(function(){
 		hotjs.voice.say('happymood');
