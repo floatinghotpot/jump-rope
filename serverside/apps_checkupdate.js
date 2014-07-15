@@ -7,13 +7,13 @@ apps['com.rjfun.jumprope'] = {
 	screenshot : 'http://rjfun.com/jumprope/screenshot.jpg',
 	desc : "智能跳绳App，自动语音计数，运动达人健身神器。什么是智能跳绳？且看《<a href='http://mp.weixin.qq.com/s?__biz=MzAxNDAwMTMzMw==&mid=200257052&idx=1&sn=2233e605c719bea86f167f768681dc98&scene=2&from=timeline&isappinstalled=0#rd'>西门吹雪与智能跳绳</a>》。",
 	android : {
-		version : '1.0.20140630',
-		vercode : 20140630,
-		url : 'http://rjfun.com/jumprope/jumprope-1.0.20140630.apk'
+		version : '1.0.20140715',
+		vercode : 20140715,
+		url : 'http://rjfun.com/jumprope/jumprope-1.0.20140715.apk'
 	},
 	ios : {
-		version : '1.0.20140627',
-		vercode : 20140627,
+		version : '1.0.20140715',
+		vercode : 20140715,
 		url : "javascript:doAlert('已提交苹果审核，敬请期待！');" 
 		// url: 'https://itunes.apple.com/cn/app/tian-tian-tiao-sheng/id892775490?l=zh&ls=1&mt=8'
 	}
